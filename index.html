@@ -963,7 +963,10 @@ const EV=[
 /* v32：困りごとの見本は入れない（見本が交通に寄り、8チームの案が同じ方向に集まるため。発散設計 v1.0 S1） */
 const PROB_SEED=[];
 
-const KEY='qrec-nbc-workbench-v1';
+/* v34：URL に ?as=枠 を付けると、その枠だけの保存先を使う（講師が同じブラウザで複数の学生役を試すため。付けなければ従来どおり） */
+const SLOT=(()=>{ try{ return (new URLSearchParams(location.search).get('as')||'').replace(/[^0-9A-Za-z_-]/g,'').slice(0,12); }catch(e){ return ''; } })();
+const KEY='qrec-nbc-workbench-v1'+(SLOT?'-as-'+SLOT:'');
+const PHKEY='nbc-phase'+(SLOT?'-as-'+SLOT:'');
 const POSTQ=[
  ['DAY1に立てた仮説と、聞いてみて分かったことの違いを書いてください','どこが違っていましたか。違っていなかったなら、なぜそう言えますか'],
  ['21の質問のうち、いちばん効いた質問はどれでしたか','番号（A1〜G3）と、その理由'],
@@ -2725,7 +2728,7 @@ document.getElementById('copy').addEventListener('click',()=>copyTo(md(),'コピ
 document.getElementById('print').addEventListener('click',()=>window.print());
 document.getElementById('wipe').addEventListener('click',e=>twoStep(e.currentTarget,'もう一度押すと、すべて消します（元に戻せません）',()=>{
   clearTimeout(saveT); WIPED=true;
-  try{ localStorage.removeItem(KEY); localStorage.removeItem('nbc-phase'); }catch(err){}
+  try{ localStorage.removeItem(KEY); localStorage.removeItem(PHKEY); }catch(err){}
   document.querySelectorAll('main input,main textarea').forEach(x=>{x.value='';x.disabled=true;});
   const w=document.getElementById('wipe'); w.disabled=true; w.textContent='消しました';
   const st=document.getElementById('status'); if(st) st.innerHTML='<b>この端末の入力を消しました。</b>ページを閉じて、開き直してください。';
@@ -2938,7 +2941,7 @@ function buildJudgePre(){
 const PHS=[['auto','いまの時間帯'],['pre','事前課題'],['pm1','DAY1'],['gap','8日間'],['d2a','DAY2 午前'],['d2p','DAY2 午後'],['out','あと'],['all','すべて']];
 function phNow(){const d=new Date(Date.now()+9*3600e3), md=(d.getUTCMonth()+1)*100+d.getUTCDate(), hm=d.getUTCHours()*100+d.getUTCMinutes();
   if(md<1025) return 'pre'; if(md===1025) return 'pm1'; if(md<1103) return 'gap'; if(md===1103) return hm<1200?'d2a':'d2p'; return 'out';}
-let PHSEL='auto'; try{PHSEL=localStorage.getItem('nbc-phase')||'auto';}catch(e){}
+let PHSEL='auto'; try{PHSEL=localStorage.getItem(PHKEY)||'auto';}catch(e){}
 function phEff(){return PHSEL==='auto'?phNow():PHSEL;}
 function applyPhase(){
   const g=phEff(); const nav=document.querySelector('nav.tabs'); if(!nav) return;
@@ -2948,7 +2951,7 @@ function applyPhase(){
     el.hidden=!keep; });
   const host=document.getElementById('phasenav'); if(!host) return;
   host.innerHTML='<span class="phl">表示するタブ</span>'+PHS.map(([k,l])=>'<button type="button" data-ph="'+k+'" aria-pressed="'+(PHSEL===k)+'"'+(k!=='auto'&&k!=='all'?' data-g="'+k+'"':'')+'>'+l+(k==='auto'?'（'+(PHS.find(x=>x[0]===phNow())||['',''])[1]+'）':'')+'</button>').join('');
-  host.querySelectorAll('[data-ph]').forEach(b=>b.addEventListener('click',()=>{PHSEL=b.dataset.ph; try{localStorage.setItem('nbc-phase',PHSEL);}catch(e){} applyPhase();}));
+  host.querySelectorAll('[data-ph]').forEach(b=>b.addEventListener('click',()=>{PHSEL=b.dataset.ph; try{localStorage.setItem(PHKEY,PHSEL);}catch(e){} applyPhase();}));
   const cur=nav.querySelector('button[aria-selected="true"]');
   if(cur&&cur.hidden){ const first=[...nav.querySelectorAll('button[data-v]')].find(b=>!b.hidden&&b.dataset.v!=='intro')||nav.querySelector('button[data-v="intro"]'); first&&first.click(); }
 }
@@ -2958,7 +2961,7 @@ function buildNext(){
     const d=document.createElement('div'); d.className='nextbar';
     const ng=TABG[nx.dataset.v]||'', lab=(ng&&ng!==TABG[b.dataset.v])?'<small>'+GLAB[ng]+'へ</small> ':'';
     d.innerHTML='<button type="button" class="btn">次へ：'+lab+nx.textContent.replace(/^✉\s*/,'')+' →</button>';
-    d.querySelector('button').addEventListener('click',()=>{ if(nx.hidden){PHSEL=ng||'all'; try{localStorage.setItem('nbc-phase',PHSEL);}catch(e){} applyPhase();}
+    d.querySelector('button').addEventListener('click',()=>{ if(nx.hidden){PHSEL=ng||'all'; try{localStorage.setItem(PHKEY,PHSEL);}catch(e){} applyPhase();}
       nx.click(); nx.scrollIntoView({block:'nearest',inline:'center'}); window.scrollTo({top:0,behavior:'smooth'}); });
     sec.appendChild(d); });
 }
@@ -2982,6 +2985,7 @@ function buildNext(){
   syncAM(); buildRedo(); buildIntro(); buildStages(); paintGroups(); buildJudgePre(); buildSubmit(); applyOptAll(); buildNext(); applyPhase();
   if(DIRECT){ const f=document.querySelector('footer'); if(f) f.innerHTML=f.innerHTML.replace('サーバーには何も送られません。共有・提出は、あなたがデータを渡したときにだけ行われます。','「提出する」を押したときだけ、その回の内容が講師の管理するGoogleスプレッドシートに送られます。それ以外は送られません。');
     const pr=document.querySelector('.promise'); if(pr){ const li=document.createElement('li'); li.innerHTML='<b>提出した内容は、講師が管理するGoogleスプレッドシートに保存します。</b>講師以外は見られません。'; pr.appendChild(li);} }
+  if(SLOT){ const ps=document.getElementById('p-save'); if(ps){ const b=document.createElement('span'); b.className='pill'; b.id='p-slot'; b.style.borderColor='var(--clay)'; b.textContent='練習用の枠 '+SLOT; b.title='この枠の入力は、ほかの枠や通常の画面と混ざりません'; ps.after(b); } document.title='['+SLOT+'] '+document.title; }
   gauge(); refreshOut();
   teamSync().then(ch=>{ if(ch) rebuildAll(); else teamBanner(); });
   const nk=document.getElementById('nick'); if(nk) nk.addEventListener('change',()=>teamSync().then(ch=>{ if(ch) rebuildAll(); else teamBanner(); }));
