@@ -294,10 +294,12 @@ table.tt tr.cur td{background:var(--hi-bg,rgba(46,125,90,.12));font-weight:700}.
   </section>
 
   <section id="v-rep" hidden>
-    <p class="lede"><b>FVCP研究会にそのまま出せる形</b>で、事前登録（設計書 v1.8・追補 v1.9）の指標を集計します。<b>閾値のある指標は合否を、閾値を置かない観測指標は分布と向きだけ</b>を出します。機械で数えた「候補」は、講師が目で確かめてから確定してください。</p>
+    <p class="lede"><b>FVCP研究会にそのまま出せる形</b>で、事前登録（設計書 v1.8・追補 v1.9）の指標を集計します。<b>概要版</b>は 目的と問い → 検証手段とN → Q2 → Q1 → Uplift → 妥当性の限界 → 結論 の7節、<b>詳細版</b>はチームごとの表と事後レポートを含む全節です。<b>閾値のある指標は合否を、閾値を置かない観測指標は分布と向きだけ</b>を出します。機械で数えた「候補」は、講師が目で確かめてから確定してください。</p>
     <div class="btns noprint">
-      <button class="btn" id="rp-md">研究会レポート（Markdown）をコピー</button>
-      <button class="btn sec" id="rp-html">研究会レポート（HTMLファイル）を保存</button>
+      <button class="btn" id="rp-md-b">概要版（Markdown）をコピー</button>
+      <button class="btn sec" id="rp-html-b">概要版（HTMLファイル）を保存</button>
+      <button class="btn" id="rp-md">詳細版（Markdown）をコピー</button>
+      <button class="btn sec" id="rp-html">詳細版（HTMLファイル）を保存</button>
       <button class="btn sec" id="rp-print">印刷する／PDFにする</button>
       <button class="btn sec" id="rp-csv">チーム別の指標（CSV）をコピー</button>
       <button class="btn sec" id="rp-blind">外部評定者用の盲検シートをコピー</button>
@@ -354,6 +356,8 @@ async function unpack(code){
   return JSON.parse(new TextDecoder().decode(bytes));
 }
 const key=s=>s.team+'|'+s.nick+'|'+s.tool+'|'+s.ord;
+const RECV={}; /* v23：シートから読んだ提出データ → 受付日時・回 */
+const DEADLINE_AM='2026/10/23 00:00:00'; /* 事前課題の締切 10月22日（木）24時 */
 const POSTQ=['仮説と分かったことの違い','いちばん効いた質問','迷った質問と理由','自分たちで決めたこと・AIに頼ったこと','これからどう使えそうか','1行の案・AIだけの案・最後の案の違い'];
 function norm(d){
   const items={}; (d.i||[]).forEach(([id,m,c,r,sc])=>{items[id]={mark:m||'',cond:(c||'000').split('').map(x=>x==='1'),reason:r||'',src:sc||''}});
@@ -361,7 +365,7 @@ function norm(d){
   return {team:(d.t||'?').trim(),nick:(d.n||'').trim(),tool:d.l||'',ord:d.o||'',started:d.s||'',items,itemsPre:(d.sc==='am'&&(d.i||[]).length)?JSON.parse(JSON.stringify(items)):null,sc:d.sc?[d.sc]:[],
     probs:(d.p||[]),pm:d.pm||null,pre:d.pre||null,iv:d.iv||null,post:d.post||null,
     mix:d.mix||null,persona:d.pa||null,vpc:d.vp||null,idea:d.id||null,bmc:d.bm||null,viz:d.vz||null,
-    delta:d.dl||null,gain:Array.isArray(d.gn)?d.gn:null,peer:Array.isArray(d.pr)?d.pr:null,redo:d.rd||null,rec:d.rc||null,at:new Date().toISOString()};
+    delta:d.dl||null,gain:Array.isArray(d.gn)?d.gn:null,peer:Array.isArray(d.pr)?d.pr:null,redo:d.rd||null,rec:d.rc||null,at:new Date().toISOString(),recv:{},raw:{},rawLast:'',restores:+d.rs||0};
 }
 const stat=s=>{
   const v=IDS.map(id=>s.items[id]);
@@ -403,7 +407,9 @@ document.getElementById('ingest').addEventListener('click',async()=>{
   let ok=0,ng=0;
   for(const c of codes){
     try{ const s=norm(await unpack(c)); const i=SUB.findIndex(x=>key(x)===key(s));
+      const sc0=(s.sc||[])[0]||'all'; const m=RECV[c]; if(m&&m.at) s.recv[sc0]=m.at; s.raw[sc0]=c; s.rawLast=c;
       if(i>=0){ const old=SUB[i];
+        s.recv=Object.assign({},old.recv||{},s.recv); s.raw=Object.assign({},old.raw||{},s.raw); s.restores=Math.max(old.restores||0,s.restores||0);
         ['pm','pre','iv','post','mix','persona','vpc','idea','bmc','viz','delta','gain','peer','redo','rec'].forEach(k=>{
           if(s[k]==null&&old[k]!=null) s[k]=old[k]; });
         if(!(s.probs||[]).length&&(old.probs||[]).length) s.probs=old.probs;
@@ -438,6 +444,7 @@ document.getElementById('sheetload').addEventListener('click',async()=>{
     if(!j.ok){setSt(j.error||'読み込めませんでした。');return;}
     const rows=(j.rows||[]).filter(x=>x&&x.code);
     if(!rows.length){setSt('まだ提出がありません。');return;}
+    rows.forEach(x=>{ RECV[x.code]={at:x.at||'',scope:x.scope||''}; });
     document.getElementById('paste').value=rows.map(x=>x.code).join('\n');
     document.getElementById('ingest').click();
   }catch(e){ setSt('読み込めませんでした（'+(e.message||'通信できません')+'）。'); }
@@ -450,12 +457,21 @@ function tbl(el,head,rows,cls){
 }
 function renderSubs(){
   document.getElementById('nsub').textContent=SUB.length+' 件';
-  tbl(document.getElementById('t-sub'),[['チーム'],['名前'],['ツール'],['使用順'],['判定',1],['◎',1],['△',1],['？',1],['根拠',1],['◎の出所',1],['条件充足',1],['困りごと',1]],
-    SUB.map(s=>{const x=stat(s);return{c:[s.team,s.nick||'—',s.tool||'—',s.ord?s.ord+'本目':'—',x.judged+' / 21',
+  const SCL={am:'①',pm:'②',iv:'④',d2:'⑤',pr:'⑤b',post:'⑥',all:'全'};
+  tbl(document.getElementById('t-sub'),[['チーム'],['名前'],['届いた回'],['受付（最新）'],['判定',1],['◎',1],['△',1],['？',1],['根拠',1],['◎の出所',1],['条件充足',1],['困りごと',1],['復元',1],['端末乗り換え']],
+    SUB.map((s,i)=>{const x=stat(s); const rv=Object.entries(s.recv||{}).sort((a,b)=>a[1]<b[1]?1:-1)[0]; const late=(s.recv||{}).am&&s.recv.am>=DEADLINE_AM;
+      return{c:[s.team,s.nick||'—',(s.sc||[]).map(k=>SCL[k]||k).join(' ')||'—',rv?(SCL[rv[0]]||rv[0])+' '+esc(rv[1]).replace(/^2026\//,'')+(late?' <span class="warnc">①締切後</span>':''):'—',x.judged+' / 21',
       '<span class="m m-◎">'+x.maru+'</span>','<span class="m m-△">'+x.sankaku+'</span>',x.unk,
       x.ev+' / 21',(x.maru?(x.srcOK===x.maru?'<span class="hi">'+x.srcOK+' / '+x.maru+'</span>':'<span class="warnc">'+x.srcOK+' / '+x.maru+'</span>'):'—'),
-      x.cond==null?'—':Math.round(x.cond*100)+'%',x.probs]};}));
+      x.cond==null?'—':Math.round(x.cond*100)+'%',x.probs,s.restores||0,'<button type="button" class="btn sec" style="padding:2px 8px;font-size:12px" data-cp="'+i+'">最新のデータをコピー</button>']};}));
+  document.querySelectorAll('#t-sub [data-cp]').forEach(b=>b.addEventListener('click',async()=>{ const s=SUB[+b.dataset.cp]; try{ const code=await packObj(repack(s)); await navigator.clipboard.writeText(code); setSt((s.nick||s.team)+' の最新の提出データ（全部の回をまとめたもの）をコピーしました。学生の新しい端末で「はじめに」→「予備：チームのデータを読み込む」に貼ってもらいます。'); }catch(e){ setSt('コピーできませんでした。'); } }));
 }
+/* v23：受け取った内容を、ワークベンチが読める形に戻す（端末乗り換え用。全部の回をまとめる） */
+function repack(s){ const o={v:3,t:s.team==='事前'?'':s.team,n:s.nick,l:'',o:'',s:s.started||'',sc:'all',rs:s.restores||0};
+  o.i=IDS.map(id=>{const x=s.items[id]||{}; return [id,x.mark||'',(x.cond||[false,false,false]).map(c=>c?'1':'0').join(''),x.reason||'',x.src||''];});
+  if(s.probs&&s.probs.length) o.p=s.probs; if(s.pm) o.pm=s.pm; if(s.pre) o.pre=s.pre; if(s.iv) o.iv=s.iv; if(s.post) o.post=s.post; if(s.mix) o.mix=s.mix;
+  if(s.persona) o.pa=s.persona; if(s.vpc) o.vp=s.vpc; if(s.idea) o.id=s.idea; if(s.bmc) o.bm=s.bmc; if(s.viz) o.vz=s.viz; if(s.delta) o.dl=s.delta;
+  if(s.gain) o.gn=s.gain; if(s.peer) o.pr=s.peer; if(s.redo) o.rd=s.redo; if(s.rec) o.rc=s.rec; return o; }
 function renderProg(){
   const k=document.getElementById('kpi');
   if(!SUB.length){k.innerHTML='<div class="kpi"><div class="l">まだ受け取っていません</div><div class="v">—</div></div>';document.getElementById('t-prog').innerHTML='';return;}
@@ -1061,6 +1077,9 @@ function teamRow(t){
   const mids=SUB.filter(s=>s.team===t&&s.iv&&s.iv.mid&&(s.iv.mid.said||'').trim());
   const subAp=SUB.filter(s=>s.team===t&&(s.sc||[]).some(x=>x==='iv'||x==='all'));
   const aiTxt=(A.text||'').trim();
+  const PV=Array.isArray(R.pivots)?R.pivots:[]; const pv1=PV.find(p=>p.at==='DAY1')||null, pv3=PV.find(p=>p.at==='DAY2')||null;
+  const rec=(r=>r===1||r===2?'target':r===3||r===4?'value':r?'none':'')(+C.row||0);
+  const nowCh=!!(pv1&&pv1.when==='now'&&rec&&rec!=='none'&&(pv1.q===rec||pv1.q==='both'));
   return {t,aio:aiTxt,aiName:A.ai||'',aioUndo:A.undo||0,fin,
     far:onCells(mix).filter(([k,v])=>v.far).length,on:onCells(mix).length,ovl:mix.overlap||'',ovlWhy:mix.ovlWhy||'',
     cust:!!(C.sum||'').trim(),row:+C.row||0,src2:C.src2||'',kata1:C.kata1||'',kata2:C.kata2||'',firstWho:C.firstWho||'',
@@ -1069,6 +1088,8 @@ function teamRow(t){
     whoJ:(C.firstWho&&firstLog)?jac(bigrams(C.firstWho),bigrams(firstLog.who||'')):null,
     starJ:(I.weak&&PL.q)?jac(bigrams(I.weak),bigrams(((PL.q||'').split('\n')[0]||''))):null,
     changed:R.changed||'',dec:R.dec||'',match:aiMatch(C.row,R.changed),
+    pv1:pv1,nowChanged:nowCh,matchPv:(()=>{ const m=aiMatch(C.row,R.changed); if(m===true) return true; if(nowCh&&(R.dec==='続ける'||(pv3&&pv3.q==='none'))) return true; return m; })(),
+    irai5:(R.irai||[]).filter((x,i)=>i!==3&&x&&x.st==='そろった').length,restores:SUB.filter(s=>s.team===t).reduce((a,s)=>a+(s.restores||0),0),
     irai:(R.irai||[]).filter(x=>x&&x.st==='そろった').length,iraiN:(R.irai||[]).filter(x=>x&&x.st).length,irai0:(I.irai0||[]).filter(Boolean).length,
     fitX,fitHit:fitX.some(k=>FITMAP[k]===R.changed),fitN:FITK.filter(k=>((R.fit||{})[k]||{}).m).length,
     people:teamPeople(t),logs:logs.length,up:own.filter(l=>['行動','対価','継続'].includes(l.strength)).length,own:own.length,
@@ -1077,13 +1098,14 @@ function teamRow(t){
     moveAI:MOVE.test(aiTxt),moveFin:MOVE.test(fin),
     orgAI:txtOrg(aiTxt).length,orgFin:txtOrg(fin).length,numAI:txtNum(aiTxt).length,numFin:txtNum(fin).length};
 }
-function agrStats(set){ const n=set.length; if(n<2) return {n}; let sumAll=0,sumJ=0,cJ=0,PbN=0,PbD=0,tot=0; const cat={}; const low=[];
-  IDS.forEach(id=>{ const v=set.map(s=>s.items[id].mark||'？'); const c={}; v.forEach(x=>c[x]=(c[x]||0)+1); const top=Math.max(...Object.values(c));
+function agrStats(set,ids){ ids=ids||IDS; const n=set.length; if(n<2||!ids.length) return {n}; let sumAll=0,sumJ=0,cJ=0,PbN=0,PbD=0,tot=0; const cat={}; const low=[];
+  ids.forEach(id=>{ const v=set.map(s=>s.items[id].mark||'？'); const c={}; v.forEach(x=>c[x]=(c[x]||0)+1); const top=Math.max(...Object.values(c));
     const a=top/v.length; sumAll+=a; if(a<.6) low.push(id);
     const j=v.filter(x=>x!=='？'&&x!==''); if(j.length){const c2={}; j.forEach(x=>c2[x]=(c2[x]||0)+1); sumJ+=Math.max(...Object.values(c2))/j.length; cJ++;}
     let s2=0; Object.values(c).forEach(k=>s2+=k*k); PbN+=(s2-n)/(n*(n-1)); PbD++; Object.keys(c).forEach(m=>cat[m]=(cat[m]||0)+c[m]); tot+=n; });
   let Pe=0; Object.values(cat).forEach(k=>{const p=k/tot; Pe+=p*p;}); const Pb=PbN/PbD;
-  return {n,aAll:sumAll/IDS.length,aJ:cJ?sumJ/cJ:null,kappa:(1-Pe)?(Pb-Pe)/(1-Pe):null,low}; }
+  return {n,aAll:sumAll/ids.length,aJ:cJ?sumJ/cJ:null,kappa:(1-Pe)?(Pb-Pe)/(1-Pe):null,low,k:ids.length}; }
+const QUOTED=/（出所：/; /* 「根拠集から引用」が入れる形 */
 /* 盲検評定のセット：AIだけの案と最後の案を混ぜ、ラベルを伏せる */
 function blindBuild(){ const ts=rteams().map(teamRow).filter(r=>r.aio&&r.fin); const have=new Set((RATE.items||[]).map(x=>x.t+'|'+x.k)); const add=[];
   ts.forEach(r=>{ if(!have.has(r.t+'|ai')) add.push({t:r.t,k:'ai',x:r.aio}); if(!have.has(r.t+'|fin')) add.push({t:r.t,k:'fin',x:r.fin}); });
@@ -1100,13 +1122,15 @@ function renderRate(){ const h=document.getElementById('rp-rate'); if(!h) return
   html+=(RATE.items||[]).map(it=>{ const r=R0[it.c]||{i:[],sp:''};
     return '<div class="bl" data-c="'+it.c+'"><b>'+it.c+'</b><pre>'+esc(it.x)+'</pre>'+
       IRAI_S.map((s,j)=>'<label><input type="checkbox" data-i="'+j+'"'+((r.i||[])[j]?' checked':'')+'>'+(j+1)+' '+esc(s)+'</label>').join('')+
-      '<div style="margin-top:4px"><span class="sm">誰が困っているかの特定度　</span><span class="seg">'+SPEC.map(s=>'<button type="button" data-sp="'+s+'" aria-pressed="'+(r.sp===s)+'">'+s+'</button>').join('')+'</span></div></div>'; }).join('');
+      '<div style="margin-top:4px"><span class="sm">誰が困っているかの特定度　</span><span class="seg">'+SPEC.map(s=>'<button type="button" data-sp="'+s+'" aria-pressed="'+(r.sp===s)+'">'+s+'</button>').join('')+'</span></div>'+
+      '<div style="margin-top:4px"><span class="sm">この案は、AIだけの案だと思いますか（盲検が成り立っているかの確認。判定には使いません）　</span><span class="seg">'+[['ai','AIだけの案だと思う'],['fin','最後の案だと思う']].map(([k,l])=>'<button type="button" data-g="'+k+'" aria-pressed="'+(r.g===k)+'">'+l+'</button>').join('')+'</span></div></div>'; }).join('');
   h.innerHTML=html;
   h.querySelector('#bl-mk').addEventListener('click',()=>{ const n=blindBuild(); persist(); renderRep(); document.getElementById('rp-st').textContent=n?n+'本を足しました。':'足す分はありません（AIだけの案と最後の案の両方がそろったチームだけ入ります）。'; });
   h.querySelectorAll('[data-r]').forEach(b=>b.addEventListener('click',()=>{ RATER=b.dataset.r; renderRate(); }));
   h.querySelectorAll('.bl').forEach(d=>{ const c=d.dataset.c; const get=()=>{ RATE[RATER]=RATE[RATER]||{}; return RATE[RATER][c]=RATE[RATER][c]||{i:[false,false,false,false,false,false],sp:''}; };
     d.querySelectorAll('input[data-i]').forEach(cb=>cb.addEventListener('change',()=>{ const r=get(); r.i[+cb.dataset.i]=cb.checked; persist(); renderRepBody(); }));
-    d.querySelectorAll('[data-sp]').forEach(b=>b.addEventListener('click',()=>{ const r=get(); r.sp=(r.sp===b.dataset.sp?'':b.dataset.sp); persist(); renderRate(); renderRepBody(); })); });
+    d.querySelectorAll('[data-sp]').forEach(b=>b.addEventListener('click',()=>{ const r=get(); r.sp=(r.sp===b.dataset.sp?'':b.dataset.sp); persist(); renderRate(); renderRepBody(); }));
+    d.querySelectorAll('[data-g]').forEach(b=>b.addEventListener('click',()=>{ const r=get(); r.g=(r.g===b.dataset.g?'':b.dataset.g); persist(); renderRate(); renderRepBody(); })); });
 }
 function renderEx(){ const h=document.getElementById('rp-ex'); if(!h) return; const ts=rteams().map(teamRow).filter(r=>r.aio||r.fin);
   if(!ts.length){ h.innerHTML='<p class="status" style="margin:0">AIだけの案か最後の案が届くと、ここに出ます。</p>'; return; }
@@ -1127,14 +1151,40 @@ function repModel(){
   const posts=SUB.filter(s=>s.post&&((s.post.a||[]).some(x=>(x||'').trim())||s.post.useful)); const us=posts.map(s=>parseInt(s.post.useful,10)).filter(n=>!isNaN(n));
   const useful=us.length?us.filter(n=>n>=5).length/us.length:null;
   const TH=(name,val,disp,th,okf,src)=>[name,disp,th,val==null?'—':(okf(val)?'<span class="pass">満たす</span>':'<span class="fail">満たさない</span>'),src];
-  S.push({h:'1　Q2　判定の一致（主分析：事前課題・ひとりずつ）',note:'同じ対象（仮・株式会社九州大学）を、チームを組む前にひとりずつ独立に判定した結果。一致しない項目は、質問や条件の書き方に原因があると読む。',
+  /* v23：目的と問い／検証手段とN */
+  const nAm=SUB.filter(s=>(s.sc||[]).includes('am')).length, nPm=rteams().filter(t=>SUB.some(s=>s.team===t&&(s.sc||[]).includes('pm'))).length, nIv=SUB.filter(s=>(s.sc||[]).includes('iv')).length, nD2=rteams().filter(t=>SUB.some(s=>s.team===t&&(s.sc||[]).includes('d2'))).length, nPr=SUB.filter(s=>(s.sc||[]).includes('pr')).length, nPost=SUB.filter(s=>(s.sc||[]).includes('post')).length;
+  const lateAm=SUB.filter(s=>(s.recv||{}).am&&s.recv.am>=DEADLINE_AM), recvAm=SUB.filter(s=>(s.recv||{}).am);
+  const rsBy={}; SUB.forEach(s=>{ if(s.restores>0){ const k=s.nick||s.team; rsBy[k]=Math.max(rsBy[k]||0,s.restores); } }); const rsP=Object.entries(rsBy).map(([nick,restores])=>({nick,restores})), rsT=rsP.reduce((a,x)=>a+x.restores,0);
+  S.push({brief:true,h:'0　目的と問い（設計書 v1.8・追補 v1.9）',note:'この演習で確かめるのは、FVCPの「7つの力」の判定と工程が、学生（判定者）にとって実行でき、独立に判定して一致し、依頼主の条件を満たす案に結びつくか。優先順位は Q2 ＞ Q1 ＞ Q3。AIのお客さんの答えは、どの指標にも入れない。',
+    head:['問い','何を見るか','主な指標','元のデータ'],rows:[
+      ['Q2　判定の一致（主分析）','同じ対象を、チームを組む前にひとりずつ独立に判定して一致するか','一致率（全回答）80%／Fleiss κ 0.6','提出①'],
+      ['Q1　工程の実行','工程の各段階を、学生が時間内に実行できるか','閾値のある7指標（判定数・根拠付与率・◎の出所・条件記録・候補数・実行率・役に立った）','提出①②④⑥'],
+      ['Q3　Uplift（記述）','工程を通した最後の案は、AIだけの案より依頼主の条件を満たすか','依頼書の6つの充足数（盲検・評定者A/B）・特定度・既存事例件数','提出②⑤・盲検評定']]});
+  S.push({brief:true,h:'0b　検証手段とN',note:'受付は、スプレッドシートから読み込んだときの受付日時。事前課題の締切は10月22日（木）24時（10月23日に大学から未提出者へ連絡）。「復元」は、学生の端末で控えから入力を戻した回数（提出データに含まれる）。',
+    head:['手段','N','備考'],rows:[
+      ['提出①　事前課題（ひとり・AIなし）',nAm+' 人',recvAm.length?('受付日時あり '+recvAm.length+' 人／締切後の受付 '+lateAm.length+' 人'+(lateAm.length?'（'+lateAm.map(s=>esc(s.nick||'—')).join('、')+'）':'')):'受付日時は、スプレッドシートから読み込むと入ります'],
+      ['提出②　DAY1（記録係）',nPm+' チーム','AIだけの案・総当たり・AIのお客さん・調査設計'],
+      ['提出④　8日間（ひとり）',nIv+' 人','1対1の聞き取り・前半の見直し（ピボット2回目）'],
+      ['提出⑤　DAY2（記録係）',nD2+' チーム','作り直す・依頼主の6つ・最後の案'],
+      ['提出⑤b　他チームへの返事（ひとり）',nPr+' 人','受け取りたいか'],
+      ['提出⑥　事後レポート（ひとり）',nPost+' 人','役に立ったか・迷った質問'],
+      ['盲検評定',(RATE.items||[]).length+' 本','評定者A（講師）'+Object.keys(RATE.A||{}).length+'／評定者B（外部）'+Object.keys(RATE.B||{}).length+' 本に入力'],
+      ['端末での復元',rsP.length+' 人・計 '+rsT+' 回',rsP.length?rsP.map(s=>esc(s.nick||'—')+'（'+s.restores+'）').join('、'):'—']]});
+  const qItems=IDS.map(id=>{ const q=preSet.filter(s=>QUOTED.test((s.items[id]||{}).reason||'')).length; return {id,q,rate:preSet.length?q/preSet.length:0}; });
+  const idsQ=qItems.filter(x=>x.rate>=.5).map(x=>x.id), idsN=qItems.filter(x=>x.rate<.5).map(x=>x.id);
+  const agQ=agrStats(preSet,idsQ), agN=agrStats(preSet,idsN);
+  const quoteRate=(()=>{ let a=0,b=0; preSet.forEach(s=>IDS.forEach(id=>{ const x=s.items[id]||{}; if(x.mark&&x.mark!=='？'){ b++; if(QUOTED.test(x.reason||'')) a++; } })); return b?a/b:null; })();
+  S.push({brief:true,h:'1　Q2　判定の一致（主分析：事前課題・ひとりずつ）',note:'同じ対象（仮・株式会社九州大学）を、チームを組む前にひとりずつ独立に判定した結果。一致しない項目は、質問や条件の書き方に原因があると読む。全員に同じ根拠集（15件）を配っているため、一致は根拠集の共有で上振れしうる。根拠集を引用した項目と、していない項目で層別する。',
     head:['指標','値','事前の基準','判定'],rows:ag.n>=2?[
       ['判定者',ag.n+' 人','',''],
       ['一致率（全回答）',pct(ag.aAll),'80%（開発目標）',ag.aAll>=.8?'<span class="pass">満たす</span>':'<span class="fail">満たさない</span>'],
       ['一致率（？を除く）',pct(ag.aJ),'参考',''],
       ['Fleiss κ',ag.kappa==null?'—':ag.kappa.toFixed(2),'0.6以上',(ag.kappa||0)>=.6?'<span class="pass">満たす</span>':'<span class="fail">満たさない</span>'],
-      ['一致率60%未満の項目',ag.low.length+' 項目'+(ag.low.length?'（'+ag.low.join('、')+'）':''),'標準の改訂に返す候補','']]:[['判定者',(ag.n||0)+' 人','2人以上で計算','']]});
-  S.push({h:'2　Q1　工程の実行（閾値のある指標）',note:'閾値はボードの既定値。設計書 v1.8 §4.1 の値と照合してから報告する。',
+      ['一致率60%未満の項目',ag.low.length+' 項目'+(ag.low.length?'（'+ag.low.join('、')+'）':''),'標準の改訂に返す候補',''],
+      ['根拠集の引用率（判定した項目のうち）',pct(quoteRate),'層別の説明に使う（基準なし）',''],
+      ['一致率：根拠集の引用が過半の項目',idsQ.length?pct(agQ.aAll)+'（'+idsQ.length+' 項目）':'—（該当なし）','参考',''],
+      ['一致率：引用が過半でない項目',idsN.length?pct(agN.aAll)+'（'+idsN.length+' 項目）':'—（該当なし）','引用が過半の項目より大きく低ければ、一致の一部は根拠集の共有による','']]:[['判定者',(ag.n||0)+' 人','2人以上で計算','']]});
+  S.push({brief:true,h:'2　Q1　工程の実行（閾値のある指標）',note:'閾値はボードの既定値。設計書 v1.8 §4.1 の値と照合してから報告する。',
     head:['指標','値','閾値','判定','元のデータ'],rows:[
       TH('判定数（中央値）',jmed,jmed==null?'—':jmed+' / 21','15以上',v=>v>=15,'提出①'),
       TH('根拠付与率',evr,pct(evr),'80%以上',v=>v>=.8,'提出①'),
@@ -1156,7 +1206,9 @@ function repModel(){
       ['案①と案②の型が違う',T.filter(r=>r.kata1&&r.kata2&&r.kata1!==r.kata2).length+' / '+T.filter(r=>r.kata1&&r.kata2).length,'解き方の発散'],
       ['最初の相手の型（候補）',T.filter(r=>r.whoJ!=null&&r.whoJ>=.3).length+' / '+T.filter(r=>r.whoJ!=null).length+'（目で確定）','まとめの「先に会う立場」と、最初の記録の相手が近いか'],
       ['★を確かめる最初の問い（候補）',T.filter(r=>r.starJ!=null&&r.starJ>=.2).length+' / '+T.filter(r=>r.starJ!=null).length+'（目で確定）','H-ai3：50%未満なら画面を改める'],
-      ['AIと実地の一致',mt.filter(r=>r.match).length+' / '+mt.length,'判断表の「変えるかもしれないもの」とDAY2で変えたもの'],
+      ['AIと実地の一致（DAY2で変えたものだけ）',mt.filter(r=>r.match).length+' / '+mt.length,'判断表の「変えるかもしれないもの」とDAY2で変えたもの'],
+      ['AIと実地の一致（DAY1で「いま変えた」を含む）',T.filter(r=>r.matchPv!=null).filter(r=>r.matchPv).length+' / '+T.filter(r=>r.matchPv!=null).length,'DAY1に判断表どおり変えて、DAY2で続けた・そのままも一致に数える'],
+      ['DAY1で「いま変えた」チーム',T.filter(r=>r.nowChanged).length+' / '+T.filter(r=>r.pv1).length,'ピボット1回目で「いま変える」を選び、変えたものが判断表のおすすめと同じ'],
       ['依頼書の6つ（自己評価・そろった数）',T.filter(r=>r.iraiN).map(r=>r.irai).join('、')||'—','DAY1の印 '+(T.filter(r=>r.irai0).map(r=>r.irai0).join('、')||'—')],
       ['H-ai2（すべて○が過半）',T.filter(r=>r.row===6).length+' チームが#6／DAY2で直す・やめる '+T.filter(r=>r.dec==='直す'||r.dec==='やめる').length,'#6が4以上かつ直す・やめるが過半なら支持']]});
   const tDet=T.map(r=>[esc(r.t),r.row?'#'+r.row:'—',esc(r.changed||'—'),r.match==null?'—':(r.match?'一致':'不一致'),r.fitX.length?r.fitX.map(k=>FITL[k]).join('、'):'—',r.fitX.length?(r.fitHit?'×の行を直した':'×の行と別を変えた'):'—',esc(r.dec||'—')]);
@@ -1177,10 +1229,17 @@ function repModel(){
   const condAB=both.length?avg(both.map(it=>[0,1,2,3,4,5].filter(j=>!!RATE.A[it.c].i[j]===!!RATE.B[it.c].i[j]).length/6)):null;
   const exv=k=>T.map(r=>{const e=((RATE.ex||{})[r.t]||{})[k]; return e===''||e==null?null:parseFloat(e);}).filter(v=>v!=null&&!isNaN(v));
   const f1=v=>v==null?'—':v.toFixed(2);
-  S.push({h:'7　Uplift（追補 v1.9 §6.2）　AIだけの案 → 最後の案（チーム単位）',note:'工程全体（判定・聞き取り・作り直し・組む相手）による上乗せの記述的な比較。指示文や標準そのものの効果ではない。時間の経過とチームの努力も含む。閾値は置かず、向きと大きさを報告する。依頼書の6つと特定度は、群ラベルを伏せて評定する。',
+  const sc5=(rt,k)=>its.filter(it=>it.k===k).map(it=>{const r=(RATE[rt]||{})[it.c]; return r&&(r.i||[]).some(Boolean)?(r.i||[]).filter((v,j)=>v&&j!==3).length:null;}).filter(v=>v!=null);
+  const gs=(rt)=>its.filter(it=>((RATE[rt]||{})[it.c]||{}).g); const gOK=(rt)=>gs(rt).filter(it=>RATE[rt][it.c].g===it.k).length;
+  const gRate=(rt)=>gs(rt).length?gOK(rt)/gs(rt).length:null;
+  const blindBroken=['A','B'].some(rt=>gs(rt).length>=4&&gRate(rt)>=.75);
+  S.push({brief:true,h:'7　Uplift（追補 v1.9 §6.2）　AIだけの案 → 最後の案（チーム単位）',note:'工程全体（判定・聞き取り・作り直し・組む相手）による上乗せの記述的な比較。指示文や標準そのものの効果ではない。時間の経過とチームの努力も含む。閾値は置かず、向きと大きさを報告する。依頼書の6つと特定度は、群ラベルを伏せて評定する。',
     head:['指標','AIだけの案','最後の案','補足'],rows:[
       ['依頼書の6つの充足数（評定者A・平均）',f1(avg(sc('A','ai'))),f1(avg(sc('A','fin'))),'評定 '+sc('A','ai').length+'＋'+sc('A','fin').length+' 本'],
       ['依頼書の6つの充足数（評定者B・平均）',f1(avg(sc('B','ai'))),f1(avg(sc('B','fin'))),'評定 '+sc('B','ai').length+'＋'+sc('B','fin').length+' 本'],
+      ['条件4（発言より強い反応）を除く5つの充足数（評定者A・平均）',f1(avg(sc5('A','ai'))),f1(avg(sc5('A','fin'))),'条件4はAIだけの案では構造上満たせない（聞き取りの前）ため、除いた値も示す'],
+      ['条件4を除く5つの充足数（評定者B・平均）',f1(avg(sc5('B','ai'))),f1(avg(sc5('B','fin'))),''],
+      ['盲検の確認：どちらの案か当てた率','','',['A','B'].map(rt=>rt+' '+(gs(rt).length?pct(gRate(rt))+'（'+gs(rt).length+'本）':'—')).join('／')+(blindBroken?'　<span class="fail">75%以上：形式の違いで見分けられている疑い。充足数の差は盲検の結果として扱わない</span>':'')],
       ['評定者AとBの一致','','','充足数の一致 '+pct(agrAB)+'／条件ごとの一致 '+pct(condAB)+'（'+both.length+'本）'],
       ['特定度（評定者A）',spd('A','ai'),spd('A','fin'),'括り／立場／名前・場面'],
       ['確かめていない固有名（候補・1チーム平均）',f1(avg(T.filter(r=>r.aio).map(r=>r.orgAI))),f1(avg(T.filter(r=>r.fin).map(r=>r.orgFin))),'目で確定'],
@@ -1199,42 +1258,68 @@ function repModel(){
     rows:T.map(r=>[esc(r.t),r.aio?esc(r.aio).replace(/\n/g,'<br>'):'—',r.fin?esc(r.fin).replace(/\n/g,'<br>'):'—'])});
   const q3=SUB.filter(x=>x.post&&((x.post.a||[])[2]||'').trim());
   S.push({h:'9　事後レポート「迷った質問」（標準の改訂に返す入力）',note:'',head:['チーム／名前','記述'],rows:q3.map(x=>[esc(x.team)+'／'+esc(x.nick||'—'),esc(x.post.a[2])])});
+  /* v23：妥当性の限界（データから自動で挙げる）と結論（自動） */
+  const lim=[];
+  lim.push(['設計上の限界','AIだけの案と最後の案は同じチームが作り、時間と努力の差を含む。工程そのものの効果と切り分けられない（追補 v1.9 §6.2）','Upliftは記述的な比較として報告する']);
+  lim.push(['設計上の限界','条件4（発言より強い反応）は、聞き取りの前に作るAIだけの案では満たせない','5つ（条件4を除く）の充足数も報告する']);
+  lim.push(['設計上の限界','全員に同じ根拠集15件を配っているため、Q2の一致は根拠集の共有で上振れしうる','根拠集の引用の有無で層別する（第1節）']);
+  if(ag.n<8) lim.push(['N','事前課題の判定者が '+(ag.n||0)+' 人（Fleiss κ は人数が少ないと不安定）','人数を明記し、κは参考値とする']);
+  if(nT<8) lim.push(['N','チーム数が '+nT+'（設計は8チーム）','チーム単位の指標は向きだけを読む']);
+  if(both.length<8) lim.push(['評定','評定者AとBの両方が入力した本数が '+both.length+'（AIだけの案8本＋最後の案8本が設計）','評定者間の一致は参考値']);
+  if(blindBroken) lim.push(['盲検','評定者が、どちらの案かを75%以上当てている','形式の違い（長さ・書きぶり）で見分けられている疑い。充足数の差は盲検の結果として扱わない']);
+  if(lateAm.length) lim.push(['手続','事前課題の締切後に受け付けた提出が '+lateAm.length+' 人','催促後の提出は、独立性（他の人と相談していないか）を事後レポートで確かめる']);
+  if(rsP.length) lim.push(['手続','端末で控えから復元した人が '+rsP.length+' 人（計 '+rsT+' 回）','復元で入力が巻き戻った可能性。該当者の提出は時刻と内容を目で確かめる']);
+  if(custN<nT) lim.push(['手続','AIのお客さんを実施していないチームが '+(nT-custN),'判断表・ピボット1回目の指標は実施したチームだけで読む']);
+  S.push({brief:true,h:'10　妥当性の限界（データから自動で挙げたもの＋設計上の限界）',note:'機械で挙げた候補。研究会で読む前に、講師が1つずつ確かめて残す・消す。',head:['種類','限界','扱い'],rows:lim});
+  const q1rows=S.find(s=>/^2　Q1/.test(s.h)).rows; const q1ok=q1rows.filter(r=>/満たす/.test(r[3])).length, q1ng=q1rows.filter(r=>/満たさない/.test(r[3])).length, q1na=q1rows.length-q1ok-q1ng;
+  const upA=(avg(sc('A','fin'))!=null&&avg(sc('A','ai'))!=null)?(avg(sc('A','fin'))-avg(sc('A','ai'))):null, up5=(avg(sc5('A','fin'))!=null&&avg(sc5('A','ai'))!=null)?(avg(sc5('A','fin'))-avg(sc5('A','ai'))):null;
+  const con=[];
+  con.push(['Q2　判定の一致',ag.n>=2?('一致率（全回答）'+pct(ag.aAll)+'（基準80%：'+(ag.aAll>=.8?'満たす':'満たさない')+'）／Fleiss κ '+(ag.kappa==null?'—':ag.kappa.toFixed(2))+'（基準0.6：'+((ag.kappa||0)>=.6?'満たす':'満たさない')+'）／判定者 '+ag.n+' 人。一致率60%未満 '+ag.low.length+' 項目'+(ag.low.length?'（'+ag.low.join('、')+'）を標準の改訂に返す':'')):'判定者が2人未満のため計算していない']);
+  con.push(['Q1　工程の実行','閾値のある7指標のうち 満たす '+q1ok+'／満たさない '+q1ng+(q1na?'／未集計 '+q1na:'')+'。'+(q1ng?('満たさない：'+q1rows.filter(r=>/満たさない/.test(r[3])).map(r=>strip(r[0])).join('、')):'')]);
+  con.push(['Q3　Uplift（記述）',its.length?('依頼書の6つの充足数（評定者A）AIだけの案 '+f1(avg(sc('A','ai')))+' → 最後の案 '+f1(avg(sc('A','fin')))+(upA==null?'':'（差 '+(upA>=0?'+':'')+upA.toFixed(2)+'）')+'／条件4を除く5つ '+f1(avg(sc5('A','ai')))+' → '+f1(avg(sc5('A','fin')))+(up5==null?'':'（差 '+(up5>=0?'+':'')+up5.toFixed(2)+'）')+'。'+(blindBroken?'盲検が成り立っていない疑いがあるため、差は参考値。':'向きと大きさの記述であり、工程の効果の証明ではない。')):'盲検評定が未入力']);
+  const agLow=ag.low||[];
+  con.push(['標準に返すもの',(agLow.length?'一致率60%未満の '+agLow.length+' 項目の質問・条件の書き方':(ag.n>=2?'一致率60%未満の項目なし':'一致率は未集計'))+'／事後レポート「迷った質問」'+q3.length+' 件']);
+  S.push({brief:true,h:'11　結論（自動・講師が確定する）',note:'数値から機械で組み立てた文。研究会に出す前に、講師が目で確かめて言い回しを確定する。',head:['問い','結論'],rows:con});
   return {S,T,at:new Date()};
 }
 function renderRepBody(){ const h=document.getElementById('rep-body'); if(!h) return; const M=repModel();
   h.innerHTML='<div class="card"><h2>研究会レポート<span class="s">集計 '+esc(M.at.toLocaleString('ja-JP'))+'　／　チーム '+M.T.length+'　／　受け取った提出 '+SUB.length+' 件</span></h2><div class="body">'+
-    M.S.map(s=>'<h3>'+esc(s.h)+'</h3>'+(s.note?'<p class="sm" style="margin:0 0 6px">'+esc(s.note)+'</p>':'')+
+    M.S.map(s=>'<h3>'+esc(s.h)+(s.brief?' <span class="s">概要版に入る</span>':'')+'</h3>'+(s.note?'<p class="sm" style="margin:0 0 6px">'+esc(s.note)+'</p>':'')+
       (s.rows.length?'<div class="scroll"><table><thead><tr>'+s.head.map(x=>'<th>'+esc(x)+'</th>').join('')+'</tr></thead><tbody>'+s.rows.map(r=>'<tr>'+r.map(c=>'<td>'+c+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>':'<p class="sm">まだデータがありません。</p>')).join('')+
     '<p class="sm" style="margin-top:14px">FVCP／7資本モデル v1.16 を参照。演習の判定であり、実在の九州大学の判定として扱わない。担い手（九大OIP）は授業のための想定。</p></div></div>'; }
 function renderRep(){ renderRate(); renderEx(); renderRepBody(); }
 const strip=c=>String(c).replace(/<br>/g,' ／ ').replace(/<[^>]+>/g,'').replace(/&lt;/g,'<').replace(/\|/g,'｜');
-function repMd(){ const M=repModel(); const L=['# FVCP方法論検証　ニュービジネス・クリエーション 2026　研究会レポート','','- 集計：'+M.at.toLocaleString('ja-JP')+'　／　チーム '+M.T.length+'　／　受け取った提出 '+SUB.length+' 件','- 準拠：設計書（事前登録版）v1.8・追補 v1.9。FVCP／7資本モデル v1.16 を参照（演習。実在の九州大学の判定として扱わない）',''];
-  M.S.forEach(s=>{ L.push('## '+s.h); L.push(''); if(s.note){L.push(s.note); L.push('');}
+function repMd(brief){ const M=repModel(); const L=['# FVCP方法論検証　ニュービジネス・クリエーション 2026　研究会レポート'+(brief?'（概要版）':'（詳細版）'),'','- 集計：'+M.at.toLocaleString('ja-JP')+'　／　チーム '+M.T.length+'　／　受け取った提出 '+SUB.length+' 件','- 準拠：設計書（事前登録版）v1.8・追補 v1.9。FVCP／7資本モデル v1.16 を参照（演習。実在の九州大学の判定として扱わない）',''];
+  M.S.filter(s=>!brief||s.brief).forEach(s=>{ L.push('## '+s.h); L.push(''); if(s.note){L.push(s.note); L.push('');}
     if(!s.rows.length){ L.push('- まだデータがありません'); L.push(''); return; }
     L.push('| '+s.head.join(' | ')+' |'); L.push('|'+s.head.map(()=>'---').join('|')+'|'); s.rows.forEach(r=>L.push('| '+r.map(strip).join(' | ')+' |')); L.push(''); });
   L.push('---'); L.push('機械で数えた「候補」は講師が目で確かめて確定する。AIのお客さんの答えは、どの指標にも入れていない。'); return L.join('\n'); }
-function repHtml(){ const M=repModel(); const css='body{font-family:"Noto Sans JP",system-ui,sans-serif;max-width:1000px;margin:24px auto;padding:0 16px;color:#16212B;line-height:1.6}h1{font-size:20px}h2{font-size:15px;color:#1F4E6B;border-bottom:2px solid #1F4E6B;padding-bottom:3px;margin-top:26px}table{border-collapse:collapse;width:100%;font-size:12.5px}th,td{border:1px solid #D3DCDA;padding:5px 7px;text-align:left;vertical-align:top}th{background:#F2F5F4}.n{color:#6E8089;font-size:12px}.pass{color:#43684A;font-weight:700}.fail{color:#9A422B;font-weight:700}';
-  return '<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>研究会レポート NBC 2026</title><style>'+css+'</style></head><body><h1>FVCP方法論検証　ニュービジネス・クリエーション 2026　研究会レポート</h1><p class="n">集計 '+esc(M.at.toLocaleString('ja-JP'))+'　／　チーム '+M.T.length+'　／　設計書 v1.8・追補 v1.9　／　FVCP／7資本モデル v1.16 を参照（演習）</p>'+
-    M.S.map(s=>'<h2>'+esc(s.h)+'</h2>'+(s.note?'<p class="n">'+esc(s.note)+'</p>':'')+(s.rows.length?'<table><tr>'+s.head.map(x=>'<th>'+esc(x)+'</th>').join('')+'</tr>'+s.rows.map(r=>'<tr>'+r.map(c=>'<td>'+c+'</td>').join('')+'</tr>').join('')+'</table>':'<p class="n">まだデータがありません。</p>')).join('')+
+function repHtml(brief){ const M=repModel(); const css='body{font-family:"Noto Sans JP",system-ui,sans-serif;max-width:1000px;margin:24px auto;padding:0 16px;color:#16212B;line-height:1.6}h1{font-size:20px}h2{font-size:15px;color:#1F4E6B;border-bottom:2px solid #1F4E6B;padding-bottom:3px;margin-top:26px}table{border-collapse:collapse;width:100%;font-size:12.5px}th,td{border:1px solid #D3DCDA;padding:5px 7px;text-align:left;vertical-align:top}th{background:#F2F5F4}.n{color:#6E8089;font-size:12px}.pass{color:#43684A;font-weight:700}.fail{color:#9A422B;font-weight:700}';
+  return '<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>研究会レポート NBC 2026</title><style>'+css+'</style></head><body><h1>FVCP方法論検証　ニュービジネス・クリエーション 2026　研究会レポート'+(brief?'（概要版）':'（詳細版）')+'</h1><p class="n">集計 '+esc(M.at.toLocaleString('ja-JP'))+'　／　チーム '+M.T.length+'　／　設計書 v1.8・追補 v1.9　／　FVCP／7資本モデル v1.16 を参照（演習）</p>'+
+    M.S.filter(s=>!brief||s.brief).map(s=>'<h2>'+esc(s.h)+'</h2>'+(s.note?'<p class="n">'+esc(s.note)+'</p>':'')+(s.rows.length?'<table><tr>'+s.head.map(x=>'<th>'+esc(x)+'</th>').join('')+'</tr>'+s.rows.map(r=>'<tr>'+r.map(c=>'<td>'+c+'</td>').join('')+'</tr>').join('')+'</table>':'<p class="n">まだデータがありません。</p>')).join('')+
     '<p class="n">機械で数えた「候補」は講師が目で確かめて確定する。AIのお客さんの答えは、どの指標にも入れていない。</p></body></html>'; }
-function repCsv(){ const T=repModel().T; const H=['team','people_1on1','logs','action_or_more','counted','refutations','mid_review','ai_customer_done','judgment_row','plan2_source','kata1','kata2','changed_day2','ai_field_match','fit_x_rows','fit_x_fixed','irai_met_self','irai_day1','far_cells','candidates','overlap','move_ai','move_final','org_ai','org_final','num_ai','num_final','ai_name','ai_only','final'];
+function repCsv(){ const T=repModel().T; const H=['team','people_1on1','logs','action_or_more','counted','refutations','mid_review','ai_customer_done','judgment_row','plan2_source','kata1','kata2','changed_day2','ai_field_match','ai_field_match_with_pivot','now_changed_day1','fit_x_rows','fit_x_fixed','irai_met_self','irai_day1','far_cells','candidates','overlap','move_ai','move_final','org_ai','org_final','num_ai','num_final','irai_met_self_5','restores','ai_name','ai_only','final'];
   const q=v=>'"'+String(v==null?'':v).replace(/"/g,'""').replace(/\n/g,' / ')+'"';
-  return [H.join(',')].concat(T.map(r=>[r.t,r.people,r.logs,r.up,r.own,r.neg,r.mid,r.cust?1:0,r.row||'',r.src2,r.kata1,r.kata2,r.changed,r.match==null?'':(r.match?1:0),r.fitX.join(' '),r.fitX.length?(r.fitHit?1:0):'',r.irai,r.irai0,r.far,r.on,r.ovl,r.moveAI?1:0,r.moveFin?1:0,r.orgAI,r.orgFin,r.numAI,r.numFin,r.aiName,r.aio,r.fin].map(q).join(','))).join('\n'); }
+  return [H.join(',')].concat(T.map(r=>[r.t,r.people,r.logs,r.up,r.own,r.neg,r.mid,r.cust?1:0,r.row||'',r.src2,r.kata1,r.kata2,r.changed,r.match==null?'':(r.match?1:0),r.matchPv==null?'':(r.matchPv?1:0),r.nowChanged?1:0,r.fitX.join(' '),r.fitX.length?(r.fitHit?1:0):'',r.irai,r.irai0,r.far,r.on,r.ovl,r.moveAI?1:0,r.moveFin?1:0,r.orgAI,r.orgFin,r.numAI,r.numFin,r.irai5,r.restores,r.aiName,r.aio,r.fin].map(q).join(','))).join('\n'); }
 function blindSheet(){ const its=RATE.items||[]; if(!its.length) return '';
   return ['# 盲検評定シート（外部評定者用）','','各案に、依頼書の6つのうち満たしているものの番号と、「誰が困っているか」の特定度（括り／立場／名前・場面）を付けてください。どの案がどの群かは伏せてあります。','',
     '依頼書の6つ：'+IRAI_S.map((s,i)=>(i+1)+' '+s).join('／'),'',
-    '| コード | 案 | 満たしている番号 | 特定度 |','|---|---|---|---|'].concat(its.map(it=>'| '+it.c+' | '+strip(esc(it.x)).replace(/\n/g,' ／ ')+' |  |  |')).join('\n'); }
+    '最後の列は、盲検が成り立っているかの確認です。その案が「AIだけの案」だと思うなら AI、「学生が作り直した最後の案」だと思うなら 最後 と書いてください（判定には使いません）。','',
+    '| コード | 案 | 満たしている番号 | 特定度 | どちらだと思うか |','|---|---|---|---|---|'].concat(its.map(it=>'| '+it.c+' | '+strip(esc(it.x)).replace(/\n/g,' ／ ')+' |  |  |  |')).join('\n'); }
 async function rpPut(text,msg){ const ta=document.getElementById('rp-out'); ta.hidden=false; ta.value=text;
   try{ await navigator.clipboard.writeText(text); document.getElementById('rp-st').textContent=msg; }catch(e){ ta.select(); document.getElementById('rp-st').textContent='自動でコピーできませんでした。下の枠から選んでコピーしてください。'; } }
-document.getElementById('rp-md').addEventListener('click',()=>rpPut(repMd(),'研究会レポート（Markdown）をコピーしました。'));
+document.getElementById('rp-md').addEventListener('click',()=>rpPut(repMd(false),'研究会レポート 詳細版（Markdown）をコピーしました。'));
+document.getElementById('rp-md-b').addEventListener('click',()=>rpPut(repMd(true),'研究会レポート 概要版（Markdown）をコピーしました。'));
+document.getElementById('rp-html-b').addEventListener('click',()=>saveHtml(repHtml(true),'NBC2026_研究会レポート_概要版_'));
 document.getElementById('rp-csv').addEventListener('click',()=>rpPut(repCsv(),'チーム別の指標（CSV）をコピーしました。'));
 document.getElementById('rp-blind').addEventListener('click',()=>{ const t=blindSheet(); if(!t){ document.getElementById('rp-st').textContent='先に「セットを作る」を押してください。'; return; } rpPut(t,'盲検シートをコピーしました。外部の評定者に渡し、返ってきた印を評定者Bとして入力してください。'); });
 document.getElementById('rp-print').addEventListener('click',()=>{ document.body.classList.add('printrep'); setTimeout(()=>{ window.print(); setTimeout(()=>document.body.classList.remove('printrep'),500); },50); });
-document.getElementById('rp-html').addEventListener('click',async()=>{ const html=repHtml(); const name='NBC2026_研究会レポート_'+new Date().toISOString().slice(0,10)+'.html';
+document.getElementById('rp-html').addEventListener('click',()=>saveHtml(repHtml(false),'NBC2026_研究会レポート_詳細版_'));
+async function saveHtml(html,prefix){ const name=prefix+new Date().toISOString().slice(0,10)+'.html';
   try{ const dl=window.claude&&window.claude.use?await window.claude.use('downloads'):null;
     if(dl){ await dl.save({filename:name,data:html}); document.getElementById('rp-st').textContent='保存しました：'+name; return; } }catch(e){}
   try{ const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([html],{type:'text/html'})); a.download=name; document.body.appendChild(a); a.click(); a.remove(); document.getElementById('rp-st').textContent='保存しました：'+name+'（保存できないときは、下の枠のHTMLをコピーしてファイルにしてください）'; }
-  catch(e){ rpPut(html,'保存できなかったため、HTMLをコピーしました。'); } });
+  catch(e){ rpPut(html,'保存できなかったため、HTMLをコピーしました。'); } }
 
 /* ---- export ---- */
 function csv(){
