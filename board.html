@@ -630,7 +630,7 @@ function teamObj(team){
     pre:{surplus:['','',''],problems:['','',''],ai:''},
     mix:{cells:{},hard:['','',''],to:{},name:{},nameAuto:{},chosen:'',chg:{picked:[],note:{}}},
     pm:{first:'α',ai:'',stage:1,runs:[],diff:['','',''],adopt:'',why:'',whyNot:''},
-    tm:{members:mem.map(p=>p.nick),rec:TEAMS.rec[team]||'',items,pre:mem.map(p=>[p.nick,((p.pre||{}).surplus)||[]]),at:new Date().toISOString()}};
+    tm:{members:mem.map(p=>p.nick),rec:TEAMS.rec[team]||'',items,pre:mem.map(p=>[p.nick,((p.pre||{}).surplus)||[],((p.pre||{}).base)||'']),at:new Date().toISOString()}};
   /* DAY1のあと：記録係の提出②のアイデアシート／8日間のあと：メンバーひとりずつの聞き取り */
   const tsub=SUB.filter(x=>x.team===team&&x.idea&&((x.idea.who||'').trim()||(x.idea.stop||'').trim()));
   const idea=tsub.length?tsub[tsub.length-1].idea:null;
@@ -1044,7 +1044,7 @@ function teamLogs(t){ return SUB.filter(s=>s.team===t&&s.iv).flatMap(s=>(s.iv.lo
 function teamPeople(t){ const st=new Set(); teamLogs(t).filter(cnted).forEach(l=>{const w=normW(l.who); if(w) st.add(w);}); return st.size; }
 function txtOrg(t){ return [...new Set((String(t||'').match(ORG)||[]).filter(x=>!/^(九州大学|九大|大学|事務局)$/.test(x)))]; }
 function txtNum(t){ return String(t||'').match(NUM)||[]; }
-function finalOf(I,R){ I=I||{}; R=R||{}; return [I.title&&('事業名：'+I.title),I.who&&('提案先：'+I.who),I.pain&&('困りごと：'+I.pain),I.val&&('渡すもの：'+I.val),I.partner&&('組む相手：'+I.partner),I.money&&('お金：'+I.money),R.dec&&('判断：'+R.dec)].filter(Boolean).join('\n'); }
+function finalOf(I,R){ I=I||{}; R=R||{}; return [(R.name||I.title)&&('事業名：'+(R.name||I.title)),(R.concept||I.concept)&&('コンセプト：'+(R.concept||I.concept)),I.who&&('提案先：'+I.who),I.pain&&('困りごと：'+I.pain),I.val&&('渡すもの：'+I.val),I.partner&&('組む相手：'+I.partner),I.money&&('お金：'+I.money),R.dec&&('判断：'+R.dec)].filter(Boolean).join('\n'); }
 function aiMatch(row,ch){ row=+row; if(!row||!ch) return null;
   if(row<=2) return ch==='ターゲット'; if(row===3) return ch==='機能的価値'||ch==='情緒的価値'; if(row===4) return ch==='払い方'; return ch==='変えない'; }
 function meanJac(texts){ const ts=texts.filter(t=>normW(t).length>5).map(bigrams); let s=0,n=0;

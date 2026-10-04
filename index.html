@@ -251,6 +251,18 @@ p.see2{margin:0 0 10px; font-size:12.5px; color:var(--ink-2)}
 .g9 .bk textarea{width:100%;min-height:70px;font-size:12px;border:1px solid var(--line);border-radius:4px;
   padding:5px;font-family:inherit;background:var(--surface);resize:vertical}
 .g9 .bk .hint{font-size:10.5px;color:var(--ink-3);margin-top:3px}
+.g9 .bk.st1{border-color:#6B0F3A}.g9 .bk.core{background:#F4EAF0}
+.g9 .bk .vstep{display:inline-block;font-size:10px;font-weight:700;color:#fff;background:#6B0F3A;border-radius:3px;padding:0 5px;margin-right:5px}
+.g9 .bk.st2 .vstep{background:#8d4a6a}.g9 .bk.st3 .vstep{background:#a98196}
+.vizsteps{line-height:1.9}
+.pv{display:grid;grid-template-columns:auto 1fr 1fr;gap:6px;align-items:stretch;max-width:640px}
+.pv .ax{font-size:11.5px;font-weight:700;color:var(--ink-2);display:flex;align-items:center;justify-content:center;text-align:center}
+.pv button{min-height:62px;text-align:left;border:1px solid var(--line-strong);border-radius:8px;background:var(--surface);padding:8px 10px;cursor:pointer;font:inherit;font-size:12.5px;color:var(--ink)}
+.pv button b{display:block;font-size:13.5px}
+.pv button[aria-pressed="true"]{border-color:#6B0F3A;box-shadow:inset 0 0 0 2px #6B0F3A;background:#F4EAF0}
+.pv button.rec::after{content:'判断表からのおすすめ';display:inline-block;margin-top:4px;font-size:10.5px;color:#fff;background:#6B0F3A;border-radius:3px;padding:0 5px}
+.stalebox{border-left-color:#b3261e!important;background:#fdf1f0!important}
+.stalebox li{margin:3px 0}
 .g6{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:760px){.g9{grid-template-columns:1fr}.g6{grid-template-columns:1fr}}
 /* ---- added: presentation ---- */
@@ -281,6 +293,20 @@ p.see2{margin:0 0 10px; font-size:12.5px; color:var(--ink-2)}
 .sl .g3>div{border:1px solid #d9c1cd;font-size:1.05cqw;padding:.4cqw;display:flex;align-items:center;justify-content:center;text-align:center;min-height:3.2cqw}
 .sl .g3>div.me{background:#EAD9E2;border-color:#6B0F3A;font-weight:700}
 .sl .q{color:#a35;}
+.sl.cover,.sl.divider{justify-content:space-between}
+.sl .cvb{flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 8cqw;border-left:1.4cqw solid #6B0F3A;margin:6cqw 0 4cqw 4cqw}
+.sl.cover h2,.sl.divider h2{border:0;padding:0;font-size:4.4cqw;color:#4a1029}
+.sl .cvk{font-size:1.3cqw;color:#7a5a68;margin:0 0 1.5cqw;letter-spacing:.06em}
+.sl .cvc{font-size:2cqw;color:#333;margin:1.6cqw 0 0;line-height:1.5}
+.sl .cvt{font-size:1.7cqw;color:#222;margin:3cqw 0 0;font-weight:700}.sl .cvt small{font-weight:400;font-size:1.35cqw;color:#555}
+.sl .split{display:grid;gap:1.4cqw;flex:1;min-height:0}.sl .split>div{display:flex;flex-direction:column;gap:1cqw;min-height:0}
+.sl .imgph{flex:1;border:.2cqw dashed #b98ca3;border-radius:.6cqw;display:flex;align-items:center;justify-content:center;text-align:center;color:#8a6a7a;font-size:1.3cqw;background:#fbf6f8}
+.sl .imgph small{font-size:1.05cqw}
+.sl .vzd{position:relative;width:100%;max-height:100%;aspect-ratio:160/66;margin:0 auto}
+.sl .vzd svg{position:absolute;inset:0;width:100%;height:100%}
+.sl .vzc{position:absolute;display:flex;align-items:center;justify-content:center;text-align:center;font-size:1.15cqw;line-height:1.3;padding:0 .4cqw;overflow:hidden}
+.sl .vzc.core{font-weight:700}
+.sl .vzl{font-size:1.05cqw;margin:0;text-align:right}
 .deck .bar{display:flex;align-items:center;gap:10px;padding:8px 16px;background:#3b0a21;color:#ead9e2;font-size:12px}
 .deck .bar button{background:#6B0F3A;color:#fff;border:1px solid #8d2a55;border-radius:6px;padding:6px 12px;cursor:pointer;font:inherit}
 .slides{display:grid;gap:10px}
@@ -358,7 +384,8 @@ table.gloss td:first-child{font-weight:700;width:30%}
 .fixl{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
 .prow{display:grid;grid-template-columns:1fr 1.4fr .8fr auto;gap:6px;align-items:end;margin:4px 0}
 @media(max-width:700px){.prow{grid-template-columns:1fr}}
-.prow input,.prow select{width:100%;font:inherit;padding:6px 8px;border:1px solid var(--line-strong);border-radius:7px;background:var(--surface);color:var(--ink)}
+.prow input,.prow select{width:100%;font:inherit;font-size:13.5px;line-height:1.6;padding:6px 8px;border:1px solid var(--line-strong);border-radius:7px;background:var(--surface);color:var(--ink)}
+.prow label{font-size:12px;color:var(--ink-2)}
 .steps{margin:4px 0 0;padding-left:1.3em;font-size:13px;line-height:1.8}
 .recsnap{font-size:12.5px;line-height:1.7}
 .recsnap h5{margin:10px 0 2px;font-size:12.5px}
@@ -443,7 +470,7 @@ nav.tabs button.subtab::before{content:"✉ ";opacity:.8}
     <div class="hd">
       <div class="brand">
         <h1>ニュービジネス・クリエーション 2026</h1>
-        <p>九大の力 × 糸島エリア　新規事業の担い手：九大OIP株式会社　／　あるものから、次の価値を。</p>
+        <p>九大の力 × 糸島エリア　新規事業の担い手：九大OIP株式会社　／　あるものと課題から、新しい事業価値を。</p>
       </div>
       <div class="meta">
         <div class="fld"><label for="team">チーム</label><input id="team" placeholder="A" autocomplete="off"></div>
@@ -506,7 +533,7 @@ nav.tabs button.subtab::before{content:"✉ ";opacity:.8}
     <div class="stage" data-v="intro"></div>
     <div class="hero">
       <p class="hero-k">この授業の一言</p>
-      <p class="hero-h">あるものから、次の価値を。</p>
+      <p class="hero-h">あるものと課題から、新しい事業価値を。</p>
       <p class="hero-s">いまある力で、誰かの困りごとに、次の価値を。<b>誰と組むかまで。</b></p>
     </div>
 
@@ -807,13 +834,14 @@ nav.tabs button.subtab::before{content:"✉ ";opacity:.8}
     <div class="card2"><h3 class="sec">2　案②（同じ困りごとの、別の解き方）</h3><div id="cust-a2"></div></div>
     <div class="card2"><h3 class="sec">3　指示文をコピーして、AIの3人に聞く</h3><div id="cust-run"></div></div>
     <div class="card2"><h3 class="sec">4　まとめと判断表 ── 変えるかもしれないものを1つ</h3><div id="cust-sum"></div></div>
+    <div class="card2"><h3 class="sec">5　ピボット表（1回目）── ターゲットと提供価値、どちらを変えるか</h3><div id="cust-pivot"></div></div>
   </section>
 
   <!-- ============ 聞きに行く ============ -->
   <section id="v-iv" hidden>
     <div class="stage" data-v="iv"></div>
-    <p class="lede">10月26日（月）から11月2日（月）までの8日間。<b>アイデアシートの提案先の本人</b>に会って、「受け取りたいか」を確かめます。<b>1対1で、チームで3人以上</b>が下限です（上限はありません。多いほど確かになります）。締切は11月1日（日）です。</p>
-    <div class="note"><b>このタブは、ひとりずつ自分の端末で書きます。</b>調査設計（誰に・何を聞くか・分担）はDAY1に「調査設計」タブで決めてあります。<br><b>8日間の途中の提出はありません。11月1日（日）</b>に聞いた記録を提出（④）します。</div>
+    <p class="lede">10月26日（月）から11月2日（月）までの8日間。<b>アイデアシートの提案先の本人</b>に会って、「受け取りたいか」を確かめます。<b>1対1で、チームで3人以上</b>が下限です（上限はありません。多いほど確かになります）。締切は<b>11月2日（月）18時</b>です。</p>
+    <div class="note"><b>このタブは、ひとりずつ自分の端末で書きます。</b>調査設計（誰に・何を聞くか・分担）はDAY1に「調査設計」タブで決めてあります。<br><b>8日間の途中の提出はありません。11月2日（月）18時まで</b>に聞いた記録を提出（④）します。</div>
     <div class="note" id="iv-weak" style="background:var(--ochre-soft);border-left-color:var(--ochre)"></div>
     <div class="card2" id="iv-steps"></div>
     <div class="note carrybox" id="iv-mine"></div>
@@ -827,7 +855,7 @@ nav.tabs button.subtab::before{content:"✉ ";opacity:.8}
       <div id="iv-l"></div>
       <div class="btns"><button class="btn sec" id="add-l">記録を追加</button></div>
       <h3 class="sec">3　前半の見直し（任意・10月28日ごろ・自分のメモ）</h3>
-      <p class="see2">最初の1〜2人の、<b>実在の相手の言葉と行動</b>で、判断表をもう一度当てはめます。後半の4日で聞く相手と質問を直し、別の案も持って行くかを決めます。ひとり5分で足ります。<b>提出はありません</b>（書いておくと、11月1日の提出④と一緒に届き、DAY2の「作り直す」に出ます）。</p>
+      <p class="see2">最初の1〜2人の、<b>実在の相手の言葉と行動</b>で、判断表をもう一度当てはめます。後半の4日で聞く相手と質問を直し、別の案も持って行くかを決めます。ひとり5分で足ります。<b>提出はありません</b>（書いておくと、提出④と一緒に届き、DAY2の「作り直す」に出ます）。</p>
       <div id="iv-mid"></div>
       <h3 class="sec">4　アンケート（任意。目標の数はありません）</h3>
       <div id="iv-s"></div>
@@ -848,6 +876,7 @@ nav.tabs button.subtab::before{content:"✉ ";opacity:.8}
         <div class="card2"><h3 class="sec">2　渡すもの（商品・サービス）</h3><div id="vpc-prod"></div></div>
         <div class="card2"><h3 class="sec">困りごとをどう減らすか</h3><div id="vpc-rel"></div></div>
         <div class="card2"><h3 class="sec">望みをどう満たすか</h3><div id="vpc-crt"></div></div>
+        <div class="card2"><h3 class="sec">情緒的価値 ── 使った人が、どんな気持ちになれるか</h3><div id="vpc-emo"></div></div>
       </div>
     </div>
     <div class="card2"><h3 class="sec">対応の確認</h3><div id="vpc2-chk" class="note" style="margin:0"></div></div>
@@ -864,7 +893,8 @@ nav.tabs button.subtab::before{content:"✉ ";opacity:.8}
     <div class="card2"><h3 class="sec">1　依頼主の6つの条件 ── そろった／足りない（理由）</h3><div id="redo-irai"></div></div>
     <div class="card2"><h3 class="sec">2　成り立つ条件は、どうだったか</h3><div id="redo-cond"></div></div>
     <div class="card2"><h3 class="sec">3　やめる条件に当たる事実は出たか</h3><div id="redo-stop"></div></div>
-    <div class="card2"><h3 class="sec">4　続ける・直す・やめる</h3><div id="redo-dec"></div></div>
+    <div class="card2"><h3 class="sec">4　続ける・直す・やめる（ピボット表・3回目）</h3><div id="redo-dec"></div></div>
+    <div class="card2"><h3 class="sec">5　事業の名称とコンセプトを確定する</h3><div id="redo-name"></div></div>
   </section>
 
   <!-- ============ BMC ============ -->
@@ -878,10 +908,14 @@ nav.tabs button.subtab::before{content:"✉ ";opacity:.8}
   <!-- ============ 図解 ============ -->
   <section id="v-viz" hidden>
     <div class="stage" data-v="viz"></div>
-    <p class="lede">ビジネスモデルを<b>3×3のマス</b>と、<b>お金・情報・モノの3つの流れ</b>で表します。<b>真ん中が自分たち</b>です。</p>
-    <div class="note">まず3×3に<b>登場する人・組織</b>を書きます（中央・右・左は前の工程から自動で入ります）。<b>空いていてよいマスもあります。</b>次に、その人・組織の間を<b>お金／情報／モノ・サービス</b>がどう流れるかを、選んで書きます。</div>
+    <p class="lede">ビジネスモデルを<b>3×3のマス</b>と<b>矢印</b>で表します（ビジネスモデル図解）。<b>4つのステップ</b>の順に書きます。</p>
+    <div class="note vizsteps"><b>Step1　中央の縦列を考える</b>　① 誰に？（その事業は誰のために行われるのか）　② 何を？（何が事業として行われるのか。製品が入ることも）　③ 誰が？（誰がその事業を行っているのか）<br>
+      <b>Step2　中央の横列を考える</b>　④ 何が重要？（その事業を特徴づける重要な関係者・モノは何か）<br>
+      <b>Step3　四隅を考える</b>　⑤ 誰が関係？（提携している企業や重要な関係会社）　⑥ 誰が関係？（利用者のほかに関係している重要な人物・会社）<br>
+      <b>Step4　矢印を考える</b>　⑦ モノ・カネ・情報の流れがどうなっているか<br>
+      <span class="see2">すべてのマスが埋まっている必要はありません（主体が入らないマスもあります）。① ② ③と④の左は、前の工程から自動で入ります。</span></div>
     <div class="card2"><div class="g9" id="viz-body"></div></div>
-    <div class="card2"><h3 class="sec">3つの流れ（どこから → どこへ：何が）</h3>
+    <div class="card2"><h3 class="sec">Step4　矢印 ── モノ・カネ・情報の流れ（どこから → どこへ：何が）</h3>
       <p class="see2">「どこから」「どこへ」は、上の3×3に書いた人・組織と、<b>下で足した新しい相手</b>から選びます。<b>お金・情報・モノは分けて書きます。</b>どれかの流れが書けないときは、その流れがまだ設計されていないということです。</p><div id="viz-arrows"></div></div>
   </section>
 
@@ -896,7 +930,7 @@ nav.tabs button.subtab::before{content:"✉ ";opacity:.8}
   <!-- ============ 発表 ============ -->
   <section id="v-show" hidden>
     <div class="stage" data-v="show"></div>
-    <p class="lede">ここまで書いたものから、<b>発表スライドを自動で作ります</b>。<b>本編5枚</b>（表紙と要旨／ペルソナと8日間／ビジネスアイデアシート／ビジネスモデルキャンバス／ビジネスモデル図解と小さく試すこと）＋<b>付録5枚</b>です。発表は本編5枚で行います（5分）。</p>
+    <p class="lede">ここまで書いたものから、<b>発表スライドを自動で作ります</b>。<b>表紙＋本編6枚</b>（P1 エグゼクティブサマリ／P2 ターゲット顧客／P3 提供価値／P4 検証仮説と結果／P5 ビジネスモデルキャンバス／P6 ビジネスモデル図）＋<b>参考資料（中表紙と付録3枚）</b>です。発表は表紙と本編で行います（5分）。P2・P3の画像の枠には、PowerPointで画像を入れます。</p>
     <div class="note"><b>「発表をはじめる」</b>で全画面になります。矢印キー（→ ←）か画面下のボタンでめくり、Escで戻ります。<br><b>「PowerPointで保存」</b>で .pptx ファイルができます。手元で文字や図を直してかまいません（直したら、そのファイルで発表します）。<br>下の「中身の確認」で、<b>未記入の項目と、直す場所（タブ）</b>が出ます。ボタンを押すと、そのタブに移ります。</div>
     <div class="btns"><button class="btn" id="show-go">発表をはじめる（全画面）</button>
       <button class="btn" id="show-pptx">PowerPointで保存（.pptx）</button>
@@ -1126,6 +1160,12 @@ function ensure32(){
   if(S.redo.learn==null) S.redo.learn='';
   if(!S.viz||typeof S.viz!=='object') S.viz={g:['','','','','','','','',''],arrows:['','','']};
   if(!Array.isArray(S.viz.extra)) S.viz.extra=[];
+  vizMigrate();
+  /* v36 */
+  if(!Array.isArray(S.pivots)) S.pivots=[];
+  if(!S.stale||typeof S.stale!=='object') S.stale={};
+  if(S.redo.name==null) S.redo.name=''; if(S.redo.concept==null) S.redo.concept='';
+  if(S.idea.concept==null) S.idea.concept=''; if(S.vpc.emo==null) S.vpc.emo='';
 }
 ensure32();
 const ITEMS={}; CAPS.forEach(c=>c.items.forEach(i=>{ITEMS[i.id]={...i,cap:c.n,capk:c.k}}));
@@ -1463,6 +1503,69 @@ function radios(host,opts,cur,on){
     b.addEventListener('click',()=>{on(o); save(); host.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x.textContent===o)));});
     host.appendChild(b);});
 }
+/* ===== v36：ピボット表（ターゲット × 提供価値）と見直し印 ===== */
+const PVQ={none:['このまま','ターゲットも提供価値も変えない'],target:['ターゲットを変える','提供価値はそのまま、相手（提案先・困っている人）を変える'],value:['提供価値を変える','相手はそのまま、渡すもの（機能・情緒・払い方）を変える'],both:['両方を変える','別の事業として作り直す（ピボットの大きな形）']};
+const PVAT={DAY1:'DAY1（AIのお客さんのあと）','10/28':'10/28 前半の見直し（ひとり）',DAY2:'DAY2（作り直す）'};
+/* 見直し印の対象：欄ごとに［タブ、名前、いまの値］ */
+const SF={
+ 'persona.name':['persona','ペルソナの名前',()=>S.persona.name],'persona.age':['persona','ペルソナの年齢・立場',()=>S.persona.age],'persona.scene':['persona','ペルソナの場面',()=>S.persona.scene],
+ 'persona.pain':['persona','ペルソナの困りごと',()=>nzx(S.persona.pain).join('／')],'persona.gain':['persona','ペルソナの望み',()=>nzx(S.persona.gain).join('／')],
+ 'persona.alt':['persona','いまの間に合わせ方',()=>S.persona.alt],'persona.payer':['persona','決める人・お金を出す人',()=>S.persona.payer],
+ 'vpc.left':['vpc','VPC① 相手の側',()=>['jobs','pains','gains'].map(k=>nzx(S.vpc[k]).join('／')).filter(Boolean).join('｜')],
+ 'vpc2.left':['vpc2','VPC② 相手のこと（書き直し）',()=>['jobs','pains','gains'].map(k=>nzx((S.vpc.d2||{})[k]).join('／')).filter(Boolean).join('｜')],
+ 'vpc.right':['vpc2','VPC② 渡すもの・減らす方法・満たす方法',()=>['prod','rel','crt'].map(k=>nzx(S.vpc[k]).join('／')).filter(Boolean).join('｜')],
+ 'vpc.emo':['vpc2','VPC② 情緒的価値',()=>S.vpc.emo],
+ 'idea.title':['idea','事業の名称（仮）',()=>S.idea.title],'idea.concept':['idea','事業コンセプト（仮）',()=>S.idea.concept],
+ 'idea.who':['idea','提案先',()=>S.idea.who],'idea.pain':['idea','その困りごと',()=>S.idea.pain],'idea.val':['idea','何を渡すか',()=>S.idea.val],
+ 'idea.how':['idea','どうやって届けるか',()=>S.idea.how],'idea.money':['idea','お金はどこから来るか',()=>S.idea.money],
+ 'redo.name':['redo','事業の名称（確定）',()=>S.redo.name],'redo.concept':['redo','事業コンセプト（確定）',()=>S.redo.concept],
+ 'bmc.cs':['bmc','① 顧客',()=>S.bmc.cs],'bmc.ch':['bmc','③ どう届けるか',()=>S.bmc.ch],'bmc.cr':['bmc','④ 関係',()=>S.bmc.cr],'bmc.vp':['bmc','② 何を渡すか',()=>S.bmc.vp],'bmc.rs':['bmc','⑤ 収入',()=>S.bmc.rs],
+ 'viz.1':['viz','図解 ① 誰に（利用者）',()=>S.viz.g[1]],'viz.4':['viz','図解 ② 何を（事業名）',()=>S.viz.g[4]]};
+const SF_T=['persona.name','persona.age','persona.scene','persona.pain','persona.gain','persona.alt','persona.payer','vpc.left','vpc2.left','idea.who','idea.pain','bmc.cs','bmc.ch','bmc.cr','viz.1','idea.title','idea.concept','redo.name','redo.concept'];
+const SF_V=['idea.val','idea.how','idea.money','vpc.right','vpc.emo','bmc.vp','bmc.rs','viz.4','idea.title','idea.concept','redo.name','redo.concept'];
+function sfGet(k){ try{ return ((SF[k][2]())||'')+''; }catch(e){ return ''; } }
+function pivotApply(q,at){ const keys=[...new Set(q==='target'?SF_T:q==='value'?SF_V:q==='both'?SF_T.concat(SF_V):[])];
+  let n=0; keys.forEach(k=>{ const v=sfGet(k).trim(); if(v){ S.stale[k]={v,at,q}; n++; } }); save(); return n; }
+function staleItems(tab){ const out=[]; Object.entries(S.stale||{}).forEach(([k,o])=>{ if(!SF[k]){ delete S.stale[k]; return; }
+    if(sfGet(k).trim()!==(o.v||'').trim()){ delete S.stale[k]; return; } /* 書き直されたら印は消える */
+    if(!tab||SF[k][0]===tab) out.push([k,o]); }); return out; }
+function staleNote(tab){ const sec=document.getElementById('v-'+tab); if(!sec) return; sec.querySelectorAll('.stalebox').forEach(x=>x.remove());
+  const L=staleItems(tab==='show'?null:tab); if(!L.length) return;
+  const d=document.createElement('div'); d.className='note stalebox';
+  d.innerHTML='<b>見直しの印：ピボットで「'+esc(PVQ[L[0][1].q]?PVQ[L[0][1].q][0]:'')+'」としたため、前の案のままの欄があります（'+L.length+'）。</b>書き直すと印は消えます。前の案のままでよい欄は「このままでよい」を押します。'+
+    '<ul style="margin:6px 0 0;padding-left:1.2em">'+L.map(([k,o])=>'<li><b>'+esc(SF[k][1])+'</b>（'+esc(tabLabel(SF[k][0]))+'）：'+esc(o.v.slice(0,60))+(o.v.length>60?'…':'')+
+      '　'+(tab==='show'||SF[k][0]!==tab?'<button type="button" class="mini" data-sgo="'+SF[k][0]+'">直す場所へ</button> ':'')+'<button type="button" class="mini" data-keep="'+k+'">このままでよい</button></li>').join('')+'</ul>';
+  d.querySelectorAll('[data-keep]').forEach(b=>b.addEventListener('click',()=>{ delete S.stale[b.dataset.keep]; save(); staleNote(tab); if(tab==='show') buildShow(); }));
+  d.querySelectorAll('[data-sgo]').forEach(b=>b.addEventListener('click',()=>{ const v=b.dataset.sgo, nb=document.querySelector('nav.tabs button[data-v="'+v+'"]'); if(nb&&nb.hidden){ PHSEL='all'; try{localStorage.setItem(PHKEY,PHSEL);}catch(e){} applyPhase(); } goTab(v); }));
+  const l=sec.querySelector('.lede'); if(l) l.after(d); else sec.prepend(d); }
+function pvRec(row){ row=+row; return row===1||row===2?'target':row===3||row===4?'value':row?'none':''; }
+/* ピボット表：at＝DAY1／10/28／DAY2。apply＝見直し印を付けるか（チームの画面だけ） */
+function pivotBox(host,at,o){ o=o||{}; host.innerHTML='';
+  const cur=o.cur||{}; const rec=o.rec||'';
+  const qs=o.noNone?['target','value','both']:['none','target','value','both'];
+  const cell=q=>'<button type="button" data-q="'+q+'" aria-pressed="'+(cur.q===q)+'"'+(rec===q?' class="rec"':'')+'><b>'+esc(PVQ[q][0])+'</b>'+esc(PVQ[q][1])+'</button>';
+  host.insertAdjacentHTML('beforeend','<p class="see2">'+esc(o.lead||'')+'</p><div class="pv"><span></span><span class="ax">提供価値は そのまま</span><span class="ax">提供価値を 変える</span>'+
+    '<span class="ax">ターゲットは<br>そのまま</span>'+(qs.includes('none')?cell('none'):'<span class="ax" style="opacity:.5">（続けるなら上の「続ける」）</span>')+cell('value')+
+    '<span class="ax">ターゲットを<br>変える</span>'+cell('target')+cell('both')+'</div>');
+  host.querySelectorAll('[data-q]').forEach(b=>b.addEventListener('click',()=>{ o.set({q:b.dataset.q}); }));
+}
+function pivotRecord(at,q,extra){ let p=S.pivots.find(x=>x.at===at); if(!p){ p={at}; S.pivots.push(p); }
+  Object.assign(p,{q,ts:new Date().toISOString(),snap:{title:S.redo.name||S.idea.title||'',concept:S.redo.concept||S.idea.concept||'',who:S.idea.who||'',val:(S.vpc.prod[0]||S.idea.val||'')}},extra||{}); save(); return p; }
+function buildCustPivot(){ const h=document.getElementById('cust-pivot'); if(!h) return; const C=S.pm.cust; const p=S.pivots.find(x=>x.at==='DAY1')||{};
+  pivotBox(h,'DAY1',{cur:p,rec:pvRec(C.row),lead:'判断表の結果を見て、ターゲットと提供価値のどちらを変えるかをチームで決めます。おすすめの枠は判断表から出ています。迷ったら「8日間で確かめてから決める」を選びます。',
+    set:v=>{ pivotRecord('DAY1',v.q); buildCustPivot(); }});
+  if(p.q&&p.q!=='none'){
+    const w=document.createElement('div'); w.className='fr'; w.innerHTML='<label>いつ変えますか</label><div class="radios"></div>';
+    radiosKV(w.querySelector('.radios'),[['check','8日間で確かめてから決める','いまの案と、変えた案の両方を持って聞きに行く（調査設計の「同時に確かめる別の案」へ）'],['now','いま変える','この場でペルソナ・アイデアシートを書き直す。前の案のままの欄に見直しの印が付く']],p.when||'',v=>{
+      p.when=v; save(); if(v==='now'){ const n=pivotApply(p.q,'DAY1'); toast('見直しの印を '+n+' 欄に付けました。ペルソナ → VPC① → アイデアシートの順に直してください。'); }
+      else if(p.q&&!(S.idea.plan.alt||'').trim()){ S.idea.plan.alt=PVQ[p.q][0]+'（AIのお客さんの判断表から）'; save(); }
+      buildCustPivot(); });
+    h.appendChild(w);
+    h.appendChild(fld('なぜそう決めたか（1行）',p.why||'','例：Bさん（今のやり方で済ませている人）のほうが困っていたので、提案先をBさんの立場に変える',x=>{p.why=x;}));
+    if(p.when==='now'){ const L=staleItems(null); h.insertAdjacentHTML('beforeend','<p class="see2"><b>見直しの印：'+L.length+' 欄</b>（各タブの上に出ます）。直すと印は消えます。'+(L.length?'':'すべて見直しました。')+'</p>'); }
+  }
+}
+
 /* v35：説明つきのボタン（値はこれまでと同じ文字で残す） */
 function radiosKV(host,opts,cur,on,dis){
   host.innerHTML=''; host.classList.add('kv');
@@ -1647,7 +1750,7 @@ function buildIvSteps(IS){
     '<li><b>連絡して会う</b>。「1 聞きに行く相手」に、アポイントの状況を付けます</li>'+
     '<li><b>1対1で聞き、その日のうちに「2 聞いた記録」に書く</b>（相手の言葉のまま・反応の強さ）</li>'+
     '<li>（任意）10月28日ごろ、最初の1〜2人の反応で「3 前半の見直し」</li>'+
-    '<li><b>11月1日（日）に「提出④」で送る</b>。自分が聞いた分だけ。チームの記録を集めて合わせる必要はありません</li>'+
+    '<li><b>11月2日（月）18時までに「提出④」で送る</b>。自分が聞いた分だけ。チームの記録を集めて合わせる必要はありません</li>'+
     '<li>DAY2の朝、<b>記録係の画面に全員分が自動で入り</b>、聞いた人数（重複を除く）も自動で数えます</li></ol>'+
     '<p class="see2">途中の進み具合は、チームのLINEなどでひと言伝え合えば十分です（データのやり取りは要りません）。担当の相手に会えなくなったら、早めにチームに伝えて代わりの相手を決めます。</p>';
   const mine=document.getElementById('iv-mine'); if(!mine) return;
@@ -1688,6 +1791,9 @@ function buildMid(){
   h.appendChild(r);
   jWizard(r.querySelector('.jwhost'),{ans:M.jq,real:true,oldRow:(M.row&&!(M.jq||[]).length)?M.row:'',
     set:(ans,row)=>{ M.jq=ans; M.row=row>0?'#'+row+' '+JROWS[row-1][1]:(row===-1?'まだ会えていない':''); save(); }});
+  const pv=document.createElement('div'); pv.className='fr'; pv.innerHTML='<label>ピボット表（2回目・自分の考え）── 実在の人の反応から、ターゲットと提供価値のどちらを変えるべきだと思うか</label><div></div>'; h.appendChild(pv);
+  const drawPv=()=>pivotBox(pv.querySelector('div'),'10/28',{cur:{q:M.pv||''},rec:pvRec((M.row||'').replace(/^#(\d).*/,'$1')),lead:'ここで選んだことは提出④と一緒に届き、DAY2の「作り直す」でチームが見ます（チームの案はここでは書きかえません）。',set:v=>{ M.pv=v.q; save(); drawPv(); }});
+  drawPv();
   h.appendChild(fld('後半の4日で、何を確かめるか（別の案も持って行くか）',M.next,'例：決める人（組合長）に、どの予算から出すかを聞く。案②も見せる',x=>M.next=x));
 }
 function buildPost(){
@@ -1990,10 +2096,11 @@ function autoNote(secId,tab,filled,sources){
   const sec=document.getElementById(secId); if(!sec) return;
   sec.querySelectorAll('.note.auto').forEach(x=>x.remove());
   const d=document.createElement('div'); d.className='note auto';
-  d.innerHTML='<b>前の工程から自動で入ります。</b>'+esc(sources)+'。<b>直してかまいません</b>（直した欄は上書きしません）。'+
-    (filled.length?'<br><span class="autotag">いま入れた欄：'+filled.map(esc).join('、')+'</span>':'')+
-    '<div class="btns" style="margin:8px 0 0"><button type="button" class="mini" data-refill>前の工程から入れ直す（上書き）</button></div>';
-  d.querySelector('[data-refill]').addEventListener('click',e=>twoStep(e.currentTarget,'もう一度押すと上書きします',()=>{ AUTO[tab](true); save(); REBUILD[tab](); }));
+  d.innerHTML='<b>空いている欄には、前の工程の内容が自動で入ります</b>（'+esc(sources)+'）。自由に書き直してください。<b>一度書いた欄は、自動では書きかわりません。</b>'+
+    (filled.length?'<br><span class="autotag">いま自動で入れた欄：'+filled.map(esc).join('、')+'</span>':'')+
+    '<details class="more" style="margin-top:6px"><summary data-fixed="1">前の工程を直したとき（ピボットのあとなど）</summary><p class="see2" style="margin:4px 0">前の工程（例：ペルソナ・アイデアシート）を先に直し、下のボタンを押すと、<b>この画面の「自動で入る欄」だけを、前の工程の最新の内容で入れ直します。</b>この画面でその欄に書いた内容は置きかわります（ほかの欄はそのまま）。</p>'+
+    '<div class="btns" style="margin:4px 0 0"><button type="button" class="mini" data-refill>前の工程の最新の内容で入れ直す</button></div></details>';
+  d.querySelector('[data-refill]').addEventListener('click',e=>twoStep(e.currentTarget,'もう一度押すと、自動で入る欄を入れ直します',()=>{ AUTO[tab](true); save(); REBUILD[tab](); }));
   const l=sec.querySelector('.lede'); if(l) l.after(d); else sec.prepend(d);
 }
 const AUTO={
@@ -2015,7 +2122,7 @@ const AUTO={
     fillIf(I,'cond',r.cond,'成り立つ条件',o,force);
     fillIf(I,'weak',starLine(r.cond||I.cond),'いちばん確かでない条件',o,force);
     fillIf(I,'stop',r.stop,'やめる条件',o,force);
-    fillIf(I,'title',firstLine(r.opp,24),'事業の名前（仮）',o,force);
+    fillIf(I,'title',firstLine(r.opp,24),'事業の名称（仮）',o,force);
     return o;},
   iv(force){ const I=ideaSrc(), o=[];
     const MR=myRows(I);
@@ -2038,7 +2145,7 @@ const AUTO={
     return o;},
   viz(force){ const I=S.idea, B=S.bmc, g=S.viz.g, o=[];
     const set=(i,v,l)=>{v=(v||'').trim(); if(v&&(force||!(g[i]||'').trim())&&g[i]!==v){g[i]=v;o.push(l);}};
-    set(4,'九大（自分たち）','中央'); set(5,I.who||B.cs,'右（お客さん）'); set(3,I.partner||B.kp,'左（組む相手）');
+    set(1,I.who||B.cs,'① 誰に（利用者）'); set(4,(S.redo&&S.redo.name)||I.title,'② 何を（事業名）'); set(7,'九大（自分たち）','③ 誰が'); set(3,I.partner||B.kp,'④ 重要な主体（組む相手）');
     return o;}
 };
 const REBUILD={persona:()=>buildPersona(),vpc:()=>buildVpc(),idea:()=>buildIdea(),iv:()=>buildIv(),bmc:()=>buildBmc(),viz:()=>buildViz()};
@@ -2116,12 +2223,14 @@ function buildVpc2(){
       const f=fld(l.replace(/（.*）/,'')+' '+(i+1)+'（書き直し）',v,d1?'DAY1：'+d1:'会った人の言葉で',x=>{S.vpc.d2[k][i]=x; vpcChk();});
       if(d1) f.insertAdjacentHTML('afterbegin','<p class="carry" style="margin:0 0 2px"><span class="ctag">DAY1</span>'+esc(d1)+'</p>');
       L.appendChild(f); }); });
+  const EM=document.getElementById('vpc-emo'); if(EM){ EM.innerHTML=''; EM.appendChild(fld('情緒的価値（1〜2行）',S.vpc.emo||'','例：店長が「外国のお客さんにも胸を張って勧められる」と思える',x=>{S.vpc.emo=x;})); }
   coreVpc(); buildFit();
   sec.querySelectorAll('.note.auto').forEach(x=>x.remove());
   if(o.length){ const d=document.createElement('div'); d.className='note auto'; d.innerHTML='<span class="autotag">いま入れた欄：'+o.map(esc).join('、')+'</span>　直してかまいません。'; sec.querySelector('.lede').after(d); }
 }
 
-const IDEAF=[['title','事業の名前（仮）','ひと言で分かる名前を。あとで変えてよい','in'],
+const IDEAF=[['title','事業の名称（仮）','ひと言で分かる名前を。DAY2の「作り直す」で確定します','in'],
+ ['concept','事業コンセプト（ひとこと・仮）','誰の、どんな困りごとを、何で、どう変えるかを1文で。DAY2の「作り直す」で確定します','in'],
  ['who','誰の困りごとに応えるか（提案先）','ペルソナの名前と立場。この1枚を最初に見せる相手'],
  ['pain','その困りごと','実際に起きている出来事で'],
  ['val','何を渡すか','九大の◎（外に出せる強み）のどれを使うかを明記する'],
@@ -2150,7 +2259,7 @@ function coreIdea(){
   const r=document.createElement('div'); r.className='fr';
   r.innerHTML='<label>提案先の種類</label><div class="radios"></div>';
   radios(r.querySelector('.radios'),IDEA_TO,S.idea.to,v=>S.idea.to=v); H.appendChild(r);
-  H.appendChild(fld('次の節目の日付',S.idea.next,'例：11月1日（聞いた記録を提出）',x=>S.idea.next=x,'in'));
+  H.appendChild(fld('次の節目の日付',S.idea.next,'例：11月2日18時（聞いた記録を提出）',x=>S.idea.next=x,'in'));
   const B=document.getElementById('idea-body'); B.innerHTML='';
   IDEAF.forEach(([k,l,ph,kind])=>B.appendChild(fld(l,S.idea[k],ph,x=>{S.idea[k]=x;},kind||'')));
   const P=document.getElementById('idea-partner'); P.innerHTML='';
@@ -2186,32 +2295,40 @@ function coreBmc(){
 }
 
 function buildViz(){ const f=AUTO.viz(false); coreViz(); autoNote('v-viz','viz',f,'アイデアシートとビジネスモデルから'); if(f.length) save(); }
-const VIZL=['左上','上（お金・制度など）','右上','左（組む相手・仕入れ先）','中央＝自分たち','右（お客さん）','左下','下（支える仕組み）','右下'];
-const FLOWS=[['money','お金の流れ','誰が誰に、何の代金として払うか','試しの参加費'],
+const VIZL=['⑤⑥ 四隅（関係者・関係会社）','① 誰に（利用者）','⑥ 四隅（利用者のほかに関係する人・会社）','④ 重要な主体・モノ','② 何を（事業名・商品）','④ 重要な主体・モノ','⑤ 四隅（提携している企業・関係会社）','③ 誰が（事業を行う主体）','⑤⑥ 四隅（関係者・関係会社）'];
+const VIZQ=['','その事業は、誰のために行われるのか','利用者のほかに関係している重要な人物・会社','その事業を特徴づける重要な関係者・モノ','何が事業として行われるのか（製品が入ることも）','その事業を特徴づける重要な関係者・モノ','提携している企業や、重要な関係会社','誰がその事業を行っているのか',''];
+const VIZSTEP=[3,1,3,2,1,2,3,1,3];
+/* v36：v35までの3×3（中央＝自分たち・右＝お客さん・左＝組む相手）を、新しい配置へ移す */
+function vizMigrate(){ const Z=S.viz; if(!Z||Z.v===2) return; Z.v=2;
+  const g=(Z.g||[]).slice(); while(g.length<9) g.push('');
+  if(!g.some(x=>(x||'').trim())&&!Object.values(Z.flows||{}).some(a=>(a||[]).some(r=>r.f!==''||r.t!==''))) return;
+  const map={4:7,5:1,3:3}; const free=[5,0,2,6,8];
+  [1,0,2,6,7,8].forEach(o=>{ if(!(g[o]||'').trim()) return; const n=free.shift();
+    if(n!=null) map[o]=n; else { const id='x'+(((Z.extra||[]).reduce((m,e)=>Math.max(m,+e.id.slice(1)||0),0))+1); (Z.extra=Z.extra||[]).push({id,name:g[o].trim()}); map[o]=id; } });
+  const ng=['','','','','','','','',''];
+  Object.entries(map).forEach(([o,n])=>{ if(typeof n==='number') ng[n]=g[+o]||''; });
+  Z.g=ng;
+  const mv=v=>{ if(v===''||v==null) return v; if(typeof v==='string'&&v[0]==='x') return v; const n=map[+v]; return n==null?'':String(n); };
+  Object.values(Z.flows||{}).forEach(a=>(a||[]).forEach(r=>{ r.f=mv(r.f); r.t=mv(r.t); }));
+  Z.migrated='v35→v36'; }
+const FLOWS=[['money','カネの流れ','誰が誰に、何の代金として払うか','試しの参加費'],
  ['info','情報の流れ','誰が誰に、何を知らせるか','案内できる日と言語'],
- ['goods','モノ・サービスの流れ','誰が誰に、何を渡すか','週末の店頭での案内']];
+ ['goods','モノ（サービス）の流れ','誰が誰に、何を渡すか','週末の店頭での案内']];
 function vizFlows(){ if(!S.viz.flows||typeof S.viz.flows!=='object') S.viz.flows={};
   FLOWS.forEach(([k])=>{ if(!Array.isArray(S.viz.flows[k])) S.viz.flows[k]=[{f:'',t:'',w:''}]; });
   return S.viz.flows; }
 function cellName(i){ if(typeof i==='string'&&i[0]==='x'){ const e=(S.viz.extra||[]).find(x=>x.id===i); return e?e.name:'（消した相手）'; } const v=(S.viz.g[+i]||'').trim(); return v||VIZL[+i]; }
 function coreViz(){
-  const h=document.getElementById('viz-body'); h.innerHTML='';
+  const h=document.getElementById('viz-body'); h.innerHTML=''; h.classList.remove('mid');
+  const old=document.getElementById('viz-full'); if(old) old.remove();
   VIZL.forEach((l,i)=>{
-    const d=document.createElement('div'); d.className='bk';
-    d.innerHTML='<label>'+(i===4?'<b style="color:var(--indigo)">'+l+'</b>':l)+'</label><textarea></textarea>';
-    const ta=d.querySelector('textarea'); ta.value=S.viz.g[i]||'';
-    if(i===4)d.style.background='var(--indigo-soft)';
+    const d=document.createElement('div'); d.className='bk st'+VIZSTEP[i]+(i===4?' core':'');
+    d.innerHTML='<label><span class="vstep">Step'+VIZSTEP[i]+'</span>'+esc(l)+'</label><textarea></textarea>'+(VIZQ[i]?'<div class="hint">'+esc(VIZQ[i])+'</div>':'');
+    const ta=d.querySelector('textarea'); ta.value=S.viz.g[i]||''; ta.placeholder=i===1||i===4||i===7?'必ず書く':'空いていてよい';
     ta.addEventListener('input',()=>{S.viz.g[i]=ta.value;save();});
     ta.addEventListener('change',()=>buildFlows());
     h.appendChild(d);
   });
-  const full=S.viz.full||[0,1,2,6,7,8].some(i=>(S.viz.g[i]||'').trim());
-  h.classList.toggle('mid',!full);
-  let tg=document.getElementById('viz-full'); if(!tg){ tg=document.createElement('button'); tg.type='button'; tg.id='viz-full'; tg.className='mini'; h.after(tg);
-    tg.addEventListener('click',()=>{S.viz.full=h.classList.contains('mid'); save(); coreViz();}); }
-  const filledC=[0,1,2,6,7,8].some(i=>(S.viz.g[i]||'').trim()); tg.hidden=filledC;
-  tg.textContent=full?'真ん中の段だけにする':'上下の段も使う（任意・6マス）';
-  tg.style.margin='8px 0 0';
   buildFlows();
 }
 function buildFlows(){
@@ -2426,12 +2543,13 @@ function buildCust(){
   jw.innerHTML='<label>判断表 ── まとめの結果表を見て、上から順に「はい／いいえ」で答えます（最初に「はい」になったところで決まります）</label><div class="jwhost"></div>';
   SM.appendChild(jw);
   const drawJW=()=>jWizard(jw.querySelector('.jwhost'),{ans:C.jq,row:C.row,hints:custHints(C.sum),real:false,oldRow:(C.row&&!(C.jq||[]).length)?('#'+C.row+' '+((JROWS[(+C.row||0)-1]||[''])[0])):'',
-    set:(ans,row)=>{ C.jq=ans; C.row=row>0?String(row):''; save(); custGate(); }});
+    set:(ans,row)=>{ C.jq=ans; C.row=row>0?String(row):''; save(); custGate(); buildCustPivot(); }});
   drawJW(); let jwT=0; const sumTa=SM.querySelector('textarea'); if(sumTa) sumTa.addEventListener('input',()=>{ clearTimeout(jwT); jwT=setTimeout(drawJW,300); });
   SM.appendChild(fld('まとめの5：いちばん先に会うべき立場（Aさんに近い人）',C.firstWho,'貼り付けると自動で入ります。直してかまいません',x=>{C.firstWho=x; C.whoAuto=false;},'in'));
   SM.appendChild(fld('まとめの5：8日間で確かめる問い（3つ）',C.qs,'貼り付けると自動で入ります。★の条件を確かめる問いを先に',x=>{C.qs=x; C.qsAuto=false;}));
   const nx=document.createElement('div'); nx.className='btns'; nx.innerHTML='<button type="button" class="btn">8日間の進め方のあと：調査設計へ →</button>';
   nx.querySelector('button').addEventListener('click',()=>{ goTab('plan'); }); SM.appendChild(nx);
+  buildCustPivot();
 }
 function custGate(){ const C=S.pm.cust, b=document.getElementById('cust-cp'), w=document.getElementById('cust-gw'); if(!b||!w) return;
   let msg='';
@@ -2474,7 +2592,7 @@ const STAGE={
  peer:['持ち寄りの場','「受け取りたいか」の一問','15分','ほかのチームへの返事'],
  post:['ふりかえり','事後レポート','11月10日まで','この方法への意見'],
  'sub-am':['提出①','事前課題の提出（ひとり1件）','10月23日 24:00','受付済みの記録'],'sub-pm':['提出②','DAY1 午後の提出','17:00','受付済みの記録'],
- 'sub-iv':['提出④','聞いた記録','11月1日','受付済みの記録'],
+ 'sub-iv':['提出④','聞いた記録','11月2日 18:00','受付済みの記録'],
  'sub-d2':['提出⑤','チームの最終案（記録係だけ）','発表のあと','受付済みの記録'],'sub-pr':['提出⑤b','他チームへの返事（全員ひとりずつ）','受け取りたいかのあと','受付済みの記録'],'sub-post':['提出⑥','事後レポート','11月10日','受付済みの記録']
 };
 function buildStages(){
@@ -2647,13 +2765,22 @@ function buildRedo(){
   const fx=FIT.filter(([k])=>S.redo.fit[k].m==='×').map(([k,l])=>l);
   if(fx.length&&R.dec==='続ける') D.insertAdjacentHTML('beforeend','<p class="see2 miss">適合表に×の行があります（'+fx.map(esc).join('、')+'）。続けるなら、その理由を下に書いてください。</p>');
   if(R.dec==='直す'){
+    const p2=S.pivots.find(x=>x.at==='DAY2')||{};
+    const pvh=document.createElement('div'); pvh.className='fr'; pvh.innerHTML='<label>ピボット表（3回目）── 何を変えますか</label><div></div>'; D.appendChild(pvh);
+    const mids=[].concat(S.iv.mid&&S.iv.mid.pv?[S.iv.mid.pv]:[],(S.teamIv||[]).map(m=>m.mid&&m.mid.pv).filter(Boolean));
+    pivotBox(pvh.querySelector('div'),'DAY2',{cur:['target','value','both'].includes(p2.q)?p2:{},noNone:true,rec:(()=>{ const c={}; mids.forEach(q=>{ if(q!=='none') c[q]=(c[q]||0)+1; }); const k=Object.keys(c).sort((x,y)=>c[y]-c[x])[0]; return k||''; })(),
+      lead:'適合表の×と、メンバーの前半の見直し（'+(mids.length?mids.map(q=>PVQ[q]?PVQ[q][0]:q).join('、'):'なし')+'）を見て決めます。選ぶと、前の案のままの欄に見直しの印が付きます。',
+      set:v=>{ pivotRecord('DAY2',v.q); const n=pivotApply(v.q,'DAY2'); const opt={target:['ターゲット'],value:['機能的価値','情緒的価値','払い方'],both:['ターゲット','機能的価値','情緒的価値','払い方']}[v.q];
+        if(opt.length===1) R.changed=opt[0]; else if(!opt.includes(R.changed)) R.changed=''; save(); toast('見直しの印を '+n+' 欄に付けました。'); buildRedo(); }});
+    const opts=[['ターゲット','ターゲット','提案先・困っている人を変える'],['機能的価値','機能的価値','渡すものの働きを変える'],['情緒的価値','情緒的価値','どんな気持ちになれるかを変える'],['払い方','払い方','誰が・いつ・どう払うかを変える']].filter(x=>!['target','value','both'].includes(p2.q)||({target:['ターゲット'],value:['機能的価値','情緒的価値','払い方'],both:['ターゲット','機能的価値','情緒的価値','払い方']}[p2.q]||[]).includes(x[0]));
     const r3=document.createElement('div'); r3.className='fr'; r3.innerHTML='<label>いちばん大きく変えたもの（1つ）</label><div class="radios"></div>';
-    radiosKV(r3.querySelector('.radios'),[['ターゲット','ターゲット','提案先・困っている人を変える'],['機能的価値','機能的価値','渡すものの働きを変える'],['情緒的価値','情緒的価値','どんな気持ちになれるかを変える'],['払い方','払い方','誰が・いつ・どう払うかを変える']],R.changed,v=>{R.changed=v;}); D.appendChild(r3);
+    radiosKV(r3.querySelector('.radios'),opts,R.changed,v=>{R.changed=v;}); D.appendChild(r3);
     D.appendChild(fld('直すもの（何を、どう変えるか）',R.fix,'例：提案先を直売所から、秋の連休に困っている観光農園に変える',x=>R.fix=x));
     D.appendChild(fld('変えないもの（◎の根拠に照らして残すもの）',R.keep,'例：留学生の母国語の力を使うこと',x=>R.keep=x));
   }
   if(R.dec==='続ける') D.appendChild(fld('変えないで進めるもの（確かめられたこと）',R.keep,'例：店長が試しの日程を出してくれた（動いた）。提案先・渡すもの・払い方はこのまま',x=>R.keep=x));
   if(R.dec==='やめる') D.appendChild(fld('何が分かって、やめるか（聞いた事実）',R.learn,'例：5人中4人が「いまのままでいい」と言った。困っていたのは別の立場の人だった',x=>R.learn=x));
+  if(R.dec&&R.dec!=='直す'){ const p=S.pivots.find(x=>x.at==='DAY2'); if(!p||p.q!==(R.dec==='続ける'?'none':'stop')) pivotRecord('DAY2',R.dec==='続ける'?'none':'stop'); }
   if(R.dec){
     D.appendChild(fld('そう決めた理由（先に書いた条件と、聞いた事実から）',R.why,'例：やめる条件には当たらなかったが、提案先が違っていたので直す',x=>R.why=x));
     if(R.dec!=='やめる') D.appendChild(fld('借り足すもの（新しく分かった足りないものと、それを埋める相手）',R.borrow,'例：当日の受付の人手。地区の公民館に相談する',x=>R.borrow=x));
@@ -2661,6 +2788,16 @@ function buildRedo(){
   const n=document.createElement('p'); n.className='see2'; n.style.marginTop='8px';
   n.innerHTML='<b>やめると決めても、それは失敗ではありません。</b>何が分かってやめたかが残り、次に組むときの材料になります。やめる条件に当たったのに続ける場合は、その理由を必ず書いてください。';
   D.appendChild(n);
+  const NM=document.getElementById('redo-name'); if(NM){ NM.innerHTML='';
+    if(R.dec==='やめる'){ NM.innerHTML='<p class="see2">「やめる」と決めたので、名称とコンセプトの確定はしません。発表では、DAY1の仮の名称と、やめた理由を示します。</p>'; }
+    else if(!R.dec){ NM.innerHTML='<p class="see2">上の「4 続ける・直す・やめる」を決めてから、名称とコンセプトを確定します。</p>'; }
+    else{ const I=S.idea;
+      if(!(R.name||'').trim()&&(I.title||'').trim()&&!S.stale['idea.title']) R.name=I.title.trim();
+      if(!(R.concept||'').trim()&&(I.concept||'').trim()&&!S.stale['idea.concept']) R.concept=I.concept.trim();
+      NM.insertAdjacentHTML('beforeend','<p class="see2">8日間とDAY2の判断を踏まえて、<b>事業の名称</b>と<b>事業コンセプト（ひとこと）</b>を確定します。発表の表紙と、最後の案に使われます。'+((I.title||I.concept)?'<br><span class="ctag">DAY1の仮</span>'+esc([I.title,I.concept].filter(Boolean).join('　／　')):'')+'</p>');
+      NM.appendChild(fld('事業の名称（確定）',R.name,'短く、覚えやすく。何の事業か分かる名前',x=>{R.name=x;},'in'));
+      NM.appendChild(fld('事業コンセプト（ひとこと・確定）',R.concept,'誰の、どんな困りごとを、何で、どう変えるかを1文で',x=>{R.concept=x;},'in'));
+    } }
 }
 
 /* 適合表（DAY2 VPC②）・依頼主の6つの条件（DAY2 作り直す） */
@@ -2695,91 +2832,151 @@ function buildIrai(){
     d.appendChild(fld('根拠、または何が足りないか（1行）',x.why,i===3?'例：行動（試しに1日店頭に立たせてくれた）が1件。足りないなら、なぜ得られなかったか':'',v=>x.why=v,'in'));
     h.appendChild(d); });
 }
-function finalLines(){ const I=S.idea, R=S.redo;
-  return [I.title&&('事業名：'+I.title),I.who&&('提案先：'+I.who),I.pain&&('困りごと：'+I.pain),I.val&&('渡すもの：'+I.val),I.partner&&('組む相手：'+I.partner),I.money&&('お金：'+I.money),R.dec&&('判断：'+R.dec+(R.changed?'（変えたもの：'+R.changed+'）':''))].filter(Boolean); }
+function finalLines(){ const I=S.idea, R=S.redo, V=S.vpc, P=S.persona;
+  const nm=(R.name||'').trim()||(I.title||'').trim(), cc=(R.concept||'').trim()||(I.concept||'').trim();
+  const val=nzx(V.prod).join('／')||(I.val||'').trim();
+  return [nm&&('事業名：'+nm),cc&&('コンセプト：'+cc),(I.who||'').trim()&&('提案先：'+I.who.trim()),(I.pain||nzx(P.pain)[0]||'')&&('困りごと：'+((I.pain||'').trim()||nzx(P.pain)[0])),
+    val&&('渡すもの：'+val),(V.emo||'').trim()&&('情緒的価値：'+V.emo.trim()),(I.partner||'').trim()&&('組む相手：'+I.partner.trim()),((S.bmc.rs||'').trim()||(I.money||'').trim())&&('お金：'+((S.bmc.rs||'').trim()||I.money.trim())),
+    R.dec&&('判断：'+R.dec+(R.changed?'（変えたもの：'+R.changed+'）':''))].filter(Boolean); }
 
 /* ---------- presentation ---------- */
 function bullets(arr){const a=(arr||[]).map(x=>(x||'').trim()).filter(Boolean);
   return a.length?'<ul style="margin:0;padding-left:1.1em">'+a.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>':'<p class="q">未記入</p>';}
 function one(t){return (t||'').trim()?'<p>'+esc(t)+'</p>':'<p class="q">未記入</p>';}
-/* v35：発表の中身（画面と PowerPoint で共通）。本編5枚＋付録5枚 */
+/* v36：発表の中身（画面と PowerPoint で共通）。表紙＋P1〜P6＋中表紙＋付録3枚 */
 const NBC_C='6B0F3A', NBC_T='EAD9E2';
+const FLOWC={money:'B8860B',info:'1F5F8B',goods:'2E7D32'}, FLOWN={money:'カネ',info:'情報',goods:'モノ'};
 function tx(v){ return ((v==null?'':v)+'').trim(); }
 function nz(a){ return (a||[]).map(tx).filter(Boolean); }
+/* 図解：四隅などの空きマスに「新しい相手」を置き、矢印を作る */
+function vizModel(){ const G=S.viz.g.slice(0,9).map(tx); const slot={}; const F=vizFlows();
+  const usedX=new Set(); FLOWS.forEach(([k])=>F[k].forEach(r=>{ [r.f,r.t].forEach(v=>{ if(typeof v==='string'&&v[0]==='x') usedX.add(v); }); }));
+  const free=[0,2,6,8,3,5].filter(i=>!G[i]);
+  (S.viz.extra||[]).forEach(e=>{ if(usedX.has(e.id)&&free.length){ const i=free.shift(); G[i]=e.name; slot[e.id]=i; } });
+  const ix=v=>{ if(v===''||v==null) return null; if(typeof v==='string'&&v[0]==='x') return slot[v]==null?null:slot[v]; const n=+v; return isNaN(n)?null:n; };
+  const arrows=[]; FLOWS.forEach(([k])=>F[k].forEach(r=>{ const a=ix(r.f), b=ix(r.t); if(a==null||b==null||a===b) return; arrows.push({k,a,b,w:tx(r.w)}); }));
+  return {G,arrows,flows:flowText()}; }
+const VZW=160, VZH=66;
+function vzGeom(){ const cw=VZW*0.24, ch=VZH*0.24; return {cw,ch,cx:i=>((i%3)*2+1)/6*VZW,cy:i=>(Math.floor(i/3)*2+1)/6*VZH}; }
+function vzArrow(a,b,k){ const g=vzGeom(); const ca=a%3,ra=Math.floor(a/3),cb=b%3,rb=Math.floor(b/3); const kk={money:0,info:1,goods:2}[k]||0;
+  let pts;
+  if(ca===cb&&Math.abs(ra-rb)===2){ const x=g.cx(a)+g.cw/2, xs=x+3+kk*2.2, y1=g.cy(a)-2+kk*2, y2=g.cy(b)-2+kk*2; pts=[[x,y1],[xs,y1],[xs,y2],[x+0.8,y2]]; }
+  else if(ra===rb&&Math.abs(ca-cb)===2){ const y=g.cy(a)+g.ch/2, ys=y+2.2+kk*1.8, x1=g.cx(a)-4+kk*4, x2=g.cx(b)-4+kk*4; pts=[[x1,y],[x1,ys],[x2,ys],[x2,y+0.8]]; }
+  else{ let x1=g.cx(a),y1=g.cy(a),x2=g.cx(b),y2=g.cy(b); const dx=x2-x1,dy=y2-y1,L=Math.hypot(dx,dy)||1; const ux=dx/L,uy=dy/L, nx=-uy,ny=ux;
+    const sx=Math.min((g.cw/2+1)/Math.max(Math.abs(ux),1e-6),(g.ch/2+1)/Math.max(Math.abs(uy),1e-6)); const o=[-1.8,0,1.8][kk];
+    pts=[[x1+ux*sx+nx*o,y1+uy*sx+ny*o],[x2-ux*sx+nx*o,y2-uy*sx+ny*o]]; }
+  const n=pts.length, [px,py]=pts[n-2], [ex,ey]=pts[n-1], L=Math.hypot(ex-px,ey-py)||1, ux=(ex-px)/L, uy=(ey-py)/L;
+  const m=n===2?0:1, mx=(pts[m][0]+pts[m+1][0])/2, my=(pts[m][1]+pts[m+1][1])/2, sl=Math.hypot(pts[m+1][0]-pts[m][0],pts[m+1][1]-pts[m][1])||1;
+  const lnx=-(pts[m+1][1]-pts[m][1])/sl, lny=(pts[m+1][0]-pts[m][0])/sl;
+  return {pts,ux,uy,nx:-uy,ny:ux,lx:mx+lnx*(n===2?2.2:-2.6)*(n===2?1:(ca===cb?-1:1)),ly:my+lny*(n===2?2.2:-2.6)*(n===2?1:(ca===cb?-1:1)),bent:n>2,vert:ca===cb}; }
 function deckModel(){
   const P=S.persona, I=S.idea, V=S.vpc, R=S.redo, B=S.bmc;
-  const team=tx(S.team)||'チーム名 未記入', mem=(S.teamInfo&&S.teamInfo.members&&S.teamInfo.members.length)?S.teamInfo.members.join('・'):'';
+  const team=tx(S.team)||'チーム名 未記入', mem=(S.teamInfo&&S.teamInfo.members&&S.teamInfo.members.length)?S.teamInfo.members.join('・'):tx(S.nick);
+  const name=tx(R.name)||tx(I.title), concept=tx(R.concept)||tx(I.concept);
   const ch=S.mix.chosen; let oid='',prob='';
   if(ch){ const [o,pi]=ch.split('|'); oid=o; const pp=probList().find(x=>String(x.i)===pi); prob=pp?pp.t:''; }
-  const m=oid?maruList().find(x=>x.id===oid):null;
-  const treasure=m?m.nm:(oid?nameOf(oid):'');
+  const m=oid?maruList().find(x=>x.id===oid):null; const treasure=m?m.nm:(oid?nameOf(oid):'');
   const rs=oid&&S.items[oid]?tx(S.items[oid].reason).split('\n')[0]:'', srcO=oid&&S.items[oid]?tx(S.items[oid].src):'';
   const logs=allLogs(), own=logs.filter(counted), sc=v=>own.filter(l=>l.strength===v).length, ppl=ivPeople(logs);
-  const ng=logs.filter(l=>l.verdict==='反証'), qt=logs.map(l=>tx(l.quote)).filter(Boolean);
+  const ng=logs.filter(l=>l.verdict==='反証'), sp=logs.filter(l=>l.verdict==='支持'), qt=logs.map(l=>tx(l.quote)).filter(Boolean);
+  const whoSet=[...new Set(own.map(l=>tx(l.who)).filter(Boolean))];
   const IR=S.redo.irai||[], nIR=IR.filter(x=>x&&x.st==='そろった').length;
-  const GT=gainText(); const flows=flowText(); const cg=((S.mix.chg&&S.mix.chg.picked)||[]).map(id=>CHG.find(c=>c.id===id)).filter(Boolean);
-  const decLines=()=>{ const L=[]; if(R.dec==='直す'){ L.push(['いちばん大きく変えたもの',R.changed]); L.push(['直すもの',R.fix]); L.push(['変えないもの',R.keep]); }
-    else if(R.dec==='続ける') L.push(['変えないで進めるもの',R.keep]); else if(R.dec==='やめる') L.push(['何が分かって、やめるか',R.learn]);
-    if(R.dec) L.push(['理由',R.why]); if(R.dec&&R.dec!=='やめる'&&tx(R.borrow)) L.push(['借り足すもの',R.borrow]); return L; };
-  const left=k=>nz(vpcLeft(k));
+  const GT=gainText(); const cg=((S.mix.chg&&S.mix.chg.picked)||[]).map(id=>CHG.find(c=>c.id===id)).filter(Boolean);
+  const left=k=>nz(vpcLeft(k)); const react='言っただけ '+sc('発言')+'／動いた '+sc('行動')+'／払う '+sc('対価')+'／続いた '+sc('継続');
+  const fitS=FIT.map(([k,l,r])=>{const x=S.redo.fit[k]||{}; return l+' ↔ '+r+'：'+(x.m||'—');}).join('\n');
   const S5try=tx((IR[5]||{}).why)||tx(R.fix)||tx(R.keep);
-  const pages=[];
-  pages.push({sec:'本編 1 / 5　表紙と要旨',title:tx(I.title)||'事業名 未記入',sub:team+(mem?'　｜　'+mem:''),
-    blocks:[{t:'kv',rows:[['誰の困りごとに',I.who],['どんな困りごとか',I.pain],['九大の何を使うか',[treasure&&('九大の宝：'+treasure),tx(I.val)].filter(Boolean).join('\n')],['誰と組むか',I.partner],['結論',(R.dec?R.dec+'と決めた':'')+(R.dec?'　／　':'')+'依頼主の6つの条件　そろった '+nIR+' / 6']]}],
-    checks:[['事業の名前',tx(I.title),'idea'],['提案先',tx(I.who),'idea'],['何を渡すか',tx(I.val),'idea'],['誰と組むか',tx(I.partner),'idea'],['続ける・直す・やめる',tx(R.dec),'redo']]});
-  pages.push({sec:'本編 2 / 5　ペルソナと8日間',title:'誰が、何に困っているか ── 会って確かめたこと',sub:'',
-    blocks:[{t:'cells',cols:2,items:[
-      {h:'ペルソナ：'+([tx(P.name),tx(P.age)].filter(Boolean).join('　')||'未記入'),lines:[tx(P.scene)&&('場面：'+tx(P.scene))].concat(nz(P.pain).map(x=>'困りごと：'+x),[tx(P.alt)&&('いまの間に合わせ方：'+tx(P.alt)),tx(P.payer)&&('決める人・お金を出す人：'+tx(P.payer)),tx(P.quote)&&('「'+tx(P.quote)+'」')]).filter(Boolean)},
-      {h:'8日間：1対1で '+ppl+' 人に聞いた（下限3人）',lines:['反応：言っただけ '+sc('発言')+'／動いた '+sc('行動')+'／払う '+sc('対価')+'／続いた '+sc('継続'),
-        '反証（外れた話）：'+ng.length+' 件'].concat(ng.slice(0,2).map(l=>'・'+tx(l.note).slice(0,70)),qt.slice(0,1).map(q=>'「'+q.slice(0,60)+'」'),[R.changed?('いちばん大きく変えたもの：'+R.changed):''] ).filter(Boolean)}]}],
-    checks:[['ペルソナの名前・立場',!!(tx(P.name)||tx(P.age)),'persona'],['ペルソナの困りごと',nz(P.pain).length>0,'persona'],['聞いた記録',logs.length>0,'iv'],['聞いた人数（3人以上）',ppl>=3,'iv'],['いちばん大きく変えたもの',!!R.changed,'redo']]});
-  pages.push({sec:'本編 3 / 5　ビジネスアイデアシート',title:'ビジネスアイデア',sub:'',
-    blocks:[{t:'kv',rows:[['提案先',I.who],['困りごと',[I.pain].concat(left('pains')).map(tx).filter(Boolean).filter((x,i,a)=>a.indexOf(x)===i).join('\n')],['渡すもの',nz(V.prod).join('\n')||tx(I.val)],['困りごとをどう減らすか',nz(V.rel).join('\n')],['望みをどう満たすか',nz(V.crt).join('\n')],
-      ['九大の宝（◎）と根拠',[treasure,rs&&('根拠：'+rs),srcO&&('出所：'+srcO)].filter(Boolean).join('\n')],['誰と組むか／相手の利益',[tx(I.partner),tx(I.benefit)&&('相手の利益：'+tx(I.benefit))].filter(Boolean).join('\n')],['お金',I.money],['いちばん確かでない条件★',I.weak],['やめる条件',I.stop]]}],
-    checks:[['提案先',tx(I.who),'idea'],['渡すもの（VPC②）',nz(V.prod).length>0,'vpc2'],['困りごとをどう減らすか（VPC②）',nz(V.rel).length>0,'vpc2'],['九大の宝（組み合わせ）',!!treasure,'mix'],['相手の利益',tx(I.benefit),'idea'],['やめる条件',tx(I.stop),'idea']]});
-  pages.push({sec:'本編 4 / 5　ビジネスモデルキャンバス',title:'ビジネスモデルキャンバス',sub:tx(I.title),blocks:[{t:'bmc',B}],
+  const pvT=S.pivots.map(p=>(PVAT[p.at]||p.at)+'：'+(PVQ[p.q]?PVQ[p.q][0]:(p.q==='stop'?'やめる':'—'))+(p.when?'（'+(p.when==='now'?'いま変えた':'8日間で確かめる')+'）':'')+(tx(p.why)?'　'+tx(p.why):'')).join('\n');
+  const decT=R.dec?(R.dec+'と決めた'+(R.changed&&R.dec==='直す'?'（いちばん大きく変えたもの：'+R.changed+'）':'')+(tx(R.why)?'\n理由：'+tx(R.why):'')):'';
+  const vm=vizModel(); const pages=[];
+  pages.push({kind:'cover',sec:'表紙',title:name||'事業の名称 未記入',sub:concept,team,mem,blocks:[],
+    checks:[['事業の名称（確定）',!!tx(R.name)||R.dec==='やめる','redo'],['事業コンセプト（確定）',!!tx(R.concept)||R.dec==='やめる','redo']]});
+  pages.push({sec:'P1　エグゼクティブサマリ',title:'エグゼクティブサマリ',sub:(name?name+'　｜　':'')+concept,
+    blocks:[{t:'kv',rows:[['誰の（ターゲット）',[tx(I.who),[tx(P.name),tx(P.age)].filter(Boolean).join('　')].filter(Boolean).filter((x,i,a)=>a.indexOf(x)===i).join('\n')],
+      ['どんな困りごと',[tx(I.pain)].concat(left('pains')).filter(Boolean).filter((x,i,a)=>a.indexOf(x)===i).join('\n')],
+      ['提供価値（機能）',[nz(V.prod).join('／')||tx(I.val)].concat(nz(V.rel),nz(V.crt)).filter(Boolean).join('\n')],['提供価値（情緒）',V.emo],
+      ['なぜ九大か（九大の宝）',[treasure,rs&&('根拠：'+rs+(srcO?'（'+srcO+'）':''))].filter(Boolean).join('\n')],
+      ['誰と組むか／相手の利益',[tx(I.partner),tx(I.benefit)&&('相手の利益：'+tx(I.benefit))].filter(Boolean).join('\n')],
+      ['お金（誰が払うか）',tx(B.rs)||tx(I.money)],
+      ['確かめたこと',ppl+' 人に1対1で聞いた（'+react+'）'+(decT?'\n'+decT:'')],
+      ['小さく試すこと／やめる条件',[S5try&&('最初の一歩：'+S5try),tx(I.stop)&&('やめる条件：'+tx(I.stop))].filter(Boolean).join('\n')],
+      ['依頼主の6つの条件／九大に増える力','そろった '+nIR+' / 6'+(GT.length?'\n'+GT.map(g=>g.t+'（'+g.now+' → '+g.after+'）').join('／'):'')]]}],
+    checks:[['提案先',!!tx(I.who),'idea'],['渡すもの（VPC②）',nz(V.prod).length>0,'vpc2'],['情緒的価値（VPC②）',!!tx(V.emo),'vpc2'],['相手の利益',!!tx(I.benefit),'idea'],['続ける・直す・やめる',!!R.dec,'redo'],['最初の一歩（依頼主の条件6）',!!tx((IR[5]||{}).why),'redo'],['九大に増える力',GT.length>0,'delta']]});
+  pages.push({sec:'P2　ターゲット顧客',title:'ターゲット顧客',sub:tx(I.who),
+    blocks:[{t:'split',ratio:.36,l:[{t:'img',label:'ペルソナの写真・イラスト'}],r:[{t:'kv',rows:[['ペルソナ',[tx(P.name),tx(P.age)].filter(Boolean).join('　')],['場面',P.scene],
+      ['やろうとしていること',left('jobs').join('\n')],['困っていること',left('pains').join('\n')||nz(P.pain).join('\n')],['望んでいること',left('gains').join('\n')||nz(P.gain).join('\n')],
+      ['いまの間に合わせ方',P.alt],['決める人・お金を出す人',P.payer],['会った人のことば',qt.slice(0,2).map(q=>'「'+q+'」').join('\n')||(tx(P.quote)?'「'+tx(P.quote)+'」':'')]]}]}],
+    checks:[['ペルソナの名前・立場',!!(tx(P.name)||tx(P.age)),'persona'],['困っていること',left('pains').length>0||nz(P.pain).length>0,'vpc2']]});
+  pages.push({sec:'P3　提供価値',title:'提供価値',sub:nz(V.prod).join('／')||tx(I.val),
+    blocks:[{t:'split',ratio:.36,l:[{t:'img',label:'商品・サービスのイメージ'}],r:[{t:'kv',rows:[['渡すもの（商品・サービス）',nz(V.prod).join('\n')||tx(I.val)],
+      ['機能的価値：困りごとをどう減らすか',nz(V.rel).join('\n')],['機能的価値：望みをどう満たすか',nz(V.crt).join('\n')],['情緒的価値：どんな気持ちになれるか',V.emo],
+      ['なぜ九大か（九大の宝と根拠）',[treasure,rs].filter(Boolean).join('\n')],['会った人の反応で確かめたか（適合表）',fitS]]}]}],
+    checks:[['渡すもの',nz(V.prod).length>0,'vpc2'],['困りごとをどう減らすか',nz(V.rel).length>0,'vpc2'],['情緒的価値',!!tx(V.emo),'vpc2'],['適合表（4行）',FIT.every(([k])=>(S.redo.fit[k]||{}).m),'vpc2']]});
+  pages.push({sec:'P4　検証仮説と結果',title:'検証仮説と結果',sub:'8日間で、提案先の本人に1対1で確かめたこと',
+    blocks:[{t:'kv',rows:[['確かめた仮説（いちばん確かでない条件★）',I.weak],['やめる条件（聞く前に決めた）',I.stop],
+      ['誰に聞いたか','1対1で '+ppl+' 人（下限3人）'+(whoSet.length?'\n'+whoSet.slice(0,6).join('／'):'')],['反応の強さ',react],
+      ['支持した声',sp.slice(0,2).map(l=>'・'+tx(l.note).slice(0,80)).join('\n')],['外れた声（反証）',ng.slice(0,3).map(l=>'・'+tx(l.note).slice(0,80)).join('\n')||'なし'],
+      ['ピボット（3回の判断）',pvT],['結論',decT]]}],
+    checks:[['聞いた記録',logs.length>0,'iv'],['聞いた人数（3人以上）',ppl>=3,'iv'],['★の条件',!!tx(I.weak),'idea'],['続ける・直す・やめる',!!R.dec,'redo']]});
+  pages.push({sec:'P5　ビジネスモデルキャンバス',title:'ビジネスモデルキャンバス',sub:name,blocks:[{t:'bmc',B}],
     checks:[['ビジネスモデル（5マス以上）',Object.values(B).filter(x=>tx(x)).length>=5,'bmc']]});
-  pages.push({sec:'本編 5 / 5　ビジネスモデル図解',title:'ビジネスモデル図解と、2027年度に小さく試すこと',sub:'',
-    blocks:[{t:'viz',g:S.viz.g.slice(),flows},{t:'kv',rows:[['小さく試すこと（最初の一歩）',S5try],['やめる条件',I.stop],['九大に増える力',GT.map(g=>g.t+'（いま '+g.now+' → '+g.after+'）').join('\n')]]}],
-    checks:[['図解の流れ（お金・情報・モノ）',flows.every(([l,rs])=>rs.length>0),'viz'],['最初の一歩（依頼主の条件6）',!!tx((IR[5]||{}).why),'redo'],['九大に増える力',GT.length>0,'delta']]});
-  pages.push({sec:'付録 A1',title:'どこから始めたか',sub:'',
-    blocks:[{t:'kv',rows:[['九大の宝 × 困りごと',[treasure,prob].filter(Boolean).join('　×　')],['成り立ちそうだと押したマス',cellsOn().length+' 通り（うち遠いマス '+farCount()+'）'],['重視した社会の変化',cg.map(c=>c.h+'（'+c.layer+'）').join('\n')||'なし'],['九大だけでは届かないが大事なこと',nz(S.mix.hard).join('\n')]]}],
-    checks:[['組み合わせを1つ選んだ',!!ch,'mix']]});
-  pages.push({sec:'付録 A2',title:'提供価値（VPC）と適合表',sub:'左は会った人の言葉で書き直したもの',
-    blocks:[{t:'cells',cols:2,items:[{h:'相手のこと',lines:left('jobs').map(x=>'やろうとしていること：'+x).concat(left('pains').map(x=>'困りごと：'+x),left('gains').map(x=>'望み：'+x))},
-      {h:'適合表（証拠 → 合っていたか）',lines:FIT.map(([k,l,r])=>{const x=S.redo.fit[k]||{}; return l+' ↔ '+r+'：'+(x.m||'—')+'（'+((STRG_KV.find(s=>s[0]===x.s)||['','—'])[1])+'）';})}]}],
-    checks:[['適合表（4行）',FIT.every(([k])=>(S.redo.fit[k]||{}).m),'vpc2']]});
-  pages.push({sec:'付録 A3',title:'作り直したこと：'+(R.dec?R.dec+'と決めた':'続ける・直す・やめる'),sub:'',
-    blocks:[{t:'kv',rows:decLines().length?decLines():[['判断','']]}],
-    checks:[['続ける・直す・やめる',!!R.dec,'redo']].concat(decLines().map(([l,v])=>[l,!!tx(v),'redo']))});
-  pages.push({sec:'付録 A4',title:'依頼主の6つの条件　そろった '+nIR+' / 6',sub:'依頼主（九大OIP・想定）が受け取るかを決める条件',
-    blocks:[{t:'kv',rows:IRAI.map(([t],i)=>{const x=IR[i]||{}; return [(i+1)+'　'+(x.st||'未記入'),t+(tx(x.why)?'\n→ '+tx(x.why):'')];})}],
+  pages.push({sec:'P6　ビジネスモデル図',title:'ビジネスモデル図',sub:'モノ・カネ・情報の流れ',blocks:[{t:'vizd',vm}],
+    checks:[['① 誰に・② 何を・③ 誰が',[1,4,7].every(i=>tx(S.viz.g[i])),'viz'],['矢印（モノ・カネ・情報）',vm.arrows.length>=2,'viz']]});
+  pages.push({kind:'divider',sec:'参考資料',title:'参考資料',sub:'検討の流れ／事業案の比較（事前課題・AIと8つの欄に・最終）／依頼主の6つの条件',blocks:[],checks:[]});
+  const r0=(S.pm.runs||[])[0]||{};
+  const preB=[].concat(S.teamPre&&Array.isArray(S.teamPre.pre)?S.teamPre.pre.filter(x=>tx(x[2])).map(x=>x[0]+'：'+tx(x[2])):[]);
+  if(!preB.length&&tx(S.pre.base)) preB.push((S.nick||'自分')+'：'+tx(S.pre.base));
+  const C=S.pm.cust||{}, jr=JROWS[(+C.row||0)-1], PL=S.idea.plan||{};
+  pages.push({sec:'付録 A1',title:'検討の流れ',sub:'事前課題からDAY2まで、何を決めてきたか',
+    blocks:[{t:'kv',rows:[['九大の宝 × 困りごと',[treasure,prob].filter(Boolean).join('　×　')],['総当たり表',cellsOn().length+' 通りを押した（遠いマス '+farCount()+'）'],
+      ['重視した社会の変化',cg.map(c=>c.h).join('\n')||'なし'],['AIのお客さん（判断表）',jr?('#'+C.row+' '+jr[0]+' → '+jr[1]):''],
+      ['調査設計',[tx(PL.first)&&('最初の相手：'+tx(PL.first)),(PL.rows||[]).filter(r=>tx(r.to)).length?('分担：'+(PL.rows||[]).filter(r=>tx(r.to)).map(r=>tx(r.who)+'→'+tx(r.to)).join('／')):''].filter(Boolean).join('\n')],
+      ['8日間',ppl+' 人（'+react+'）'],['ピボット（3回の判断）',pvT],['名称・コンセプトの変化',[tx(I.title)&&('DAY1（仮）：'+[tx(I.title),tx(I.concept)].filter(Boolean).join('　／　')),tx(R.name)&&('DAY2（確定）：'+[tx(R.name),tx(R.concept)].filter(Boolean).join('　／　'))].filter(Boolean).join('\n')]]}],
+    checks:[]});
+  pages.push({sec:'付録 A2',title:'事業案の比較 ── 事前課題・AIと8つの欄に・最終プレゼン',sub:'2日間と8日間で、何が上乗せされたか',
+    blocks:[{t:'cells',cols:3,items:[{h:'① 事前課題の1行の案（ひとりずつ・AIなし）',lines:preB},
+      {h:'② AIと8つの欄に（DAY1・チームの途中の案）',lines:RUNF.map(([k,l])=>tx(r0[k])?(l.replace(/（.*）/,'')+'：'+tx(r0[k])):'').filter(Boolean)},
+      {h:'③ 最終プレゼンの案（DAY2）',lines:finalLines()}]}],
+    checks:[['AIと8つの欄の案',RUNF.some(([k])=>tx(r0[k])),'pm']]});
+  pages.push({sec:'付録 A3',title:'依頼主の6つの条件　そろった '+nIR+' / 6',sub:'依頼主（九大OIP・想定）が受け取るかを決める条件と、九大に増える力',
+    blocks:[{t:'kv',rows:IRAI.map(([t],i)=>{const x=IR[i]||{}; return [(i+1)+'　'+(x.st||'未記入'),t+(tx(x.why)?'\n→ '+tx(x.why):'')];}).concat([['九大に増える力',GT.map(g=>g.t+'（いま '+g.now+' → '+g.after+'）'+(g.why?'：'+g.why:'')).join('\n')]])}],
     checks:[['6つすべてに印',IR.every(x=>x&&x.st),'redo']]});
-  const A=S.mix.aionly||{}, FL=finalLines();
-  pages.push({sec:'付録 A5',title:'AIだけの案と、最後の案',sub:'2日間と8日間で、何が上乗せされたか',
-    blocks:[{t:'cells',cols:2,items:[{h:'AIだけの案（DAY1 13:35・直していない）',lines:[tx(A.text)||tx(S.teamAio)]},{h:'最後の案（DAY2）',lines:FL}]}],
-    checks:[['AIだけの案',!!(tx(A.text)||tx(S.teamAio)),'mix']]});
-  pages.forEach((p,i)=>{ p.no=i+1; p.main=i<5; p.miss=p.checks.filter(c=>!c[1]); });
+  const st=staleItems(null);
+  pages.forEach((p,i)=>{ p.no=i+1; p.main=i<=6; if(i===1&&st.length) p.checks=p.checks.concat(st.map(([k])=>['見直しの印：'+SF[k][1],false,SF[k][0]])); p.miss=p.checks.filter(c=>!c[1]); });
   return pages;
 }
 function deckPages(){ return deckModel(); }
 function lineHtml(lines){ const a=(lines||[]).map(tx).filter(Boolean); return a.length?a.map(x=>'<p>'+esc(x)+'</p>').join(''):'<p class="q">未記入</p>'; }
+function vizdSvg(vm){ const g=vzGeom();
+  let h='<div class="vzd"><svg viewBox="0 0 '+VZW+' '+VZH+'" aria-label="ビジネスモデル図">';
+  vm.G.forEach((v,i)=>{ const x=g.cx(i)-g.cw/2, y=g.cy(i)-g.ch/2; const core=i===4, key=i===1||i===7;
+    h+='<rect x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+g.cw.toFixed(1)+'" height="'+g.ch.toFixed(1)+'" rx="1.2" fill="'+(core?'#EAD9E2':'#fff')+'" stroke="'+(v?(core||key?'#6B0F3A':'#b98ca3'):'#ddd')+'" stroke-width="'+(v?0.35:0.25)+'"'+(v?'':' stroke-dasharray="1 1"')+'/>';
+    h+='<text x="'+g.cx(i).toFixed(1)+'" y="'+(y+2.6).toFixed(1)+'" font-size="1.9" fill="#8a6a7a" text-anchor="middle">'+esc(VIZL[i].replace(/^[①-⑥⑤⑥]+\s*/,'').replace(/（.*$/,''))+'</text>'; });
+  vm.arrows.forEach(r=>{ const A=vzArrow(r.a,r.b,r.k), c='#'+FLOWC[r.k]; const P=A.pts.map(p=>p.slice()); const E=P[P.length-1]; const hx=E[0]-A.ux*2.2, hy=E[1]-A.uy*2.2; P[P.length-1]=[hx,hy];
+    h+='<polyline class="ar" points="'+P.map(p=>p[0].toFixed(2)+','+p[1].toFixed(2)).join(' ')+'" fill="none" stroke="'+c+'" stroke-width="0.5"'+(r.k==='info'?' stroke-dasharray="1.4 0.9"':'')+'/>';
+    h+='<polygon points="'+[E[0],E[1],hx+A.nx*1.1,hy+A.ny*1.1,hx-A.nx*1.1,hy-A.ny*1.1].map(v=>v.toFixed(2)).join(' ')+'" fill="'+c+'"/>';
+    h+='<text x="'+A.lx.toFixed(1)+'" y="'+(A.ly+0.7).toFixed(1)+'" font-size="2.1" fill="'+c+'" text-anchor="'+(A.bent&&A.vert?'start':'middle')+'" stroke="#fff" stroke-width="0.8" paint-order="stroke">'+esc(FLOWN[r.k]+(r.w?'：'+r.w.slice(0,14):''))+'</text>'; });
+  h+='</svg>'+vm.G.map((v,i)=>v?'<div class="vzc'+(i===4?' core':'')+'" style="left:'+((g.cx(i)-g.cw/2)/VZW*100).toFixed(2)+'%;top:'+((g.cy(i)-g.ch/2+3)/VZH*100).toFixed(2)+'%;width:'+(g.cw/VZW*100).toFixed(2)+'%;height:'+((g.ch-3)/VZH*100).toFixed(2)+'%">'+esc(v)+'</div>':'').join('')+'</div>'+
+    '<p class="vzl"><span style="color:#B8860B">━ カネ</span>　<span style="color:#2E7D32">━ モノ</span>　<span style="color:#1F5F8B">┅ 情報</span></p>';
+  return h; }
+function blockHtml(k){
+  if(k.t==='kv') return '<table class="kvt'+(k.rows.length>7?' dense':'')+'">'+k.rows.map(([l,v])=>'<tr><th>'+esc(l)+'</th><td>'+(tx(v)?esc(tx(v)):'<span class="q">未記入</span>')+'</td></tr>').join('')+'</table>';
+  if(k.t==='cells') return '<div class="cells" style="grid-template-columns:repeat('+k.cols+',1fr)">'+k.items.map(c=>'<div class="cl"><b>'+esc(c.h)+'</b><div>'+lineHtml(c.lines)+'</div></div>').join('')+'</div>';
+  if(k.t==='img') return '<div class="imgph">ここに画像を入れる<br><small>（'+esc(k.label)+'・PowerPointで入れます）</small></div>';
+  if(k.t==='split') return '<div class="split" style="grid-template-columns:'+k.ratio+'fr '+(1-k.ratio)+'fr"><div>'+k.l.map(blockHtml).join('')+'</div><div>'+k.r.map(blockHtml).join('')+'</div></div>';
+  if(k.t==='bmc'){ const B=k.B; const cell=(key,l,a)=>'<div class="cl" style="grid-area:'+a+'"><b>'+l+'</b><div>'+lineHtml(tx(B[key]).split('\n'))+'</div></div>';
+    return '<div class="bmc">'+cell('kp','⑧ パートナー','1/1/3/3')+cell('ka','⑦ 主要活動','1/3/2/5')+cell('kr','⑥ リソース','2/3/3/5')+cell('vp','② 価値提供','1/5/3/7')+cell('cr','④ 顧客との関係','1/7/2/9')+cell('ch','③ チャネル','2/7/3/9')+cell('cs','① 顧客セグメント','1/9/3/11')+cell('cost','⑨ コスト構造','3/1/4/6')+cell('rs','⑤ 収益の流れ','3/6/4/11')+'</div>'; }
+  if(k.t==='vizd') return vizdSvg(k.vm);
+  return ''; }
 function slideHtml(p,team){
-  let b='';
-  p.blocks.forEach(k=>{
-    if(k.t==='kv') b+='<table class="kvt'+(k.rows.length>7?' dense':'')+'">'+k.rows.map(([l,v])=>'<tr><th>'+esc(l)+'</th><td>'+(tx(v)?esc(tx(v)):'<span class="q">未記入</span>')+'</td></tr>').join('')+'</table>';
-    if(k.t==='cells') b+='<div class="cells" style="grid-template-columns:repeat('+k.cols+',1fr)">'+k.items.map(c=>'<div class="cl"><b>'+esc(c.h)+'</b><div>'+lineHtml(c.lines)+'</div></div>').join('')+'</div>';
-    if(k.t==='bmc'){ const B=k.B; const cell=(key,l,a)=>'<div class="cl" style="grid-area:'+a+'"><b>'+l+'</b><div>'+lineHtml(tx(B[key]).split('\n'))+'</div></div>';
-      b+='<div class="bmc">'+cell('kp','⑧ パートナー','1/1/3/3')+cell('ka','⑦ 主要活動','1/3/2/5')+cell('kr','⑥ リソース','2/3/3/5')+cell('vp','② 価値提供','1/5/3/7')+cell('cr','④ 顧客との関係','1/7/2/9')+cell('ch','③ チャネル','2/7/3/9')+cell('cs','① 顧客セグメント','1/9/3/11')+cell('cost','⑨ コスト構造','3/1/4/6')+cell('rs','⑤ 収益の流れ','3/6/4/11')+'</div>'; }
-    if(k.t==='viz') b+='<div class="vz"><div class="g3">'+k.g.map((v,i)=>'<div'+(i===4?' class="me"':'')+'>'+(tx(v)?esc(tx(v)):'')+'</div>').join('')+'</div><div class="cl"><b>お金・情報・モノの流れ</b><div>'+k.flows.map(([l,rs])=>'<p><b>'+esc(l)+'</b></p>'+lineHtml(rs)).join('')+'</div></div></div>';
-  });
-  return '<div class="sl"><span class="slk">'+esc(p.sec)+'</span><div class="slh"><h2>'+esc(p.title)+'</h2>'+(p.sub?'<p class="sls">'+esc(p.sub)+'</p>':'')+'</div><div class="slb">'+b+'</div><div class="slf"><span>ニュービジネス・クリエーション 2026　｜　'+esc(team)+'</span><span>'+p.no+'</span></div></div>';
+  if(p.kind==='cover') return '<div class="sl cover"><div class="cvb"><p class="cvk">ニュービジネス・クリエーション 2026　｜　九大の力 × 糸島エリア</p><h2>'+esc(p.title)+'</h2>'+(p.sub?'<p class="cvc">'+esc(p.sub)+'</p>':'<p class="cvc q">事業コンセプト 未記入</p>')+'<p class="cvt">'+esc(p.team)+(p.mem?'<br><small>'+esc(p.mem)+'</small>':'')+'</p></div><div class="slf"><span>2026年11月3日</span><span></span></div></div>';
+  if(p.kind==='divider') return '<div class="sl divider"><div class="cvb"><h2>'+esc(p.title)+'</h2><p class="cvc">'+esc(p.sub)+'</p></div><div class="slf"><span>ニュービジネス・クリエーション 2026　｜　'+esc(team)+'</span><span>'+p.no+'</span></div></div>';
+  return '<div class="sl"><span class="slk">'+esc(p.sec)+'</span><div class="slh"><h2>'+esc(p.title)+'</h2>'+(p.sub?'<p class="sls">'+esc(p.sub)+'</p>':'')+'</div><div class="slb">'+p.blocks.map(blockHtml).join('')+'</div><div class="slf"><span>ニュービジネス・クリエーション 2026　｜　'+esc(team)+'</span><span>'+p.no+'</span></div></div>';
 }
 let deckI=0, deckEl=null;
 function deckRender(){
   const ps=deckModel(); const p=ps[deckI];
   deckEl.querySelector('.stage16').innerHTML=slideHtml(p,tx(S.team));
-  deckEl.querySelector('.num').textContent=(deckI+1)+' / '+ps.length+(p.main?'（本編）':'（付録）');
+  deckEl.querySelector('.num').textContent=(deckI+1)+' / '+ps.length+(p.main?'（本編）':'（参考資料）');
 }
 function deckOpen(){
   if(deckEl)deckEl.remove();
@@ -2805,7 +3002,7 @@ document.addEventListener('keydown',e=>{
 });
 function tabLabel(v){ const b=document.querySelector('nav.tabs button[data-v="'+v+'"]'); return b?b.textContent.trim():v; }
 function buildShow(){
-  const h=document.getElementById('show-list'); h.innerHTML='';
+  const h=document.getElementById('show-list'); h.innerHTML=''; staleNote('show');
   deckModel().forEach(p=>{
     const d=document.createElement('div'); d.className='sv';
     const tabs=[...new Set(p.miss.map(c=>c[2]))];
@@ -2817,12 +3014,13 @@ function buildShow(){
 }
 function deckText(){
   const L=['# 発表原稿　'+(S.team||'')+'　'+(S.idea.title||''),''];
-  deckModel().forEach(p=>{ L.push('## '+p.sec+'　'+p.title); if(p.sub) L.push(p.sub);
+  deckModel().forEach(p=>{ L.push('## '+p.sec+'　'+p.title); if(p.sub) L.push(p.sub); if(p.kind==='cover') L.push(p.team+'　'+(p.mem||''));
     p.blocks.forEach(k=>{
       if(k.t==='kv') k.rows.forEach(([l,v])=>L.push('- '+l+'：'+(tx(v)||'未記入').replace(/\n/g,' ／ ')));
       if(k.t==='cells') k.items.forEach(c=>{ L.push('- '+c.h); nz(c.lines).forEach(x=>L.push('  - '+x)); });
       if(k.t==='bmc') BMCF.forEach(([key,l])=>L.push('- '+l+'：'+(tx(k.B[key])||'未記入')));
-      if(k.t==='viz'){ L.push('- 図解：'+k.g.map(tx).filter(Boolean).join('／')); k.flows.forEach(([l,rs])=>L.push('- '+l+'：'+(rs.join(' ／ ')||'未記入'))); }
+      if(k.t==='vizd'){ L.push('- 図解：'+k.vm.G.map(tx).filter(Boolean).join('／')); k.vm.flows.forEach(([l,rs])=>L.push('- '+l+'：'+(rs.join(' ／ ')||'未記入'))); }
+      if(k.t==='split') [].concat(k.l,k.r).forEach(b=>{ if(b.t==='kv') b.rows.forEach(([l,v])=>L.push('- '+l+'：'+(tx(v)||'未記入').replace(/\n/g,' ／ '))); });
     }); L.push(''); });
   return L.join('\n');
 }
@@ -2836,53 +3034,67 @@ function loadPptx(){ return new Promise((res,rej)=>{ if(window.PptxGenJS) return
 async function exportPptx(){
   const st=document.getElementById('show-st'); if(st) st.textContent='PowerPointを作っています…';
   try{
-    const Pptx=await loadPptx(); const pptx=new Pptx(); pptx.layout='LAYOUT_16x9'; pptx.author=S.nick||''; pptx.title=(S.idea.title||'NBC2026 発表');
+    const Pptx=await loadPptx(); const pptx=new Pptx(); pptx.layout='LAYOUT_16x9'; pptx.author=S.nick||''; pptx.title=(S.redo.name||S.idea.title||'NBC2026 発表');
     const F='Yu Gothic', C=NBC_C, T=NBC_T, team=tx(S.team);
     const txt=v=>tx(v)||'未記入';
+    const draw=(s,k,x,y,w,h)=>{
+      if(k.t==='kv'){ const n=k.rows.length, fs=n>9?8:n>7?8.5:n>5?9.5:11;
+        s.addTable(k.rows.map(([l,v])=>[{text:l,options:{bold:true,color:'4A1029',fill:{color:T}}},{text:txt(v),options:{color:tx(v)?'222222':'AA3355'}}]),
+          {x,y,w,colW:[Math.min(2.4,w*0.3),w-Math.min(2.4,w*0.3)],fontFace:F,fontSize:fs,border:{type:'solid',pt:0.75,color:'D9C1CD'},valign:'top',margin:n>8?0.025:0.05,rowH:Math.min(0.5,h/n)}); }
+      if(k.t==='cells'){ const n=k.cols, gap=0.15, cw=(w-gap*(n-1))/n;
+        k.items.forEach((c,i)=>{ const cx=x+i*(cw+gap);
+          s.addShape(pptx.ShapeType.rect,{x:cx,y,w:cw,h:0.34,fill:{color:C},line:{color:C}});
+          s.addText(c.h,{x:cx+0.06,y,w:cw-0.12,h:0.34,fontFace:F,fontSize:9.5,bold:true,color:'FFFFFF',valign:'middle',margin:0,fit:'shrink'});
+          s.addShape(pptx.ShapeType.rect,{x:cx,y:y+0.34,w:cw,h:h-0.34,fill:{color:'FFFFFF'},line:{color:'D9C1CD',width:0.75}});
+          const ls=nz(c.lines); s.addText(ls.length?ls.map(t=>({text:t,options:{breakLine:true}})):[{text:'未記入',options:{color:'AA3355'}}],{x:cx+0.08,y:y+0.4,w:cw-0.16,h:h-0.46,fontFace:F,fontSize:9.5,color:'222222',valign:'top',margin:0,paraSpaceAfter:3,fit:'shrink'}); }); }
+      if(k.t==='img'){ s.addShape(pptx.ShapeType.rect,{x,y,w,h,fill:{color:'FBF6F8'},line:{color:'B98CA3',width:1,dashType:'dash'}});
+        s.addText([{text:'ここに画像を入れる',options:{breakLine:true,bold:true}},{text:'（'+k.label+'）',options:{fontSize:9}}],{x,y,w,h,fontFace:F,fontSize:12,color:'8A6A7A',align:'center',valign:'middle',margin:0}); }
+      if(k.t==='split'){ const gap=0.2, lw=(w-gap)*k.ratio; drawList(s,k.l,x,y,lw,h); drawList(s,k.r,x+lw+gap,y,w-lw-gap,h); }
+      if(k.t==='bmc'){ const cw=w/10, rh=[h*0.37,h*0.37,h*0.26]; const ry=[y,y+rh[0],y+rh[0]+rh[1]];
+        const box=(key,l,r0,c0,r1,c1)=>{ const bx=x+c0*cw, by=ry[r0], bw=(c1-c0)*cw-0.05, bh=ry[r1-1]+rh[r1-1]-ry[r0]-0.05;
+          s.addShape(pptx.ShapeType.rect,{x:bx,y:by,w:bw,h:bh,fill:{color:'FFFFFF'},line:{color:C,width:0.75}});
+          s.addText(l,{x:bx+0.05,y:by+0.03,w:bw-0.1,h:0.22,fontFace:F,fontSize:8.5,bold:true,color:C,margin:0});
+          s.addText(txt(k.B[key]),{x:bx+0.05,y:by+0.27,w:bw-0.1,h:bh-0.3,fontFace:F,fontSize:9,color:tx(k.B[key])?'222222':'AA3355',valign:'top',margin:0,fit:'shrink'}); };
+        box('kp','⑧ パートナー',0,0,2,2); box('ka','⑦ 主要活動',0,2,1,4); box('kr','⑥ リソース',1,2,2,4); box('vp','② 価値提供',0,4,2,6); box('cr','④ 顧客との関係',0,6,1,8); box('ch','③ チャネル',1,6,2,8); box('cs','① 顧客セグメント',0,8,2,10); box('cost','⑨ コスト構造',2,0,3,5); box('rs','⑤ 収益の流れ',2,5,3,10); }
+      if(k.t==='vizd'){ let W2=w, H2=w*VZH/VZW; if(H2>h-0.25){ H2=h-0.25; W2=H2*VZW/VZH; } const ox=x+(w-W2)/2, oy=y, sx=W2/VZW, sy=H2/VZH, g=vzGeom();
+        k.vm.G.forEach((v,i)=>{ const bx=ox+(g.cx(i)-g.cw/2)*sx, by=oy+(g.cy(i)-g.ch/2)*sy, bw=g.cw*sx, bh=g.ch*sy;
+          s.addShape(pptx.ShapeType.roundRect,{x:bx,y:by,w:bw,h:bh,rectRadius:0.06,fill:{color:i===4?T:'FFFFFF'},line:{color:v?(i===4||i===1||i===7?C:'B98CA3'):'DDDDDD',width:v?1:0.5,dashType:v?'solid':'dash'}});
+          s.addText(VIZL[i].replace(/（.*$/,''),{x:bx,y:by+0.02,w:bw,h:0.2,fontFace:F,fontSize:7,color:'8A6A7A',align:'center',margin:0});
+          if(v) s.addText(v,{x:bx+0.04,y:by+0.2,w:bw-0.08,h:bh-0.24,fontFace:F,fontSize:10,bold:i===4,color:'222222',align:'center',valign:'middle',margin:0,fit:'shrink'}); });
+        k.vm.arrows.forEach(r=>{ const A=vzArrow(r.a,r.b,r.k);
+          for(let i=0;i<A.pts.length-1;i++){ const X1=ox+A.pts[i][0]*sx, Y1=oy+A.pts[i][1]*sy, X2=ox+A.pts[i+1][0]*sx, Y2=oy+A.pts[i+1][1]*sy; const last=i===A.pts.length-2;
+            s.addShape(pptx.ShapeType.line,{x:Math.min(X1,X2),y:Math.min(Y1,Y2),w:Math.max(Math.abs(X2-X1),0.001),h:Math.max(Math.abs(Y2-Y1),0.001),flipH:X2<X1,flipV:Y2<Y1,
+              line:Object.assign({color:FLOWC[r.k],width:1.75,dashType:r.k==='info'?'dash':'solid'},last?{endArrowType:'triangle'}:{})}); }
+          const mx=ox+A.lx*sx, my=oy+A.ly*sy, left=A.bent&&A.vert;
+          const lab=FLOWN[r.k]+(r.w?'：'+r.w:''), lw=Math.min(1.8,0.11*lab.length+0.12);
+          s.addText(lab,{x:left?mx:mx-lw/2,y:my-0.12,w:lw,h:0.24,fontFace:F,fontSize:8,color:FLOWC[r.k],align:left?'left':'center',valign:'middle',margin:0,fill:{color:'FFFFFF'},fit:'shrink'}); });
+        s.addText([{text:'━ カネ　',options:{color:FLOWC.money}},{text:'━ モノ　',options:{color:FLOWC.goods}},{text:'┅ 情報',options:{color:FLOWC.info}}],{x:x+w-3,y:oy+H2+0.02,w:3,h:0.2,fontFace:F,fontSize:8,align:'right',margin:0}); }
+    };
+    const drawList=(s,blocks,x,y,w,h)=>{ const n=blocks.length, gap=0.12, hh=(h-gap*(n-1))/n; blocks.forEach((k,i)=>draw(s,k,x,y+i*(hh+gap),w,hh)); };
     deckModel().forEach(p=>{
       const s=pptx.addSlide(); s.background={color:'FFFFFF'};
+      if(p.kind==='cover'||p.kind==='divider'){
+        s.addShape(pptx.ShapeType.rect,{x:0.45,y:0.9,w:0.14,h:3.4,fill:{color:C},line:{color:C}});
+        if(p.kind==='cover') s.addText('ニュービジネス・クリエーション 2026　｜　九大の力 × 糸島エリア',{x:0.8,y:0.9,w:8.6,h:0.3,fontFace:F,fontSize:11,color:'7A5A68',margin:0});
+        s.addText(p.title,{x:0.8,y:1.3,w:8.6,h:1.1,fontFace:F,fontSize:p.title.length>18?30:38,bold:true,color:'4A1029',valign:'middle',margin:0,fit:'shrink'});
+        s.addText(p.sub||(p.kind==='cover'?'事業コンセプト 未記入':''),{x:0.8,y:2.45,w:8.6,h:0.8,fontFace:F,fontSize:16,color:p.sub?'333333':'AA3355',valign:'top',margin:0,fit:'shrink'});
+        if(p.kind==='cover') s.addText([{text:p.team,options:{bold:true,breakLine:true}},{text:p.mem||'',options:{fontSize:12,color:'555555'}}],{x:0.8,y:3.4,w:8.6,h:0.8,fontFace:F,fontSize:15,color:'222222',valign:'top',margin:0});
+        s.addShape(pptx.ShapeType.rect,{x:0,y:5.4,w:10,h:0.225,fill:{color:C},line:{color:C}});
+        s.addText(p.kind==='cover'?'2026年11月3日':'ニュービジネス・クリエーション 2026　｜　'+team,{x:0.2,y:5.4,w:7,h:0.225,fontFace:F,fontSize:8,color:'FFFFFF',valign:'middle',margin:0});
+        if(p.kind==='divider') s.addText(String(p.no),{x:9.2,y:5.4,w:0.6,h:0.225,fontFace:F,fontSize:9,color:'FFFFFF',align:'right',valign:'middle',margin:0});
+        return; }
       s.addShape(pptx.ShapeType.rect,{x:0.35,y:0.3,w:0.07,h:0.46,fill:{color:C},line:{color:C}});
-      s.addText(p.title,{x:0.5,y:0.24,w:8.3,h:0.58,fontFace:F,fontSize:p.title.length>28?18:22,bold:true,color:'222222',valign:'middle',margin:0});
-      s.addText(p.sec,{x:7.4,y:0.05,w:2.4,h:0.22,fontFace:F,fontSize:8,color:'7A5A68',align:'right',margin:0});
-      if(p.sub) s.addText(p.sub,{x:0.52,y:0.8,w:9,h:0.3,fontFace:F,fontSize:11,color:'555555',margin:0});
+      s.addText(p.title,{x:0.5,y:0.24,w:8.3,h:0.58,fontFace:F,fontSize:p.title.length>28?17:22,bold:true,color:'222222',valign:'middle',margin:0,fit:'shrink'});
+      s.addText(p.sec,{x:6.8,y:0.05,w:3,h:0.22,fontFace:F,fontSize:8,color:'7A5A68',align:'right',margin:0});
+      if(p.sub) s.addText(p.sub,{x:0.52,y:0.8,w:9,h:0.3,fontFace:F,fontSize:11,color:'555555',margin:0,fit:'shrink'});
       s.addShape(pptx.ShapeType.rect,{x:0,y:5.4,w:10,h:0.225,fill:{color:C},line:{color:C}});
       s.addText('ニュービジネス・クリエーション 2026　｜　'+team,{x:0.2,y:5.4,w:7,h:0.225,fontFace:F,fontSize:8,color:'FFFFFF',valign:'middle',margin:0});
       s.addText(String(p.no),{x:9.2,y:5.4,w:0.6,h:0.225,fontFace:F,fontSize:9,color:'FFFFFF',align:'right',valign:'middle',margin:0});
-      let y=p.sub?1.2:1.05; const X=0.4, W=9.2, Y1=5.25;
-      p.blocks.forEach((k,bi)=>{
-        const hAvail=Y1-y; const share=(p.blocks.length>1&&bi===0)?hAvail*0.58:hAvail;
-        if(k.t==='kv'){ const fs=k.rows.length>8?8:k.rows.length>5?9.5:11;
-          s.addTable(k.rows.map(([l,v])=>[{text:l,options:{bold:true,color:'4A1029',fill:{color:T}}},{text:txt(v),options:{color:tx(v)?'222222':'AA3355'}}]),
-            {x:X,y,w:W,colW:[2.4,W-2.4],fontFace:F,fontSize:fs,border:{type:'solid',pt:0.75,color:'D9C1CD'},valign:'top',margin:k.rows.length>8?0.025:0.05,rowH:Math.min(0.5,share/k.rows.length)});
-          y+=share+0.1; }
-        if(k.t==='cells'){ const n=k.cols, gap=0.2, cw=(W-gap*(n-1))/n;
-          k.items.forEach((c,i)=>{ const cx=X+i*(cw+gap);
-            s.addShape(pptx.ShapeType.rect,{x:cx,y,w:cw,h:0.32,fill:{color:C},line:{color:C}});
-            s.addText(c.h,{x:cx+0.08,y,w:cw-0.16,h:0.32,fontFace:F,fontSize:11,bold:true,color:'FFFFFF',valign:'middle',margin:0});
-            s.addShape(pptx.ShapeType.rect,{x:cx,y:y+0.32,w:cw,h:share-0.32,fill:{color:'FFFFFF'},line:{color:'D9C1CD',width:0.75}});
-            const ls=nz(c.lines); s.addText(ls.length?ls.map(t=>({text:t,options:{breakLine:true}})):[{text:'未記入',options:{color:'AA3355'}}],{x:cx+0.1,y:y+0.38,w:cw-0.2,h:share-0.44,fontFace:F,fontSize:11,color:'222222',valign:'top',margin:0,paraSpaceAfter:3,fit:'shrink'}); });
-          y+=share+0.1; }
-        if(k.t==='bmc'){ const cw=W/10, rh=[1.55,1.55,1.0]; const ry=[y,y+rh[0],y+rh[0]+rh[1]];
-          const box=(key,l,r0,c0,r1,c1)=>{ const bx=X+c0*cw, by=ry[r0], bw=(c1-c0)*cw-0.05, bh=ry[r1-1]+rh[r1-1]-ry[r0]-0.05;
-            s.addShape(pptx.ShapeType.rect,{x:bx,y:by,w:bw,h:bh,fill:{color:'FFFFFF'},line:{color:C,width:0.75}});
-            s.addText(l,{x:bx+0.05,y:by+0.03,w:bw-0.1,h:0.22,fontFace:F,fontSize:8.5,bold:true,color:C,margin:0});
-            s.addText(txt(k.B[key]),{x:bx+0.05,y:by+0.27,w:bw-0.1,h:bh-0.3,fontFace:F,fontSize:9,color:tx(k.B[key])?'222222':'AA3355',valign:'top',margin:0,fit:'shrink'}); };
-          box('kp','⑧ パートナー',0,0,2,2); box('ka','⑦ 主要活動',0,2,1,4); box('kr','⑥ リソース',1,2,2,4); box('vp','② 価値提供',0,4,2,6); box('cr','④ 顧客との関係',0,6,1,8); box('ch','③ チャネル',1,6,2,8); box('cs','① 顧客セグメント',0,8,2,10); box('cost','⑨ コスト構造',2,0,3,5); box('rs','⑤ 収益の流れ',2,5,3,10);
-          y+=rh[0]+rh[1]+rh[2]+0.1; }
-        if(k.t==='viz'){ const gw=4.6, gh=share, cw=(gw-0.1)/3, ch=(gh-0.1)/3;
-          k.g.forEach((v,i)=>{ const r=Math.floor(i/3), c=i%3; s.addShape(pptx.ShapeType.rect,{x:X+c*(cw+0.05),y:y+r*(ch+0.05),w:cw,h:ch,fill:{color:i===4?T:'FFFFFF'},line:{color:i===4?C:'D9C1CD',width:0.75}});
-            if(tx(v)) s.addText(tx(v),{x:X+c*(cw+0.05)+0.03,y:y+r*(ch+0.05),w:cw-0.06,h:ch,fontFace:F,fontSize:9,bold:i===4,color:'222222',align:'center',valign:'middle',margin:0,fit:'shrink'}); });
-          const fx=X+gw+0.2, fw=W-gw-0.2;
-          s.addShape(pptx.ShapeType.rect,{x:fx,y,w:fw,h:0.28,fill:{color:C},line:{color:C}});
-          s.addText('お金・情報・モノの流れ',{x:fx+0.08,y,w:fw-0.16,h:0.28,fontFace:F,fontSize:10,bold:true,color:'FFFFFF',valign:'middle',margin:0});
-          const runs=[]; k.flows.forEach(([l,rs])=>{ runs.push({text:l,options:{bold:true,color:C,breakLine:true}}); (rs.length?rs:['未記入']).forEach(x=>runs.push({text:x,options:{breakLine:true,color:rs.length?'222222':'AA3355'}})); });
-          s.addText(runs,{x:fx+0.08,y:y+0.32,w:fw-0.16,h:gh-0.34,fontFace:F,fontSize:9.5,valign:'top',margin:0,fit:'shrink'});
-          y+=share+0.1; }
-      });
+      const y0=p.sub?1.18:1.02; drawList(s,p.blocks,0.4,y0,9.2,5.27-y0);
     });
     const name='NBC2026_'+(team||'チーム')+'_発表.pptx';
     await pptx.writeFile({fileName:name});
-    if(st) st.textContent='PowerPointを保存しました：'+name+'（本編5枚＋付録5枚）。手元で直してかまいません。';
+    if(st) st.textContent='PowerPointを保存しました：'+name+'（表紙＋本編6枚＋参考資料4枚）。P2・P3の枠に画像を入れてください。';
   }catch(e){ if(st) st.innerHTML='<span class="miss">PowerPointを作れませんでした（'+esc(e.message||e)+'）。</span>通信を確かめて、もう一度押してください。'; }
 }
 
@@ -2894,8 +3106,8 @@ const b64u={
 };
 /* 提出：回ごとに分ける */
 const PK={i:()=>CAPS.flatMap(c=>c.items.map(it=>{const x=S.items[it.id];return [it.id,x.mark||'',x.cond.map(b=>b?1:0).join(''),x.reason||'',x.src||''];})),
-  p:()=>S.probs.filter(p=>(p||'').trim()),pre:()=>S.pre,mix:()=>S.mix,pm:()=>S.pm,pa:()=>S.persona,vp:()=>S.vpc,id:()=>S.idea,
-  iv:()=>S.iv,rd:()=>S.redo,bm:()=>S.bmc,vz:()=>S.viz,gn:()=>gainRows(),pr:()=>S.peer,post:()=>S.post,dl:()=>S.delta,rc:()=>S.rec};
+  p:()=>S.probs.filter(p=>(p||'').trim()),pre:()=>S.pre,mix:()=>S.mix,pm:()=>Object.assign({},S.pm,{pivots:S.pivots}),pa:()=>S.persona,vp:()=>S.vpc,id:()=>S.idea,
+  iv:()=>S.iv,rd:()=>Object.assign({},S.redo,{pivots:S.pivots}),bm:()=>S.bmc,vz:()=>S.viz,gn:()=>gainRows(),pr:()=>S.peer,post:()=>S.post,dl:()=>S.delta,rc:()=>S.rec};
 const nzl=a=>(a||[]).filter(x=>(x||'').trim()).length;
 const SUBMITS=[
  {id:'am',g:'pre',t:'① 事前課題（ひとり）',when:'10月23日（金）24:00',keys:['i','p','pre'],
@@ -2915,7 +3127,7 @@ const SUBMITS=[
    ['AIのお客さん（まとめを貼り、判断表で決めた）',!!((S.pm.cust||{}).sum||'').trim()&&!!(S.pm.cust||{}).row,''],
    ['調査設計（最初の相手・最初の質問）',!!(S.idea.plan.first||'').trim()&&!!(S.idea.plan.q||'').trim(),'「調査設計」タブ'],
    ['分担表（だれが、だれに聞くか）',planRows().some(r=>(r.who||'').trim()&&(r.to||'').trim()),planRows().filter(r=>(r.who||'').trim()&&(r.to||'').trim()).length+' 行']]},
- {id:'iv',g:'gap',t:'④ 8日間 おわり（ひとり）',when:'11月1日（日）',keys:['iv'],
+ {id:'iv',g:'gap',t:'④ 8日間 おわり（ひとり）',when:'11月2日（月）18:00',keys:['iv'],
   chk:()=>{const L=S.iv.logs.filter(l=>(l.note||'').trim()); return [['自分が聞いた記録が1件以上（1対1で、チームで3人以上が下限）',L.length>=1,L.length+' 件'],['反応の強さを全部選んだ',L.length>0&&L.every(l=>l.strength),''],['相手が誰かを全部選んだ',L.length>0&&L.every(l=>l.self),'']];}},
  {id:'d2',g:'d2p',team:true,t:'⑤ DAY2 チームの最終案（記録係だけが送る）',when:'11月3日（火）発表のあと',keys:['id','pa','vp','rd','bm','vz','gn'],
   chk:()=>[['作り直す（判断）',!!S.redo.dec,S.redo.dec||'未'],['ビジネスモデル5マス以上',Object.values(S.bmc).filter(x=>(x||'').trim()).length>=5,Object.values(S.bmc).filter(x=>(x||'').trim()).length+' / 9'],
@@ -2923,7 +3135,9 @@ const SUBMITS=[
    ['九大に何が増えるか（1つ以上）',gainRows().some(r=>r.id&&r.after),''],
    ['適合表（VPC②・4行に○△×）',FIT.every(([k])=>S.redo.fit[k]&&S.redo.fit[k].m),FIT.filter(([k])=>S.redo.fit[k]&&S.redo.fit[k].m).length+' / 4'],
    ['依頼主の6つの条件（そろった／足りない）',S.redo.irai.every(x=>x&&x.st),S.redo.irai.filter(x=>x&&x.st).length+' / 6'],
-   ['いちばん大きく変えたもの',!!S.redo.changed,S.redo.changed||'未']]},
+   ['いちばん大きく変えたもの',!!S.redo.changed,S.redo.changed||'未'],
+   ['事業の名称とコンセプト（確定）',S.redo.dec==='やめる'||(!!(S.redo.name||'').trim()&&!!(S.redo.concept||'').trim()),S.redo.name||'未'],
+   ['見直しの印が残っていない',staleItems(null).length===0,staleItems(null).length+' 欄']]},
  {id:'pr',g:'d2p',t:'⑤b 他チームへの返事（受け取りたいか・全員ひとりずつ）',when:'11月3日（火）「受け取りたいか」のあと',keys:['pr'],
   chk:()=>[['返事を書いたチーム',S.peer.length>0,S.peer.length+' チーム'],['返事と6つの軸すべて',S.peer.length>0&&S.peer.every(r=>r.want&&(r.s||[]).every(x=>x>0)),'']]},
  {id:'post',g:'out',t:'⑥ 事後レポート（ひとり）',when:'11月10日（月）',keys:['post'],
@@ -3051,7 +3265,7 @@ function applyPacked(d){
   if(d.vz) S.viz=Object.assign(S.viz,d.vz);
   if(d.dl) S.delta=Object.assign(S.delta,d.dl);
   if(Array.isArray(d.pr)) S.peer=d.pr.slice();
-  if(d.rd) S.redo=Object.assign(S.redo,d.rd);
+  if(d.rd){ S.redo=Object.assign(S.redo,d.rd); if(Array.isArray(d.rd.pivots)) S.pivots=d.rd.pivots; delete S.redo.pivots; }
   if(d.rc) S.rec=Object.assign(S.rec,d.rc);
   if(Array.isArray(d.gn)) S.gain=d.gn;
   if(d.tm&&typeof d.tm==='object') S.teamPre=d.tm;
@@ -3176,6 +3390,7 @@ document.querySelectorAll('nav.tabs button').forEach(b=>b.addEventListener('clic
   if(V==='pm') buildPm();
   if(V==='iv') buildIv();
   if(V==='plan') buildPlanTab();
+  setTimeout(()=>staleNote(V),0);
   if(V==='vpc2') buildVpc2();
   if(V==='redo') buildRedo();
   if(V==='show') buildShow();
