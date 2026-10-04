@@ -201,7 +201,7 @@ table.tt tr.cur td{background:var(--hi-bg,rgba(46,125,90,.12));font-weight:700}.
       <div class="body"><p class="status">提出①が届いていない人は、ここに出ません。当日その人を入れるときは、記録係の画面に口頭で足してもらいます。</p></div></div>
     <div class="card"><h2>ワークベンチに載せる（teams.js）<span class="s">学生の操作なしで、チームのデータが入ります</span></h2><div class="body">
       <p style="margin:0 0 6px;font-size:13px">学生は、ワークベンチを開くだけです。<b>右上の名前（事前課題と同じ書き方）で自分のチームが自動で見つかり</b>、記録係の端末にはメンバー全員の事前課題が入ります。メンバーの端末には、チーム名・記録係・「記録係の画面で作業する」案内が出て、チームの提出ボタンは押せなくなります。</p>
-      <p style="margin:0 0 6px;font-size:13px"><b>載せる時期は3回</b>：①10/24（チーム編成と事前課題）②10/25夜（記録係の提出②のアイデアシート → メンバーの8日間の画面へ）③11/2（メンバーの聞き取り④と前半の見直し → 記録係のDAY2の画面へ）。毎回ここで作り直して、差し替えます。</p>
+      <p style="margin:0 0 6px;font-size:13px"><b>載せる時期は4回</b>：①10/24（チーム編成と事前課題）②10/25夜（記録係の提出② → メンバーの8日間の画面へ：調査設計・分担表・AIだけの案・チームの控え（DAY1））③11/2（メンバーの聞き取り④と前半の見直し → 記録係のDAY2の画面へ）④11/3夜（記録係の提出⑤ → メンバーの事後レポートへ：チームの控え（DAY2まで））。毎回、先に「スプレッドシートから読み込む」をしてから、ここで作り直して差し替えます。</p>
       <div class="btns"><button class="btn" id="tm-js">teams.js を作ってコピー</button></div>
       <p class="status" id="tm-js-st"></p>
       <textarea id="tm-js-out" readonly hidden style="min-height:80px"></textarea>
@@ -636,7 +636,12 @@ function teamObj(team){
   const idea=tsub.length?tsub[tsub.length-1].idea:null;
   const ivm=SUB.filter(x=>x.team===team&&x.iv&&(((x.iv.logs||[]).length)||((x.iv.targets||[]).length))).map(x=>({nick:x.nick,targets:x.iv.targets||[],logs:x.iv.logs||[],mid:x.iv.mid||null}));
   const am=SUB.filter(x=>x.team===team&&x.mix&&x.mix.aionly&&(x.mix.aionly.text||'').trim()); const aio=am.length?am[am.length-1].mix.aionly.text:'';
-  return {o,mem,idea,ivm,aio,items,i,probs:probs.length,agree:IDS.filter(id=>tmAgree(items[id])).length,maru:IDS.filter(id=>items[id].some(r=>r[1]==='◎')).length};
+  /* v21：記録係の提出②⑤の中身（チームの控え）。メンバーの「聞きに行く」「事後レポート」に読むだけで出る */
+  const recN=TEAMS.rec[team]||''; const rsub=SUB.filter(x=>x.team===team&&(x.idea||x.redo||x.bmc)); const rr=rsub.find(x=>x.nick===recN)||rsub[rsub.length-1]||null;
+  const cu=rr&&rr.pm&&rr.pm.cust?rr.pm.cust:{};
+  const rp=rr?{at:rr.at||'',persona:rr.persona||null,vpc:rr.vpc||null,idea:rr.idea||null,redo:rr.redo||null,bmc:rr.bmc||null,viz:rr.viz||null,gain:rr.gain||null,aio,
+    cust:{row:cu.row||'',jq:cu.jq||[],firstWho:cu.firstWho||'',qs:cu.qs||'',plan2:cu.plan2||''}}:null;
+  return {o,mem,idea,ivm,aio,rp,items,i,probs:probs.length,agree:IDS.filter(id=>tmAgree(items[id])).length,maru:IDS.filter(id=>items[id].some(r=>r[1]==='◎')).length};
 }
 /* ワークベンチに載せる teams.js：メンバーの名前ごとに暗号化（名前が鍵）。名前そのものは平文で載らない */
 function normName(x){ return String(x||'').normalize('NFKC').replace(/\s+/g,'').toLowerCase(); }
@@ -653,11 +658,11 @@ async function teamsJs(){
   const salt=b64e(crypto.getRandomValues(new Uint8Array(12))), at=new Date().toISOString(), m={}; let nMem=0, nTeam=0;
   for(const team of TNAMES){ const mem=persons().filter(p=>TEAMS.assign[p.nick]===team); if(!mem.length) continue; nTeam++;
     const t=teamObj(team);
-    const body={team,rec:TEAMS.rec[team]||'',members:mem.map(p=>p.nick),init:{i:t.i,p:t.o.p},tm:t.o.tm,idea:t.idea,ivm:t.ivm,aio:t.aio};
+    const body={team,rec:TEAMS.rec[team]||'',members:mem.map(p=>p.nick),init:{i:t.i,p:t.o.p},tm:t.o.tm,idea:t.idea,ivm:t.ivm,aio:t.aio,rp:t.rp};
     for(const p of mem){ const n=normName(p.nick); m[await sha24(salt+'|'+n)]=await sealFor(salt,n,body); nMem++; } }
   return {text:'/* ニュービジネス・クリエーション 2026　チームのデータ（'+at+'）。名前ごとに暗号化 */\nwindow.NBC_TEAMS='+JSON.stringify({v:1,at,salt,m})+';\n',nMem,nTeam}; }
 function tmMail(team,t){ return '【NBC】チーム編成のお知らせ（'+team+'）\n\n'+team+'のメンバー：'+t.mem.map(p=>p.nick).join('、')+'\n記録係：'+(TEAMS.rec[team]||'当日、チームで決めてください')+
-  '\n\nDAY1（10月25日）の朝、記録係の人は、ワークベンチの「控え・共有」タブ →「チームのデータ・記録係の内容を読み込む」に、このメールの本文を丸ごと貼って「読み込む」を押してください。'+
+  '\n\nDAY1（10月25日）の朝、記録係の人は、ワークベンチの「はじめに」タブのいちばん下 →「予備：チームのデータを読み込む」に、このメールの本文を丸ごと貼って「読み込む」を押してください。'+
   '\n21の質問に、メンバー全員の事前課題（判定と根拠）が並んだ状態で始まります。全員一致の質問には、判定が入っています。'+
   '\nほかのメンバーは、記録係の画面を一緒に見て進めます（自分の端末に読み込んでもかまいません。読み込むと、その端末の入力は置きかわります）。'+
   '\n\n【チームのデータ　ここから】\n'+t.code+'\n【ここまで】\n（書き換えずに、そのまま貼ってください）'; } /* 予備：teams.js が載せられないときだけ使う */
@@ -758,7 +763,7 @@ function renderMix(){
       const nm=((r.name||{})[oid]||'').trim();
       lab=(nm?'<b>'+esc(nm)+'</b>（'+oid+' '+esc(see)+'）':oid+' '+esc(see))+'　×　'+esc(pt);}
     return '<div style="border-bottom:1px solid var(--line);padding:8px 0"><b>'+esc(r.t)+'</b>　'+lab+'</div>';}).join('');
-  const CHGN={c1:'人口／既に起きつつある：糸島は人が増えているが働き手の割合は減っている',c2:'技術・制度／見込まれる：生成AIが事務や調べものの仕事に広く入っていく',c3:'環境／起こりうる：警固断層帯の地震',c4:'価値観（別枠）：都会の20代の4割が地方暮らしに関心'};
+  const CHGN={c1:'人口／既に起きつつある：糸島は人が増えているが働き手の割合は減っている',c2:'技術・制度／見込まれる：生成AIが事務や調べものの仕事に広く入っていく',c3:'環境／起こりうる：警固断層帯の地震',c4:'価値観（別枠）：都会の20代の4割が地方暮らしに関心',c5:'農業・食／既に起きつつある：農業の担い手が5年で24％減り、平均年齢は67.7歳',c6:'外国人・多文化／既に起きつつある：福岡県に住む外国人が11万人を超え、増え続けている',c7:'観光・インバウンド／既に起きつつある：九州に入国する外国人が2025年に過去最多を更新',c8:'地域・まちづくり／既に起きつつある：全国の空き家が900万戸を超え、過去最多になった',c9:'医療・介護／見込まれる：2040年度には介護職員が約272万人必要になる',c10:'エネルギー・脱炭素／見込まれる：2040年度、電気の4〜5割程度を再エネでまかなう見通し',c11:'教育・子ども／見込まれる：大学に進む人は2040年に約46万人へ減ると見込まれる',c12:'働き方・雇用／見込まれる：働く人の参加が進まないと、2040年の就業者は約5,768万人に',c13:'防災・気候／起こりうる：温暖化が進むと、福岡県の猛暑日は年33日ほどになりうる',c14:'価値観／別枠：「心の豊かさ」重視は半数、若い世代は「物の豊かさ」が多め',c15:'消費・暮らし／別枠：環境や社会に配慮した買い物、興味は4割台・実践は3割台'};
   const pc={}; const notes=[];
   ts.forEach(t=>{const mx=pick(t,'mix')||{}; const cg=(mx.chg&&mx.chg.picked)||[];
     cg.forEach(id=>{pc[id]=(pc[id]||0)+1; const n=((mx.chg.note||{})[id]||'').trim(); if(n) notes.push({t,id,n});});});
