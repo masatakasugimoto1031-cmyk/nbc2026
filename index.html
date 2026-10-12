@@ -5,7 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ニュービジネス・クリエーション 2026</title>
 <script src="config.js"></script>
-<style>img{max-width:100%}[hidden]{display:none!important}</style>
+<style>img{max-width:100%}[hidden]{display:none!important}
+/* v38：VPC②の向かい合わせ */
+.vpair{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start;padding:4px 0}
+.vhead{display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:12px;font-weight:700;color:var(--ink-3);margin-top:8px;border-bottom:1px solid var(--line);padding-bottom:4px}
+@media(max-width:720px){.vpair,.vhead{grid-template-columns:1fr}.vhead span:last-child{display:none}}
+</style>
 </head>
 <body>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -473,8 +478,8 @@ nav.tabs button.subtab::before{content:"✉ ";opacity:.8}
         <p>九大の力 × 糸島エリア　新規事業の担い手：九大OIP株式会社　／　あるものと課題から、新しい事業価値を。</p>
       </div>
       <div class="meta">
-        <div class="fld"><label for="team">チーム</label><input id="team" placeholder="A" autocomplete="off"></div>
-        <div class="fld"><label for="nick">あなたの名前（フルネーム）</label><input id="nick" placeholder="糸島 太郎" autocomplete="off"></div>
+        <div class="fld"><label for="team">チーム</label><input id="team" placeholder="講師が決めます（空欄のまま）" title="チームは10月22日に講師が決め、DAY1の前日までにこのページに自動で入ります。事前課題のあいだは空欄のままにしてください。" autocomplete="off"></div>
+        <div class="fld"><label for="nick">あなたの名前（フルネーム）</label><input id="nick" placeholder="糸島 太郎" title="フルネームで。提出のたびに同じ書き方にしてください（講師の集計は名前で人をまとめます）。" autocomplete="off"></div>
         <div class="fld" hidden><label>&nbsp;</label><button class="mini" id="share" style="padding:6px 12px">チームで共有</button></div>
       </div>
     </div>
@@ -485,6 +490,7 @@ nav.tabs button.subtab::before{content:"✉ ";opacity:.8}
       <span class="pill" id="p-src">◎の出所 <b>0</b> / 0</span>
       <span class="pill" id="p-prob">糸島の困りごと <b>0</b></span>
       <span class="pill" id="p-iv">聞いた記録 <b>0</b></span>
+      <span class="pill" id="p-sent" title="この端末から「提出する」で送って、受け付けられた回">提出 —</span>
       <span class="pill" id="p-save" title="入力は、この端末（このブラウザ）の中に自動で保存されます">この端末に保存 —</span>
     </div>
     <div class="phasenav" id="phasenav" role="group" aria-label="時間帯でタブを絞る"></div>
@@ -580,11 +586,11 @@ nav.tabs button.subtab::before{content:"✉ ";opacity:.8}
     <div class="card2">
       <h3 class="sec">この授業の進み方（3つのかたまり）</h3>
       <div class="f4s">
-        <div class="f4"><span class="f4n">① 事前課題（ひとり・60分）</span><b>10月22日（木）24時まで</b>
+        <div class="f4"><span class="f4n">① 事前課題（ひとり・目安60分）</span><b>10月19日（月）24時まで</b>
           <p>当たり前のメモ10分 → 21の質問30分 → 糸島の困りごと13分 → いま思いつく事業案を1行2分 → 提出5分。<b>「提出①」タブから、ひとりずつ送ります。</b></p>
           <p><b>AIで調べるのはOK。AIの文章をそのまま貼るのはNG。</b>◎には出所（だれに聞いた／どこで見た）を1行。</p></div>
-        <div class="f4"><span class="f4n">② DAY1（チーム・10月25日）</span><b>チームは前日に講師が決めます</b>
-          <p>10月24日に講師がチームと記録係を決め、<b>チームのデータをこのページに載せます</b>。DAY1の朝にこのページを開くと、<b>メンバー全員の事前課題が集まった状態</b>で始まります（読み込みの操作はありません）。午前に講義と、事前課題の持ち寄り。午後に、つなぎ合わせ→AIだけの案→AIと8つの欄に→ペルソナ→提供価値→アイデアシート→AIのお客さん→調査設計。
+        <div class="f4"><span class="f4n">② DAY1（チーム・10月25日）</span><b>チームと記録係は講師が決めます</b>
+          <p>10月22日に講師がチームと記録係を決め、DAY1の前日までに<b>チームのデータをこのページに載せます</b>。DAY1の朝にこのページを開くと、<b>メンバー全員の事前課題が集まった状態</b>で始まります（読み込みの操作はありません）。午前に講義と、事前課題の持ち寄り。午後に、つなぎ合わせ→AIだけの案→AIと8つの欄に→ペルソナ→提供価値→アイデアシート→AIのお客さん→調査設計。
           <b>ここから先はチームで1つの画面</b>（記録係の端末）に書き、提出も<b>チームで1件</b>です。</p></div>
         <div class="f4"><span class="f4n">③ 8日間とDAY2</span><b>10月26日〜11月3日</b>
           <p>聞きに行って（<b>1対1で、チームで3人以上</b>が下限）、作り直して、発表します。提出は、8日間のおわりの④（ひとりずつ）と、DAY2の⑤（チーム）・⑤b・⑥（ひとりずつ）。<b>8日間の途中の提出はありません。</b></p></div>
@@ -643,10 +649,12 @@ nav.tabs button.subtab::before{content:"✉ ";opacity:.8}
       <div class="scroll"><table class="map"><thead><tr><th>こうなった</th><th>こうする</th></tr></thead><tbody>
         <tr><td>入力が消えた・前の内容に戻したい</td><td>下の「<b>控えから復元</b>」。この端末には、数分ごとの控えが自動で6つ残っています。提出した回は講師の集計にも残っているので、消えません</td></tr>
         <tr><td>画面が動かない・真っ白になった</td><td>ページを読み込み直してください（入力は消えません）。直らなければ、別のブラウザで同じアドレスを開き、下の「<b>ファイルに控えを保存</b>」で作ったファイルを「<b>ファイルから復元</b>」で読み込みます</td></tr>
-        <tr><td>記録係の端末が使えなくなった（DAY1・DAY2）</td><td>ほかのメンバーの端末で「記録係が休みのとき：この端末を記録係にする」を押し、講師に伝えてください。講師が集計ボードから<b>最新の提出データ</b>を渡すので、下の「予備：チームのデータを読み込む」に貼ります</td></tr>
+        <tr><td>記録係の端末が使えなくなった（DAY1・DAY2）</td><td>ほかのメンバーの端末で「記録係が休みのとき：この端末を記録係にする」を押し、講師かTAに伝えてください。講師・TAが集計ボードから<b>記録係の引き継ぎデータ</b>を渡すので、下の「予備：チームのデータを読み込む」に貼ります（あなたの名前はそのまま残ります）</td></tr>
         <tr><td>「この名前が見つかりません」と出る</td><td>事前課題で入れたときと同じ書き方（姓と名の間の空白も）か確かめてください。違っていなければ、講師に名前を伝えてください</td></tr>
+        <tr><td>当日、チームや記録係が変わった</td><td>講師・TAがチームのデータを差し替えます。画面上の「<b>チームのデータを読み込み直す</b>」を押すか、ページを読み込み直してください。あなたの入力は消えません</td></tr>
         <tr><td>「提出する」が送れない</td><td>通信を確かめてもう一度。続けて失敗するときは「データだけコピー」を押し、講師に送ってください（講師が集計ボードに貼ります）</td></tr>
       </tbody></table></div>
+      <p class="see2" style="margin-top:6px">この画面の版：v38（2026年10月12日）</p>
       <h3 class="sec" style="margin-top:12px">控えから復元</h3>
       <p class="see2">自動の控え（この端末の中）の一覧です。復元すると、いまの入力はその時点の内容に置きかわります（置きかわる前の内容も、控えとして残します）。</p>
       <div id="bk-list"></div>
@@ -670,11 +678,11 @@ nav.tabs button.subtab::before{content:"✉ ";opacity:.8}
   <!-- ============ 事前課題 ============ -->
   <section id="v-pre" hidden>
     <div class="stage" data-v="pre"></div>
-    <p class="lede"><b>事前課題です。ひとりで、合わせて60分くらいを目安に</b>書いてください（このタブ10分＋「21の質問」30分＋「糸島の困りごと」13分＋事業案を1行2分＋提出5分）。<b>1回で終わらなくても大丈夫です。</b>入力はこの端末に残るので、何回かに分けて進められます。<b>締切は10月22日（木）24時。</b>「提出①」タブから送ります。10月23日に、大学から未提出の人へ連絡が行きます。<b>調べる前に、まず自分が知っていることを書いてください。</b></p>
+    <p class="lede"><b>事前課題です。ひとりで書きます。目安は60分（早い人は30分ほど）</b>です（このタブ10分＋「21の質問」30分＋「糸島の困りごと」13分＋事業案を1行2分＋提出5分）。<b>1回で終わらなくても大丈夫です。</b>入力はこの端末に残るので、何回かに分けて進められます。<b>締切は10月19日（月）24時。</b>「提出①」タブから送ります。10月20日に、大学から未提出の人へ連絡が行きます。<b>調べる前に、まず自分が知っていることを書いてください。</b></p>
     <div class="note" style="background:var(--ochre-soft);border-left-color:var(--ochre)"><b>AIのルール</b><br>
       AIで調べるのはかまいません。ただし、<b>AIの文章をそのまま貼らないでください。</b>自分の言葉で書き、<b>◎を付けた項目には「だれに聞いたか／どこで見たか」を1行だけ</b>添えてください（「21の質問」タブの出所欄）。<br>
       使ったかどうかは、下の3で教えてください。<b>使ったから減点、ということはありません。</b></div>
-    <div class="note">事前課題は<b>ひとりの作業</b>です。右上の「<b>あなたの名前</b>」には<b>フルネーム</b>を入れてください。<b>チームは空欄のままで構いません。</b>チームは講師が10月24日に決め、メンバー全員の事前課題を集めて<b>このページに載せます</b>。DAY1の朝、このページを開けば入っています。<b>同じ名前の書き方で</b>開いてください。</div>
+    <div class="note">事前課題は<b>ひとりの作業</b>です。右上の「<b>あなたの名前</b>」には<b>フルネーム</b>を入れてください。<b>チームは空欄のままで構いません。</b>チームは講師が10月22日に決め、メンバー全員の事前課題を集めて<b>このページに載せます</b>。DAY1の朝、このページを開けば入っています。<b>同じ名前の書き方で</b>開いてください。</div>
     <div class="card2">
       <h3 class="sec">1　九州大学について、あなたが「当たり前」だと思っていること</h3>
       <p class="see2">毎日見ているので特別だと思っていないもの。<b>外の人には珍しいかもしれないもの</b>。外の人に言われて意外だったことがあれば、それも。3つ書いてください。</p>
@@ -775,11 +783,11 @@ nav.tabs button.subtab::before{content:"✉ ";opacity:.8}
       指示文はこのページが作ります。<b>21の質問の◎△、糸島の困りごと、選んだ組み合わせ、選んだ社会の変化が自動で入ります。</b>書き写す必要はありません。</div>
     <div class="note" style="background:var(--ochre-soft);border-left-color:var(--ochre)"><b>このやり取りでは、AIは答えを出さずに質問を返してきます。それは故障ではなく、そういう指示文です。</b>答えを出すのはあなたたちです。<br>
       <b>分からないことは「分かりません」と答えてください。</b>分からない欄は空欄にせず「未確認」と書き、<b>誰に何を聞けば分かるか</b>を添えます。それが8日間で聞きに行くことになります。<b>AIが出した数字や会社名を、確かめずに写さないでください。</b></div>
-    <div class="note"><b>30分の目安：</b>やり取り20分 →「まとめて」をコピーして送る → まとめを貼り付けて「8つの欄に振り分ける」→ 残り10分で直す（確かめたものだけ残す・★を付ける・AIだけの案との違いを1行）。<br><b>AIへの返事は、1問1行で短くてかまいません。</b>分からなければ「分からない」だけで十分です。長く打つほど時間が足りなくなります。</div>
+    <div class="note"><b>30分の目安：</b>やり取り20分 →「まとめて」をコピーして送る → まとめを貼り付けて「8つの欄に振り分ける」→ 残り10分で直す（確かめたものだけ残す・★を付ける・AIだけの案との違いを1行）。<br><b>AIへの返事は、1問1行で短くてかまいません。</b>分からなければ「分からない」だけで十分です。長く打つほど時間が足りなくなります。<br>AIの発言の頭に出る<b>［3往復目／最大10］</b>は、やり取りの回数です（8つの欄の数とは関係ありません）。</div>
     <div class="note carrybox" id="pm-aio" hidden></div>
     <div class="card2">
       <h3 class="sec">① 使うAIの名前</h3>
-      <div class="fr"><label>使ったAIの名前（何でも構いません）</label><input type="text" id="pm-ai" placeholder="例：ChatGPT / Claude / Gemini など"></div>
+      <div class="fr"><label>使うAIの名前（何でも構いません）</label><input type="text" id="pm-ai" placeholder="例：ChatGPT / Claude / Gemini など"></div>
       <div id="pm-first" hidden></div>
     </div>
     <div id="pm-runs"></div>
@@ -856,7 +864,7 @@ nav.tabs button.subtab::before{content:"✉ ";opacity:.8}
   <section id="v-iv" hidden>
     <div class="stage" data-v="iv"></div>
     <p class="lede">10月26日（月）から11月2日（月）までの8日間。<b>アイデアシートの提案先の本人</b>に会って、「受け取りたいか」を確かめます。<b>1対1で、チームで3人以上</b>が下限です（上限はありません。多いほど確かになります）。締切は<b>11月2日（月）18時</b>です。</p>
-    <div class="note"><b>このタブは、ひとりずつ自分の端末で書きます。</b>調査設計（誰に・何を聞くか・分担）はDAY1に「調査設計」タブで決めてあります。<br><b>8日間の途中の提出はありません。11月2日（月）18時まで</b>に聞いた記録を提出（④）します。</div>
+    <div class="note"><b>このタブは、ひとりずつ自分の端末で書きます。</b>調査設計（誰に・何を聞くか・分担）はDAY1に「調査設計」タブで決めてあります。<br><b>8日間の途中の提出はありません。11月2日（月）18時まで</b>に聞いた記録を提出（④）します。<br><b>チームの3人のうち、少なくとも1人は、家族・友人ではない人</b>に聞くことをすすめます（家族・友人でも、提案先と同じ立場なら数えます）。</div>
     <div class="note" id="iv-weak" style="background:var(--ochre-soft);border-left-color:var(--ochre)"></div>
     <div class="card2" id="iv-steps"></div>
     <div class="note carrybox" id="iv-mine"></div>
@@ -885,15 +893,8 @@ nav.tabs button.subtab::before{content:"✉ ";opacity:.8}
     <div class="stage" data-v="vpc2"></div>
     <p class="lede"><b>DAY2の最初の作業です（10:40〜11:10・30分）。</b>8日間に会った人の言葉で、<b>左（相手のこと）を書き直し</b>、そのあとで<b>右（渡すもの）を初めて書きます</b>。最後に、左と右が合っているかを、聞いた事実で確かめます（適合表）。</p>
     <div class="note carrybox" id="vpc2-recap"></div>
-    <div class="g6">
-      <div><div class="card2"><h3 class="sec">1　相手のこと（会った人の言葉で書き直す）</h3><div id="vpc2-left"></div></div></div>
-      <div>
-        <div class="card2"><h3 class="sec">2　渡すもの（商品・サービス）</h3><div id="vpc-prod"></div></div>
-        <div class="card2"><h3 class="sec">困りごとをどう減らすか</h3><div id="vpc-rel"></div></div>
-        <div class="card2"><h3 class="sec">望みをどう満たすか</h3><div id="vpc-crt"></div></div>
-        <div class="card2"><h3 class="sec">情緒的価値 ── 使った人が、どんな気持ちになれるか</h3><div id="vpc-emo"></div></div>
-      </div>
-    </div>
+    <div class="card2"><h3 class="sec">1・2　相手のこと（左）と、渡すもの（右）── 行ごとに向かい合わせて書く</h3><div id="vpc2-left"></div></div>
+    <div class="card2"><h3 class="sec">情緒的価値 ── 使った人が、どんな気持ちになれるか</h3><div id="vpc-emo"></div></div>
     <div class="card2"><h3 class="sec">対応の確認</h3><div id="vpc2-chk" class="note" style="margin:0"></div></div>
     <div class="card2"><h3 class="sec">3　合っているか（適合表）── 聞いた事実で確かめる</h3><div id="redo-fit"></div></div>
   </section>
@@ -960,14 +961,16 @@ nav.tabs button.subtab::before{content:"✉ ";opacity:.8}
     <p class="lede">ほかのチームの発表を聞いて、<b>ひとつだけ答えます。「これを受け取りたいか」。</b>あなたが提案先の相手だったら、と考えてください。</p>
     <div class="note">点数も順位もつけません。<b>返事と、その理由</b>が、相手のチームにとっていちばん役に立ちます。<br>
       下の6つの軸は<b>授業の評価</b>です（<b>必須</b>）。この方法の判定ではありません。<br><b>5の「◎」</b>＝21の質問で「外に出せる強み」と判定した九大の強み。発表で使った九大の強みに、<b>外の人が認めた根拠（出所）</b>が示されていたかを見ます。</div>
-    <div class="btns"><button class="btn sec" id="peer-add">返事を書くチームを追加</button></div>
+    <div class="note" id="peer-guide"></div>
+    <div class="btns"><button class="btn" id="peer-all" hidden>残りのチームの欄をまとめて作る</button><button class="btn sec" id="peer-add">＋ 返事を書くチームを1つ追加</button></div>
     <div id="peer-body"></div>
+    <div class="btns"><button class="btn sec" id="peer-add2">＋ 返事を書くチームを1つ追加</button></div>
   </section>
 
   <!-- ============ 事後レポート ============ -->
   <section id="v-post" hidden>
     <div class="stage" data-v="post"></div>
-    <p class="lede">DAY2のあと、<b>11月10日（月）まで</b>に出してください。ひとりで書きます。</p>
+    <p class="lede">DAY2のあと、<b>11月10日（火）まで</b>に出してください。ひとりで書きます。</p>
     <div class="note"><b>3番（迷った質問）を具体的に書いてくれた人のレポートが、この方法をいちばん良くします。</b>うまくいかなかったことほど値打ちがあります。</div>
     <div class="note carrybox" id="post-ref" hidden></div>
     <div class="card2" id="post-q"></div>
@@ -1007,7 +1010,7 @@ nav.tabs button.subtab::before{content:"✉ ";opacity:.8}
   <div class="df"><button class="btn sec" id="pk-x">閉じる</button></div>
 </dialog>
 
-<script src="teams.js"></script>
+<script>document.write('<script src="teams.js?t='+Date.now()+'"><\/script>');</script>
 <script>
 const CAPS=[
  {k:'A',n:'ひと',s:'ここで動かしている人と、入ってくる人',items:[
@@ -1039,8 +1042,8 @@ const CAPS=[
   {id:'G2',see:'相手の広がり',q:'その相手は企業だけでしたか。役所や金融機関、メディアも入っていましたか',lv:['同じ立場だけ','2種類の立場','3種類以上の立場が入っている']},
   {id:'G3',see:'2回目があるか',q:'同じ相手と2回目、3回目をやっている例はありますか',lv:['ない','1組','複数組で継続している'],star:'1回きりの組み合わせがいくつあっても力になりません。7つの力のうち、この「組んだ実績」だけは、使うほど減るのではなく、使うほど増えます。'}]},
 ];
-const COND={'◎':['繰り返している（1回きりではない）','外から認められている（外の誰かが言った・使った事実がある）','事業を止めずに渡せる（渡しても九大が困らない）'],
-            '△':['実際に起きている（困ったことが本当に起きた）','その項目が原因である（ほかの原因のせいではない）','続いている（1回きりではない）']};
+const COND={'◎':['1回きりではない（毎年・毎週のように、くり返しある）','外の人が認めた事実がある（外の誰かが言った・使った・記事になった）','渡しても九大が困らない（研究や授業を止めずに外に出せる）'],
+            '△':['困ったことが実際に起きた（想像ではなく、起きた場面を言える）','この質問の力が足りないせいで起きた（ほかの理由ではない）','1回きりではない（続いている・くり返し起きている）']};
 const MARKS=[['◎','外に出せる強み'],['○','足りている'],['△','足りない'],['？','まだ分からない'],['—','当てはまらない']];
 
 const EV=[
@@ -1237,6 +1240,11 @@ function gauge(){
   document.getElementById('p-prob').innerHTML='糸島の困りごと <b>'+c.prob+'</b>';
   const iv=document.getElementById('p-iv');
   iv.innerHTML='聞いた記録 <b>'+c.log+'</b> / 3'; iv.className='pill '+(c.log>=3?'done':'');
+  const ps=document.getElementById('p-sent'); if(ps){ const SN={am:'①',pm:'②',iv:'④',d2:'⑤',pr:'⑤b',post:'⑥'};
+    const pre=(typeof phNow==='function')&&phNow()==='pre';
+    const ids=pre?['am']:(S.teamInfo&&S.role!=='rec'?['am','iv','pr','post']:['am','pm','iv','d2','pr','post']);
+    const sent=S.sent||{}; ps.innerHTML='提出 '+ids.map(k=>SN[k]+(sent[k]?'<b>✓</b>':'—')).join(' ');
+    ps.className='pill '+(ids.every(k=>sent[k])?'done':''); }
   CAPS.forEach(c2=>{
     const n=c2.items.filter(i=>S.items[i.id].mark&&S.items[i.id].mark!=='？').length;
     const e=document.getElementById('cnt-'+c2.k); if(e)e.textContent=n+' / 3';
@@ -1257,7 +1265,7 @@ function buildJudge(){
         '<p class="see">'+[2,1,0].map(i=>['△','○','◎'][i]+'　'+it.lv[i]).join('　／　')+'</p>'+
         '<div class="marks">'+MARKS.map(([m,l])=>'<button type="button" data-m="'+m+'" aria-pressed="'+(st.mark===m)+'"><span class="g">'+m+'</span>'+l+'</button>').join('')+'</div>'+
         '<div class="conds"><span class="ttl"></span></div>'+
-        '<textarea class="reason" id="r-'+it.id+'" placeholder="だれが・いつ・どこで、何と言ったか／何を見たか">'+(st.reason||'')+'</textarea>'+
+        '<textarea class="reason" id="r-'+it.id+'" placeholder="だれが・いつ・どこで、何と言ったか／何を見たか（下の「根拠集から引用」を押すと、出所つきで入ります）">'+(st.reason||'')+'</textarea>'+
         '<div class="srcbox" hidden><label for="s-'+it.id+'">出所（◎のときは必ず）</label>'+
         '<input type="text" class="src" id="s-'+it.id+'" value="'+esc(st.src||'')+'" placeholder="例：事務局の職員に聞いた（9/30）／産学連携課の公開資料（2026年度）">'+
         '<span class="srcmiss"></span></div>'+
@@ -1271,9 +1279,9 @@ function buildJudge(){
       function drawConds(){
         const m=st.mark; if(m!=='◎'&&m!=='△'){conds.innerHTML='<span class="ttl"></span>'; return;}
         const done=st.cond.filter(Boolean).length;
-        conds.innerHTML='<span class="ttl">'+(m==='◎'?'◎ 外に出せる強み':'△ 足りない')+' をつけるには、3つ全部に当てはまることが要ります</span>'+
+        conds.innerHTML='<span class="ttl">'+(m==='◎'?'◎ 外に出せる強み':'△ 足りない')+'：当てはまるものに印を付けてください（目安）</span>'+
           COND[m].map((t,i)=>'<label><input type="checkbox" data-c="'+i+'"'+(st.cond[i]?' checked':'')+'>'+t+'</label>').join('')+
-          (done<3?'<span class="warn">いま '+done+' / 3。3つそろわないときは「？ まだ分からない」にしてください。</span>':'');
+          (done<3?'<span class="warn">いま '+done+' / 3。<b>判定はこのままで構いません。</b>印が付かないものは、根拠の欄に「何がまだ言えないか」を1行足してください。</span>':'');
         conds.querySelectorAll('input').forEach(cb=>cb.addEventListener('change',e=>{
           st.cond[+e.target.dataset.c]=e.target.checked; save(); drawConds();
         }));
@@ -1369,7 +1377,7 @@ function ctx(){
   L.push('新規事業の担い手：九大OIP株式会社（九州大学が100%出資する会社。九大の研究成果や資産を事業にする）');
   L.push('事業を展開する場：糸島エリア（糸島半島の福岡市西区・糸島市エリア）');
   L.push('');
-  const pick=m=>CAPS.flatMap(c=>c.items).filter(i=>S.items[i.id].mark===m)
+  const pick=m=>CAPS.flatMap(c=>c.items).filter(i=>S.items[i.id].mark===m&&(m!=='◎'||useIds().includes(i.id)))
     .map(i=>{const n=(((S.mix&&S.mix.name)||{})[i.id]||'').trim();
       return '・'+(n?n+'（'+i.see+'）':i.see)+'：'+(S.items[i.id].reason.trim().replace(/\n/g,' ')||'（根拠は未記入）');});
   const o=pick('◎'), x=pick('△');
@@ -1388,7 +1396,7 @@ function ctx(){
   const others=(typeof cellsOn==='function'?cellsOn():[]).map(([k])=>k).filter(k=>k!==(S.mix&&S.mix.chosen));
   if(others.length){ L.push(''); L.push('総当たり表で「成り立ちそう」とした、ほかの候補：'); others.forEach(k=>L.push('・'+lab(k))); }
   const to=Object.entries((S.mix&&S.mix.to)||{}).map(([oid,arr])=>{const a=(arr||[]).map(v=>(v||'').trim()).filter(Boolean);
-    return a.length&&ITEMS[oid]&&S.items[oid]&&S.items[oid].mark==='◎'?'・'+nameOf(oid)+'：'+a.join('／'):'';}).filter(Boolean);
+    return a.length&&ITEMS[oid]&&S.items[oid]&&S.items[oid].mark==='◎'&&useIds().includes(oid)?'・'+nameOf(oid)+'：'+a.join('／'):'';}).filter(Boolean);
   if(to.length){ L.push(''); L.push('九大の宝ごとに、それを欲しがりそうな相手としてチームが挙げた人：'); L.push(to.join('\n')); }
   const cg=((S.mix&&S.mix.chg&&S.mix.chg.picked)||[]).map(id=>CHG.find(c=>c.id===id)).filter(Boolean);
   if(cg.length){ L.push(''); L.push('このチームが重視した社会の変化（講師が根拠つきで示したもの。予想ではない）：');
@@ -1415,7 +1423,7 @@ function promptFor(kind){
 ・社会の変化について、チームに予想させない。問うのは「その変化が起きたあとで、九大の外に出せる強みが誰の何に使えるか」だけ。
 ・**よくある事業の型（配車・予約・仲介のアプリなど）に寄せない。** チームの「宝のひと言」から離れない。前提にない分野の一般論を持ち込まない。
 ・健康・病歴・信条など立ち入った事柄、特定の個人の評価、相手が内緒だと言ったことは扱わない。税金・法律・お金の運用についての助言はしない。
-・毎回の発言の最初に「［n／10］」と、いま何往復目かを書く。
+・毎回の発言の最初に「［n往復目／最大10］」と、いま何往復目かを書く。
 ・チームの答えは短くてよい（単語や1行）。短い答えを聞き返さない。例を挙げるときは2つまで。
 
 【進め方】3段階。往復の目安を守る。目安を超えたら、その段階で答えの出ていない項目を「未確認」にして次へ進む。
@@ -1469,18 +1477,18 @@ function buildPm(){
   d.innerHTML='<h3 class="sec">② 指示文をコピーして、AIとやり取りする</h3>'+
     '<p class="see2">下のボタンで指示文をコピーし、お使いのAIに貼り付けてください。<b>20分は、この下の8つの欄を埋めるつもりで、AIとやり取りしてください</b>（聞く・答える・直す）。<b>「まとめて」は20分たってから送ります</b>（AIが先に最後のまとめを出したときは、その時点で）。</p>'+
     '<div class="fr"><label>このやり取りを、どこで始めますか（必ず選ぶ）</label><div class="radios" data-ch="0"></div>'+
-    '<p class="see2">いちばんよいのは<b>一時チャット</b>（過去のやり取りを使わないチャット）です。AIの「メモリ」機能は、新しいチャットにも前の内容を持ち込むことがあります。</p>'+
+    '<p class="see2"><b>必ず新しいチャットで始めます。</b>ChatGPTの「一時チャット」のように、過去のやり取りを使わない設定があれば、それを選ぶとなおよいです（AIの「メモリ」機能は、新しいチャットにも前の内容を持ち込むことがあります）。</p>'+
     '<p class="note" data-chw="0" hidden style="color:#b3261e"></p></div>'+
     '<div class="btns"><button class="btn" data-cp="0">指示文をコピー</button>'+
     '<button class="btn sec" data-sh="0">指示文を見る</button></div>'+
     '<pre class="out" data-pv="0" hidden style="max-height:260px;font-size:11.5px"></pre>';
   const CHO=['一時チャット','新しいチャット','これまでのチャットの続き'];
   const cpb=d.querySelector('[data-cp]'), chw=d.querySelector('[data-chw]');
-  const chGate=()=>{ const mx=counts().maru, hasMix=!!(S.mix&&S.mix.chosen&&S.mix.chosen.split('|').length===2), mxOk=mx>=1&&mx<=5;
+  const chGate=()=>{ const mx=maruList().length, hasMix=!!(S.mix&&S.mix.chosen&&S.mix.chosen.split('|').length===2), mxOk=mx>=1&&mx<=5;
     const okc=(r.chat===CHO[0]||r.chat===CHO[1])&&hasMix&&mxOk;
     cpb.disabled=!okc; cpb.style.opacity=okc?'':'.45'; cpb.style.cursor=okc?'':'not-allowed';
     if(!hasMix){ chw.hidden=false; chw.textContent='「つなぎ合わせる」で、組み合わせを1つ選んでください。選ぶと、コピーのボタンが押せるようになります。'; }
-    else if(!mxOk){ chw.hidden=false; chw.textContent='チームの◎が '+mx+' 個です。持ち寄りで3〜5個に絞ってから始めます（AIに渡す◎は、絞ったものだけです）。「21の質問」で、残りを○か？に直してください。'; }
+    else if(!mxOk){ chw.hidden=false; chw.innerHTML='AIに渡す◎が '+mx+' 個です。<b>「つなぎ合わせる」のいちばん上の枠で、3〜5個を選んでください</b>（「21の質問」の判定は変えません）。 <button type="button" class="mini" data-gomix>「つなぎ合わせる」へ</button>'; const gm=chw.querySelector('[data-gomix]'); if(gm) gm.addEventListener('click',()=>goTab('mix')); }
     else if(r.chat===CHO[2]){ chw.hidden=false; chw.textContent='これまでのチャットの続きでは始めないでください。前の話題が混ざります。新しいチャット（できれば一時チャット）を開いてから、選び直してください。'; }
     else if(!r.chat){ chw.hidden=false; chw.textContent='↑ 先にどこで始めるかを選ぶと、コピーのボタンが押せるようになります。'; }
     else chw.hidden=true; };
@@ -1500,7 +1508,7 @@ function buildPm(){
   wrapBtns.querySelector('[data-wr]').addEventListener('click',()=>copyTo(WRAPUP,'「まとめて」の文をコピーしました。AIに貼り付けて送ってください。'));
   d.appendChild(wrapBtns);
   const pa=document.createElement('div'); pa.className='fr pmpaste';
-  pa.innerHTML='<label>先に「まとめて」をAIに送り、<b>その返事</b>をここに丸ごと貼り付け（8つに分けるには「まとめて」が必要です）</label><textarea placeholder="1 機会（1文）… から 8 やめる条件 … までを貼り付けて、下のボタンを押します"></textarea>'+
+  pa.innerHTML='<label>上の「まとめて」をAIに送ると、AIが1〜8の番号つきで最後のまとめを返します。<b>そのまとめの返事を丸ごとコピーして、ここに貼り付け</b>、下のボタンを押します</label><textarea placeholder="1 機会（1文）… から 8 やめる条件 … までを貼り付けて、下のボタンを押します"></textarea>'+
     '<div class="btns"><button class="btn" type="button">8つの欄に振り分ける</button><span class="see2 pmres"></span></div>';
   pa.querySelector('button').addEventListener('click',()=>{
     const got=split8(pa.querySelector('textarea').value); let n=0, kept=0;
@@ -1708,6 +1716,10 @@ function coreIv(){
     r0.innerHTML='<label>その人は（家族・友人でも、提案先と同じ立場なら数えます）</label><div class="radios"></div>';
     radios(r0.querySelector('.radios'),['提案先の本人','提案先と同じ立場の人（家族・友人でもよい）','対象に当てはまらない人'],l.self||'',x=>{l.self=x;gauge();});
     d.appendChild(r0);
+    const rf=document.createElement('div'); rf.className='fr';
+    rf.innerHTML='<label>その人は、あなたの家族・友人ですか（数え方は変わりません。記録のためです）</label><div class="radios"></div>';
+    radios(rf.querySelector('.radios'),['家族・友人','家族・友人ではない'],l.fam||'',x=>{l.fam=x;});
+    d.appendChild(rf);
     d.appendChild(fld('聞いた内容（相手の言葉をそのまま）',l.note,'言い換えないで、言われたとおりに書いてください',x=>l.note=x));
     const r1=document.createElement('div'); r1.className='fr';
     r1.innerHTML='<label>反応の強さ ── 相手は、話を聞いたあと何をしましたか（いちばん強いもの1つ）</label><div class="radios"></div>'+
@@ -1830,6 +1842,11 @@ function buildMid(){
   drawPv();
   h.appendChild(fld('後半の4日で、何を確かめるか（別の案も持って行くか）',M.next,'例：決める人（組合長）に、どの予算から出すかを聞く。案②も見せる',x=>M.next=x));
 }
+function post21Html(){ const me=normName(S.nick||''); const T=S.teamPre&&S.teamPre.items;
+  const own=id=>{ if(T&&Array.isArray(T[id])){ const r=T[id].find(x=>normName(x[0])===me); if(r) return r[1]||''; } return (S.items[id]||{}).mark||''; };
+  const team=id=>(S.teamInfo&&S.role==='rec')?((S.items[id]||{}).mark||''):'';
+  return '<details class="more" open style="margin:8px 0"><summary data-fixed="1">問2・問3のための控え：21の質問と、あなたの印（自動で表示）</summary><div class="scroll"><table class="map"><thead><tr><th>#</th><th>見ること</th><th>あなたの事前課題の印</th>'+(S.teamInfo&&S.role==='rec'?'<th>チームの印</th>':'')+'</tr></thead><tbody>'+
+    CAPS.flatMap(c=>c.items).map(it=>'<tr><td>'+it.id+'</td><td>'+esc(it.see)+'</td><td>'+esc(own(it.id)||'—')+'</td>'+(S.teamInfo&&S.role==='rec'?'<td>'+esc(team(it.id)||'—')+'</td>':'')+'</tr>').join('')+'</tbody></table></div></details>'; }
 function buildPost(){
   const ref=document.getElementById('post-ref');
   if(ref){ const A=((S.mix.aionly||{}).text||'').trim()||(S.teamAio||'');
@@ -1840,6 +1857,7 @@ function buildPost(){
       ((S.teamInfo&&S.role!=='rec'&&S.teamRec)?'<details class="more" style="margin-top:8px"><summary data-fixed="1">チームの控え（記録係の画面・DAY1とDAY2）を見る</summary>'+recSnapHtml(S.teamRec,true)+'</details>':''); }
   const q=document.getElementById('post-q'); q.innerHTML='';
   POSTQ.forEach((t,i)=>{
+    if(i===1) q.insertAdjacentHTML('beforeend',post21Html());
     const h=document.createElement('h3'); h.className='sec'; h.textContent=(i+1)+'　'+t[0]; q.appendChild(h);
     if(t[1]){const p=document.createElement('p'); p.className='see2'; p.textContent=t[1]; q.appendChild(p);}
     q.appendChild(fld('','','',x=>S.post.a[i]=x));
@@ -1850,7 +1868,7 @@ function buildPost(){
 }
 document.getElementById('pm-ai').addEventListener('input',e=>{S.pm.ai=e.target.value;save();});
 document.getElementById('add-t').addEventListener('click',()=>{S.iv.targets.push({who:'',how:'',status:''});buildIv();save();});
-document.getElementById('add-l').addEventListener('click',()=>{S.iv.logs.push({who:'',when:'',note:'',verdict:'',quote:'',strength:'',self:''});buildIv();save();});
+document.getElementById('add-l').addEventListener('click',()=>{S.iv.logs.push({who:'',when:'',note:'',verdict:'',quote:'',strength:'',self:'',fam:''});buildIv();save();});
 
 const dlg=document.getElementById('picker');
 function openPick(id){
@@ -1958,9 +1976,10 @@ function refreshOut(){
 
 /* ================= added: mix / persona / vpc / idea / bmc / viz / delta / show / peer ================= */
 function nameOf(oid){const n=((S.mix&&S.mix.name)||{})[oid]; return (n||'').trim()||(ITEMS[oid]?ITEMS[oid].see:oid);}
+function useIds(){ const all=maruIds(); const u=((S.mix&&S.mix.use)||[]).filter(id=>all.includes(id)); return (all.length>5&&u.length)?u:all; }
 function maruList(){
-  const N=(S.mix&&S.mix.name)||{};
-  return CAPS.flatMap(c=>c.items.filter(i=>S.items[i.id].mark==='◎').map(i=>{const nm=(N[i.id]||'').trim();
+  const N=(S.mix&&S.mix.name)||{}; const U=useIds();
+  return CAPS.flatMap(c=>c.items.filter(i=>S.items[i.id].mark==='◎'&&U.includes(i.id)).map(i=>{const nm=(N[i.id]||'').trim();
     return {id:i.id,see:i.see,cap:c.n,named:!!nm,nm:nm||i.see};}));
 }
 function probList(){ return S.probs.map((t,i)=>({i,t:(t||'').trim()})).filter(x=>x.t); }
@@ -1998,7 +2017,14 @@ function carryAM(){
   h.innerHTML='<b>午前から自動で引き継いでいます（書き直す必要はありません）</b><br>'+
     '◎ 外に出せる強み <b>'+c.maru+'</b>（根拠も一緒に）　／　△ 足りない <b>'+tri.length+'</b>'+(tri.length?'（'+tri.map(esc).join('、')+'）':'')+
     '　／　糸島の困りごと <b>'+c.prob+'</b> 件'+(fromPre?'（事前課題からの '+fromPre+' 件を含む）':'')+
-    (c.maru>5?'<br><span class="miss">チームの◎は3〜5個に絞ります（いま '+c.maru+' 個）。根拠がいちばん強いもの、外の人が認めているものを残してください。</span>':'');
+    (c.maru&&c.maru<=5?'<br>◎の中身：'+maruIds().map(id=>'<b>'+id+'</b> '+esc(ITEMS[id].see)).join('、'):'');
+  if(c.maru>5){ const all=maruIds(), U=((S.mix&&S.mix.use)||[]).filter(id=>all.includes(id));
+    h.insertAdjacentHTML('beforeend','<div class="usebox" style="margin-top:8px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface)"><b>AIに渡す◎を3〜5個選んでください</b>（チームの◎が '+c.maru+' 個あります。<b>「21の質問」の判定は、このまま変えません。</b>ここで選んだものだけが、総当たり表とAIへの指示文に入ります。◎を付けた人が多いもの、外の人が認めた根拠があるものから選びます）'+
+      '<div class="usel" style="display:grid;gap:4px;margin-top:6px">'+all.map(id=>'<label style="display:flex;gap:6px;align-items:flex-start;font-size:13px"><input type="checkbox" data-use="'+id+'"'+(U.includes(id)?' checked':'')+'><span><b>'+id+'</b> '+esc(ITEMS[id].see)+(((S.items[id].reason||'').trim())?'<span class="see2">　'+esc(firstLine(S.items[id].reason,40))+'</span>':'')+'</span></label>').join('')+'</div>'+
+      '<p class="see2" style="margin:6px 0 0"><span class="'+(U.length>=3&&U.length<=5?'autotag':'miss')+'">選んだ '+U.length+' 個（3〜5個）</span></p></div>');
+    h.querySelectorAll('[data-use]').forEach(cb=>cb.addEventListener('change',()=>{ let u=((S.mix&&S.mix.use)||[]).filter(id=>all.includes(id)); const id=cb.dataset.use;
+      if(cb.checked){ if(u.length>=5){ cb.checked=false; return; } u.push(id); } else u=u.filter(x=>x!==id);
+      S.mix.use=all.filter(x=>u.includes(x)); save(); buildMix(); })); }
 }
 function nameCount(){return maruList().filter(m=>m.named).length;}
 function mixStat(){
@@ -2009,7 +2035,7 @@ function mixStat(){
     (on>=2&&!farCount()?'<br><span class="miss">候補のうち1つは「遠いマス」（宝と困りごとの分野が違う組み合わせ）にして、マスの「遠いマス」に印を付けてください。</span>':'')+
     (ms.length&&nameCount()<ms.length?'<br><span class="miss">ひと言にしていない宝があります。1に戻って書くと、表の見出しが分かりやすくなります。</span>':'')+
     (ms.length<3?'<br><span class="miss">◎が3つ未満です。「21の質問」に戻って、外に出せる強みを探してください。</span>':'')+
-    (ms.length>5?'<br><span class="miss">チームの◎が '+ms.length+' 個あります。持ち寄りで3〜5個に絞ってください（残りは「21の質問」で○か？に直す）。6個以上のままでは、AIへの指示文をコピーできません。</span>':'')+
+    (ms.length>5?'<br><span class="miss">AIに渡す◎がまだ '+ms.length+' 個です。上の「午前から引き継いでいます」の枠で、3〜5個を選んでください（判定は変えません）。選ぶまで、AIへの指示文はコピーできません。</span>':'')+
     (ps.length<3?'<br><span class="miss">困りごとが3件未満です。「糸島の困りごと」に戻ってください（3〜5件）。</span>':'');
 }
 function buildMix(){
@@ -2234,10 +2260,11 @@ function vpcChk(){
   const L=['相手の側（書き直し後）：やろうとしていること '+m('jobs')+' ／ 困りごと '+m('pains')+' ／ 望み '+m('gains'),
     '渡す側：渡すもの '+n('prod')+' ／ 減らす方法 '+n('rel')+' ／ 満たす方法 '+n('crt')];
   const w=[];
-  if(m('pains')>n('rel')) w.push('困りごとの数（'+m('pains')+'）より、減らす方法（'+n('rel')+'）が少ないです。<b>手を打てていない困りごとがあります。</b>');
-  if(n('rel')>m('pains')) w.push('減らす方法（'+n('rel')+'）が、困りごと（'+m('pains')+'）より多いです。<b>誰も困っていないことに手を打っている可能性があります。</b>');
-  if(m('gains')>n('crt')) w.push('望み（'+m('gains')+'）より、満たす方法（'+n('crt')+'）が少ないです。');
-  e2.innerHTML=L.join('<br>')+(w.length?'<br><br><span class="miss">'+w.join('<br>')+'</span>':'<br><br>左右の数が対応しています。');
+  [['pains','rel','困りごと','減らす方法'],['gains','crt','望み','満たす方法']].forEach(([lk,rk,ll,rl])=>{ const LL=vpcLeft(lk);
+    (S.vpc[rk]||[]).forEach((v,i)=>{ const l=(LL[i]||'').trim(), r=(v||'').trim();
+      if(l&&!r) w.push(ll+(i+1)+'の右（'+rl+'）が空です。<b>この困りごと・望みには、まだ何も渡していません。</b>');
+      if(r&&!l) w.push(rl+(i+1)+'の左（'+ll+'）が空です。<b>相手のことが書かれていない行に、手を打っています。</b>'); }); });
+  e2.innerHTML=L.join('<br>')+(w.length?'<br><br><span class="miss">'+w.join('<br>')+'</span>':'<br><br>向かい合う行が、すべてそろっています。');
 }
 function ivRecapHtml(){ const logs=allLogs(); const own=logs.filter(counted);
   const c=v=>logs.filter(l=>l.verdict===v).length, sc=v=>own.filter(l=>l.strength===v).length;
@@ -2250,13 +2277,23 @@ function buildVpc2(){
   const rc=document.getElementById('vpc2-recap'); if(rc) rc.innerHTML='<b>8日間で分かったこと（自動で表示）</b><br>'+ivRecapHtml();
   const I=S.idea, V=S.vpc, o=[];
   if(!(V.prod[0]||'').trim()&&(I.val||'').trim()){ V.prod[0]=I.val.trim(); o.push('渡すもの1（アイデアシートの「何を渡すか」から）'); save(); }
-  const L=document.getElementById('vpc2-left'); L.innerHTML='<p class="see2">DAY1に書いたことを、<b>会った人の言葉</b>で書き直します。変わらなければ、同じことを書いてかまいません。ここが空のときは、DAY1の内容がそのまま使われます。</p>';
-  [['jobs','相手がやろうとしていること'],['pains','困っていること（ペイン）'],['gains','望んでいること（ゲイン）']].forEach(([k,l])=>{
-    L.insertAdjacentHTML('beforeend','<h4 style="margin:10px 0 2px;font-size:13px">'+l+'</h4>');
+  const L=document.getElementById('vpc2-left'); L.innerHTML='<p class="see2"><b>左</b>は、DAY1に書いたことを<b>会った人の言葉</b>で書き直します（変わらなければ同じでかまいません。空のときはDAY1の内容が使われます）。<b>右</b>は、<b>その行の左に応えるもの</b>を初めて書きます。</p>'+
+    '<div class="vhead"><span>相手のこと（会った人の言葉で）</span><span>渡すもの（九大の側から）</span></div>';
+  [['jobs','prod','相手がやろうとしていること','渡すもの（商品・サービス）','例：週末に、母国語で商品を案内できる人と手順'],
+   ['pains','rel','困っていること（ペイン）','その困りごとをどう減らすか','左の困りごとに、何で応えるか'],
+   ['gains','crt','望んでいること（ゲイン）','その望みをどう満たすか','左の望みに、何で応えるか']].forEach(([k,rk,l,rl,rph])=>{
+    L.insertAdjacentHTML('beforeend','<h4 style="margin:12px 0 4px;font-size:13px">'+l+' ⇔ '+rl+'</h4>');
+    let more=null;
     S.vpc.d2[k].forEach((v,i)=>{ const d1=(S.vpc[k][i]||'').trim();
+      const row=document.createElement('div'); row.className='vpair';
       const f=fld(l.replace(/（.*）/,'')+' '+(i+1)+'（書き直し）',v,d1?'DAY1：'+d1:'会った人の言葉で',x=>{S.vpc.d2[k][i]=x; vpcChk();});
       if(d1) f.insertAdjacentHTML('afterbegin','<p class="carry" style="margin:0 0 2px"><span class="ctag">DAY1</span>'+esc(d1)+'</p>');
-      L.appendChild(f); }); });
+      const g=fld(rl.replace(/（.*）/,'')+' '+(i+1),S.vpc[rk][i]||'',i===0?rph:'',x=>{S.vpc[rk][i]=x; vpcChk();});
+      row.appendChild(f); row.appendChild(g);
+      if(i===0) L.appendChild(row);
+      else{ if(!more){ more=document.createElement('details'); more.className='more vmore'; const any=[1,2].some(j=>((S.vpc.d2[k][j]||'').trim()||(S.vpc[k][j]||'').trim()||(S.vpc[rk][j]||'').trim())); if(any) more.open=true;
+          more.innerHTML='<summary data-fixed="1">2行目・3行目（任意）</summary>'; L.appendChild(more); }
+        more.appendChild(row); } }); });
   const EM=document.getElementById('vpc-emo'); if(EM){ EM.innerHTML=''; EM.appendChild(fld('情緒的価値（1〜2行）',S.vpc.emo||'','例：店長が「外国のお客さんにも胸を張って勧められる」と思える',x=>{S.vpc.emo=x;})); }
   coreVpc(); buildFit();
   sec.querySelectorAll('.note.auto').forEach(x=>x.remove());
@@ -2267,7 +2304,7 @@ const IDEAF=[['title','事業の名称（仮）','ひと言で分かる名前を
  ['concept','事業コンセプト（ひとこと・仮）','誰の、どんな困りごとを、何で、どう変えるかを1文で。DAY2の「作り直す」で確定します','in'],
  ['who','誰の困りごとに応えるか（提案先）','ペルソナの名前と立場。この1枚を最初に見せる相手'],
  ['pain','その困りごと','実際に起きている出来事で'],
- ['val','何を渡すか','九大の◎（外に出せる強み）のどれを使うかを明記する'],
+ ['val','何を渡すか（仮説：8日間で確かめる）','九大の◎（外に出せる強み）のどれを使うかを明記する。まだ確かめていないので、言い切らなくてかまいません'],
  ['how','どうやって届けるか','誰が、いつ、どこで'],
  ['partner','誰と組むか','組織でも個人（学生・研究者など）でもよい。「地元の企業」ではなく特定できる形で'],
  ['benefit','その相手にとっての利益','相手の側から見て、これをやると何が良いのか'],
@@ -2432,17 +2469,25 @@ function buildDelta(){
 function gainText(){ return gainRows().filter(r=>r.id&&ITEMS[r.id]).map(r=>{const it=ITEMS[r.id];
   return {cap:it.cap,t:it.id+' '+it.see,now:S.items[r.id].mark||'未判定',after:r.after||'—',why:r.why||''};}); }
 const PEERAX=['1 新規性','2 優位性','3 有効性','4 市場性','5 九大の強み（◎）に根拠があるか','6 組む相手に相手の利益が書かれているか'];
+function peerTeams(){ const all=((S.teamInfo&&S.teamInfo.all)||[]).filter(Boolean); const mine=S.team||'';
+  return all.filter(t=>t!==mine); }
+function peerGuide(){ const g=document.getElementById('peer-guide'); if(!g) return; const others=peerTeams();
+  const done=S.peer.filter(r=>(r.team||'').trim()&&r.want).length;
+  const has=new Set(S.peer.map(r=>(r.team||'').trim()));
+  const rest=others.filter(t=>!has.has(t));
+  g.innerHTML='<b>自分のチーム以外の、すべてのチームに1枚ずつ返事を書きます。</b>'+(others.length?'いま <b>'+done+' / '+others.length+'</b> チーム'+(rest.length?'（まだ欄がないチーム：'+rest.map(esc).join('、')+'）':''):'いま <b>'+done+'</b> チーム分。発表したチームの数だけ「＋」で追加します。');
+  const pa=document.getElementById('peer-all'); if(pa) pa.hidden=!rest.length; }
 function buildPeer(){
-  const h=document.getElementById('peer-body'); h.innerHTML='';
-  if(!S.peer.length){h.innerHTML='<p class="see2">「返事を書くチームを追加」を押してください。</p>';return;}
+  const h=document.getElementById('peer-body'); h.innerHTML=''; peerGuide();
+  if(!S.peer.length){h.innerHTML='<p class="see2">'+(peerTeams().length?'「残りのチームの欄をまとめて作る」を押すと、全チームの欄ができます。':'「＋ 返事を書くチームを1つ追加」を押してください。')+'</p>';return;}
   S.peer.forEach((r,i)=>{
     if(!Array.isArray(r.s)) r.s=[0,0,0,0,0,0];
     const d=document.createElement('div'); d.className='card2';
-    d.innerHTML='<div class="hdr"><b>'+(i+1)+'</b><button type="button" class="del">削除</button></div>';
-    d.appendChild(fld('チーム名',r.team,'例：Cチーム',x=>r.team=x,'in'));
+    d.innerHTML='<div class="hdr"><b>'+(i+1)+(r.team?'　'+esc(r.team):'')+'</b><button type="button" class="del">この欄を削除</button></div>';
+    d.appendChild(fld('チーム名',r.team,'例：Cチーム',x=>{r.team=x; peerGuide();},'in'));
     const q=document.createElement('div'); q.className='fr';
     q.innerHTML='<label style="font-size:14px"><b>あなたが提案先の相手だったら、これを受け取りたいですか</b></label><div class="radios"></div>';
-    radios(q.querySelector('.radios'),['受け取りたい','条件つきで受け取りたい','受け取らない'],r.want||'',v=>{r.want=v;});
+    radios(q.querySelector('.radios'),['受け取りたい','条件つきで受け取りたい','受け取らない'],r.want||'',v=>{r.want=v; peerGuide();});
     d.appendChild(q);
     d.appendChild(fld('そう答えた理由',r.why,'例：秋の試しなら乗れる。ただし誰が当日動くのかが分からない',x=>r.why=x));
     d.appendChild(fld('このチームに、いちばん確かめてほしいこと',r.ask,'例：本当に週末に手伝える人がいるのか',x=>r.ask=x));
@@ -2567,7 +2612,12 @@ function buildCust(){
   const ch=document.createElement('div'); ch.className='fr'; ch.innerHTML='<label>どこで始めますか（必ず選ぶ）</label><div class="radios"></div>'; R.appendChild(ch);
   radios(ch.querySelector('.radios'),CHO,C.chat,v=>{C.chat=v; custGate();});
   const bt=document.createElement('div'); bt.className='btns'; bt.innerHTML='<button type="button" class="btn" id="cust-cp">指示文をコピー</button><button type="button" class="btn sec" id="cust-sh">指示文を見る</button>'; R.appendChild(bt);
-  R.insertAdjacentHTML('beforeend','<p class="note" id="cust-gw" hidden style="color:#b3261e"></p><pre class="out" id="cust-pv" hidden style="max-height:260px;font-size:11.5px;white-space:pre-wrap"></pre>');
+  R.insertAdjacentHTML('beforeend','<p class="note" id="cust-gw" hidden style="color:#b3261e"></p><pre class="out" id="cust-pv" hidden style="max-height:260px;font-size:11.5px;white-space:pre-wrap"></pre>'+
+    '<div class="note" style="margin-top:8px"><b>コピーしたあとにすること</b><ol style="margin:4px 0 0;padding-left:1.4em">'+
+    '<li>新しいチャットに貼り付けて送る → AIが場面と3人（Aさん・Bさん・Cさん）を出します</li>'+
+    '<li>3人の設定がペルソナと違えば「Aさんの〇〇は△△」と1回だけ直す。直すところがなければ「このままで」と送る</li>'+
+    '<li>そのあとは、AIが毎回の最後に「――次は…」と<b>次に送る言葉</b>を出します。それをそのまま送ります（1問目 → 2問目 → 「提示」 → 3問目 → 「まとめ」）</li>'+
+    '<li>「まとめ」の返事を丸ごとコピーして、下の4に貼り付けます</li></ol></div>');
   bt.querySelector('#cust-cp').addEventListener('click',async e=>{ if(e.currentTarget.disabled) return; if(!C.t0){C.t0=Date.now(); save();} await copyTo(custPrompt(),'指示文をコピーしました。新しいチャットに貼って送ってください。'); });
   bt.querySelector('#cust-sh').addEventListener('click',()=>{ const pv=document.getElementById('cust-pv'); pv.hidden=!pv.hidden; pv.textContent=custPrompt(); });
   custGate();
@@ -2625,7 +2675,7 @@ const STAGE={
  show:['S6 形にする','発表','8分／チーム','自動でできた発表画面'],
  peer:['持ち寄りの場','「受け取りたいか」の一問','15分','ほかのチームへの返事'],
  post:['ふりかえり','事後レポート','11月10日まで','この方法への意見'],
- 'sub-am':['提出①','事前課題の提出（ひとり1件）','10月22日 24:00','受付済みの記録'],'sub-pm':['提出②','DAY1 午後の提出','17:00','受付済みの記録'],
+ 'sub-am':['提出①','事前課題の提出（ひとり1件）','10月19日 24:00','受付済みの記録'],'sub-pm':['提出②','DAY1 午後の提出','17:00','受付済みの記録'],
  'sub-iv':['提出④','聞いた記録','11月2日 18:00','受付済みの記録'],
  'sub-d2':['提出⑤','チームの最終案（記録係だけ）','発表のあと','受付済みの記録'],'sub-pr':['提出⑤b','他チームへの返事（全員ひとりずつ）','受け取りたいかのあと','受付済みの記録'],'sub-post':['提出⑥','事後レポート','11月10日','受付済みの記録']
 };
@@ -3151,15 +3201,15 @@ const PK={i:()=>CAPS.flatMap(c=>c.items.map(it=>{const x=S.items[it.id];return [
   iv:()=>S.iv,rd:()=>Object.assign({},S.redo,{pivots:S.pivots}),bm:()=>S.bmc,vz:()=>S.viz,gn:()=>gainRows(),pr:()=>S.peer,post:()=>S.post,dl:()=>S.delta,rc:()=>S.rec};
 const nzl=a=>(a||[]).filter(x=>(x||'').trim()).length;
 const SUBMITS=[
- {id:'am',g:'pre',t:'① 事前課題（ひとり）',when:'10月22日（木）24:00',keys:['i','p','pre'],
+ {id:'am',g:'pre',t:'① 事前課題（ひとり）',when:'10月19日（月）24:00',keys:['i','p','pre'],
   chk:()=>[['21の質問を15問以上判定',counts().judged>=15,counts().judged+' / 21'],
    ['◎ 外に出せる強みが3つ以上',counts().maru>=3,counts().maru+' 個'],
    ['◎すべてに根拠と出所',maruIds().length>0&&maruIds().every(id=>(S.items[id].reason||'').trim()&&(S.items[id].src||'').trim()),srcCount()+' / '+maruIds().length],
    ['糸島の困りごとが3〜5件',counts().prob>=3&&counts().prob<=5,counts().prob+' 件'],
    ['いま思いつく事業案を1行',!!(S.pre.base||'').trim(),'']]},
  {id:'pm',g:'pm1',team:true,t:'② DAY1 午後（チーム・記録係）',when:'10月25日（日）17:00',keys:['i','p','pre','mix','pm','pa','vp','id'],
-  chk:()=>[['宝のひと言',maruIds().every(id=>((S.mix.name||{})[id]||'').trim()),nameCount()+' / '+maruIds().length],
-   ['チームの◎を3〜5個に絞った',counts().maru>=3&&counts().maru<=5,counts().maru+' 個'],
+  chk:()=>[['宝のひと言',maruList().every(m=>((S.mix.name||{})[m.id]||'').trim()),nameCount()+' / '+maruList().length],
+   ['AIに渡す◎を3〜5個にした',maruList().length>=3&&maruList().length<=5,maruList().length+' 個'],
    ['組み合わせを1つ選んだ',!!S.mix.chosen,S.mix.chosen?'選択済み':'未選択'],
    ['AIとの8欄（6欄以上）',RUNF.filter(([k])=>(((S.pm.runs||[])[0]||{})[k]||'').trim()).length>=6,RUNF.filter(([k])=>(((S.pm.runs||[])[0]||{})[k]||'').trim()).length+' / 8'],
   ['ペルソナの名前・困りごと',!!(S.persona.name||'').trim()&&nzl(S.persona.pain)>0,''],
@@ -3181,7 +3231,7 @@ const SUBMITS=[
    ['見直しの印が残っていない',staleItems(null).length===0,staleItems(null).length+' 欄']]},
  {id:'pr',g:'d2p',t:'⑤b 他チームへの返事（受け取りたいか・全員ひとりずつ）',when:'11月3日（火）「受け取りたいか」のあと',keys:['pr'],
   chk:()=>[['返事を書いたチーム',S.peer.length>0,S.peer.length+' チーム'],['返事と6つの軸すべて',S.peer.length>0&&S.peer.every(r=>r.want&&(r.s||[]).every(x=>x>0)),'']]},
- {id:'post',g:'out',t:'⑥ 事後レポート（ひとり）',when:'11月10日（月）',keys:['post'],
+ {id:'post',g:'out',t:'⑥ 事後レポート（ひとり）',when:'11月10日（火）',keys:['post'],
   chk:()=>[[POSTQ.length+'問すべて',nzl(S.post.a)>=POSTQ.length,nzl(S.post.a)+' / '+POSTQ.length],['役に立ったか',!!S.post.useful,S.post.useful||'未']]}
 ];
 /* 提出先（講師のメールアドレス）。空のときは宛先なしでメールが開く */
@@ -3189,9 +3239,15 @@ const SUBMIT_TO='masataka.sugimoto1031@gmail.com';
 /* 直接提出の設定（GitHub Pages 版では config.js が入れる。claude.ai 版では空＝メール・共有で送る） */
 const CFG=(typeof window!=='undefined'&&window.NBC_CONFIG)||{};
 const DIRECT=!!(CFG.submitUrl&&/^https:\/\//.test(CFG.submitUrl));
+let NICKOK='';
 function needTeam(sb){ const st=stEl();
-  if(sb&&sb.id==='am'){ if(!S.nick){ st.textContent='先に、画面右上の「あなたの名前」にフルネームを入れてください（チームは空欄で構いません）。'; document.getElementById('nick').focus(); return false; } return true; }
-  if(!S.team||!S.nick){ st.textContent='先に、画面右上に「チーム」と「あなたの名前」を入れてください。'; document.getElementById(S.team?'nick':'team').focus(); return false; } return true; }
+  if(!(S.nick||'').trim()){ st.textContent='先に、画面右上の「あなたの名前」にフルネームを入れてください（チームは空欄で構いません）。'; document.getElementById('nick').focus(); return false; }
+  if(sb&&sb.team&&!(S.team||'').trim()){ st.textContent='これはチームの提出（記録係が送る回）です。画面右上の「チーム」が空です。チームのデータが入っていないときは、講師に聞いたチーム名（例：Aチーム）を入れてください。'; document.getElementById('team').focus(); return false; }
+  const prev=(S.nickSent||'').trim();
+  if(prev&&normName(prev)!==normName(S.nick)&&NICKOK!==normName(S.nick)){ NICKOK=normName(S.nick);
+    st.innerHTML='<span class="miss"><b>前に「'+esc(prev)+'」の名前で提出しています。</b></span>名前が違うと、講師の集計で別の人として数えられます。同じ人なら、右上の名前を「'+esc(prev)+'」に戻してから押してください。名前を本当に変えるときだけ、もう一度押すと、この名前で送ります。';
+    return false; }
+  return true; }
 function showCode(code){ const ta=document.querySelector('main section:not([hidden]) textarea.subcode')||document.getElementById('code'); ta.style.display='block'; ta.value=code; }
 function subjectOf(sb){ return '【NBC提出】'+(S.team||(sb.id==='am'?'事前':''))+'　'+S.nick+'　'+sb.t; }
 function bodyOf(sb,code){ return subjectOf(sb)+'\n締切：'+sb.when+'\n\n※下の英数字の並びは、入力内容を圧縮した提出データです（文字化けではありません）。講師の集計画面で元に戻して読みます。\n\n【提出データ　ここから】\n'+code+'\n【ここまで】\n（この本文を消したり書き換えたりせず、そのまま送ってください）'; }
@@ -3211,7 +3267,7 @@ async function sendSub(sb){
   if(DIRECT){
     const btn=document.querySelector('.subc[data-id="'+sb.id+'"] [data-send]'); if(btn){btn.disabled=true; btn.textContent='送っています…';}
     try{ const j=await postSub(sb,code);
-      S.sent=S.sent||{}; S.sent[sb.id]='受付済み　'+(j.at||new Date().toLocaleString('ja-JP')); save();
+      S.sent=S.sent||{}; S.sent[sb.id]='受付済み　'+(j.at||new Date().toLocaleString('ja-JP')); S.nickSent=S.nick; NICKOK=''; save(); gauge();
       st.innerHTML='<b>'+esc(sb.t)+'を受け付けました</b>（'+esc(j.at||'')+'）。講師の集計に入りました。直したときは、もう一度押せば新しい内容で上書きされます。';
     }catch(e){
       st.innerHTML='<span class="miss">送れませんでした（'+esc(e.message||'通信できません')+'）。</span>通信を確かめて、もう一度押してください。続けて失敗するときは「データだけコピー」を押し、講師に送ってください。';
@@ -3251,7 +3307,7 @@ function buildSubmit(){
       '<ul class="subl">'+ck.map(([l,b,n])=>'<li class="'+(b?'ok':'ng')+'">'+(b?'✓':'・')+' '+esc(l)+(n?'<span>'+esc(n)+'</span>':'')+'</li>').join('')+'</ul>'+
       '<div class="btns" style="margin:8px 0 0"><button type="button" class="btn" data-send>'+(DIRECT?'提出する':'提出する（送る）')+'</button>'+
       '<button type="button" class="mini" data-copy>データだけコピー</button></div>'+
-      ((S.sent||{})[sb.id]?'<p class="see2" style="margin:4px 0 0"><span class="autotag">'+(/^受付済み/.test(S.sent[sb.id])?'':'送る画面を開きました　')+esc(S.sent[sb.id])+'</span></p>':'')+
+      ((S.sent||{})[sb.id]?'<p class="see2" style="margin:4px 0 0"><span class="autotag">'+(/^受付済み/.test(S.sent[sb.id])?'':'送る画面を開きました　')+esc(S.sent[sb.id])+'</span></p>':'<p class="see2" style="margin:4px 0 0"><span class="miss">この端末からは、まだ送っていません。</span></p>')+
       (ok?'':'<p class="see2" style="margin:4px 0 0">・の項目がまだです。そのままでも提出できます。</p>');
     d.querySelector('[data-send]').addEventListener('click',()=>sendSub(sb));
     d.querySelector('[data-copy]').addEventListener('click',async()=>{
@@ -3291,7 +3347,8 @@ async function unpack(code){
   return JSON.parse(new TextDecoder().decode(bytes));
 }
 function applyPacked(d){
-  S.team=d.t||''; S.nick=d.n||S.nick; S.tool=d.l||''; S.ord=d.o||''; S.started=d.s||S.started;
+  if(d.t&&d.t!=='事前') S.team=d.t; S.nick=d.n||S.nick; S.tool=d.l||''; S.ord=d.o||''; S.started=d.s||S.started;
+  if(d.hand){ S.role='rec'; S.teamInit=d.t||S.teamInit; }
   (d.i||[]).forEach(([id,mark,cond,reason,src])=>{ if(!S.items[id])return;
     S.items[id]={mark:mark||'',reason:reason||'',src:src||'',cond:(cond||'000').split('').map(c=>c==='1')}; });
   if(Array.isArray(d.p)) S.probs=d.p.slice();
@@ -3360,7 +3417,7 @@ document.getElementById('imp-go').addEventListener('click',async()=>{
   if(!code){ st.textContent='共有URLかデータが見つかりません。記録係から届いたものを、そのまま貼ってください。'; return; }
   try{ const d=await unpack(code); applyPacked(d); save(); gauge(); refreshOut();
     document.getElementById('imp-code').value='';
-    st.innerHTML='<b>読み込みました。</b>右上の「チーム」と「あなたの名前」を、自分のものに書き直してください。'; document.getElementById('team').focus(); }
+    st.innerHTML=d.hand?'<b>記録係の内容を引き継ぎました。この端末が記録係です。</b>右上の名前が、あなたの名前になっているか確かめてください。':'<b>読み込みました。</b>右上の「チーム」と「あなたの名前」が、自分のものになっているか確かめてください。'; rebuildAll(); }
   catch(err){ st.textContent='読み込めませんでした。途中で切れていないか確かめて、もう一度貼ってください。'; }
 });
 
@@ -3376,7 +3433,6 @@ const OPT={
  'v-pm':[/^AIとのやり取り/,/^違い [23]$/],
  'v-persona':[/^ふだんの1日$/,/^困りごと [23]$/,/^望んでいること [23]$/,/^この人が事業者なら/,/^この人が言いそうなこと/,/^なぜこの人を選んだか$/],
  'v-vpc':[/ [23]$/],
- 'v-vpc2':[/ [23]$/,/ [23]（書き直し）$/],
  'v-idea':[/^この1枚で、誰が何を決めるか$/,/^次の節目の日付$/,/^その困りごと$/,/^どうやって届けるか$/,/^お金はどこから来るか$/,/^組む相手の分野/],
  'v-iv':[/^どうやって連絡したか$/,/^いつ・どこで$/,/^印象に残った一言$/,/^分かったこと（数字で）$/],
  'v-redo':[/^まだ確かめられていないもの$/,/^出たなら、どんな事実か$/,/^借り足すもの/],
@@ -3451,7 +3507,9 @@ document.querySelectorAll('nav.tabs button').forEach(b=>b.addEventListener('clic
 document.getElementById('addprob').addEventListener('click',()=>{ if(S.probs.length>=PROB_MAX){probCap();return;} S.probs.push(''); buildProb(); save();});
 function goTab(v){ const b=document.querySelector('nav.tabs button[data-v="'+v+'"]'); if(b) b.click(); }
 document.getElementById('intro-go').addEventListener('click',()=>goTab('judge'));
-document.getElementById('peer-add').addEventListener('click',()=>{S.peer.push({team:'',want:'',why:'',ask:'',s:[0,0,0,0,0,0],memo:''});buildPeer();save();});
+['peer-add','peer-add2'].forEach(id=>{ const b=document.getElementById(id); if(b) b.addEventListener('click',()=>{S.peer.push({team:'',want:'',why:'',ask:'',s:[0,0,0,0,0,0],memo:''});buildPeer();save();}); });
+document.getElementById('peer-all').addEventListener('click',()=>{ const has=new Set(S.peer.map(r=>(r.team||'').trim()));
+  peerTeams().filter(t=>!has.has(t)).forEach(t=>S.peer.push({team:t,want:'',why:'',ask:'',s:[0,0,0,0,0,0],memo:''})); buildPeer(); save(); });
 document.getElementById('show-go').addEventListener('click',deckOpen);
 document.getElementById('show-txt').addEventListener('click',()=>copyTo(deckText(),'発表原稿をコピーしました。'));
 document.getElementById('show-pptx').addEventListener('click',()=>exportPptx());
@@ -3489,9 +3547,9 @@ async function teamSync(){
   if(!(S.nick||'').trim()){ TEAMSTATE='name'; return false; }
   let d=null; try{ const n=normName(S.nick); const e=T.m[await sha24(T.salt+'|'+n)]; if(e) d=await openTeam(T.salt,n,e); }catch(err){ d=null; }
   if(!d){ TEAMSTATE='notfound'; return false; }
-  const n=normName(S.nick), moved=!S.teamInfo||S.teamInfo.team!==d.team;
-  S.team=d.team; S.teamInfo={team:d.team,rec:d.rec||'',members:d.members||[],at:T.at||''};
-  if(moved||!S.role) S.role=(normName(d.rec)===n)?'rec':'mem';
+  const n=normName(S.nick), moved=!S.teamInfo||S.teamInfo.team!==d.team, recChg=!!S.teamInfo&&normName(S.teamInfo.rec||'')!==normName(d.rec||'');
+  S.team=d.team; S.teamInfo={team:d.team,rec:d.rec||'',members:d.members||[],at:T.at||'',all:Array.isArray(d.all)?d.all:[]};
+  if(moved||recChg||!S.role) S.role=(normName(d.rec)===n)?'rec':'mem';
   S.teamPre=d.tm||null; S.teamIdea=d.idea||null; S.teamIv=(d.ivm||[]).filter(m=>normName(m.nick)!==n); S.teamAio=d.aio||''; S.teamRec=d.rp||null;
   if(S.role==='rec'&&d.init&&(S.teamInit!==d.team)&&!hasTeamWork()) applyInit(d);
   ensure32(); TEAMSTATE='ok'; save(); return true; }
@@ -3499,7 +3557,7 @@ function teamBanner(){
   let b=document.getElementById('team-banner'); if(!b){ b=document.createElement('div'); b.id='team-banner'; b.className='note'; b.style.margin='12px 0'; document.querySelector('main').prepend(b); }
   const I=S.teamInfo; const tf=document.getElementById('team'); if(tf) tf.readOnly=!!I;
   if(TEAMSTATE==='name'){ b.hidden=false; b.innerHTML='<b>右上の「あなたの名前」に、事前課題で入れたフルネームを入れてください。</b>チームのデータが自動で入ります。'; return; }
-  if(TEAMSTATE==='notfound'){ b.hidden=false; b.style.borderLeftColor='var(--clay)'; b.innerHTML='<b>チームのデータに、この名前（'+esc(S.nick)+'）が見つかりません。</b>事前課題で入れたときと同じ書き方か確かめてください。違っていなければ、講師に名前を伝えてください。'; return; }
+  if(TEAMSTATE==='notfound'){ b.hidden=false; b.style.borderLeftColor='var(--clay)'; b.innerHTML='<b>チームのデータに、この名前（'+esc(S.nick)+'）が見つかりません。</b>事前課題で入れたときと同じ書き方か確かめてください。違っていなければ、講師かTAに名前を伝えてください（チームに入れたあと、下のボタンで読み込み直せます）。'+reloadBtnHtml(); wireReload(b); return; }
   if(TEAMSTATE!=='ok'||!I){ b.hidden=true; return; }
   b.style.borderLeftColor=''; b.hidden=false;
   const mem=(I.members||[]).map(esc).join('・');
@@ -3507,7 +3565,17 @@ function teamBanner(){
   else{ b.innerHTML='<b>'+esc(I.team)+'（'+mem+'）。記録係は '+esc(I.rec||'—')+' さんです。</b>DAY1・DAY2のチームの作業は、<b>記録係の画面を3人で見て</b>進めます。この画面に書くのは、<b>自分が聞いた8日間の記録（④）、受け取りたいか（⑤b）、事後レポート（⑥）</b>だけです。チームで決めたことは、記録係の提出のあと「チームの控え」として「聞きに行く」「事後レポート」に出ます。'+
     '<div class="btns" style="margin:8px 0 0"><button type="button" class="mini" id="be-rec">記録係が休みのとき：この端末を記録係にする</button></div>';
     const br=document.getElementById('be-rec'); br.addEventListener('click',e=>twoStep(e.currentTarget,'もう一度押すと、この端末が記録係になります',()=>{ S.role='rec'; const T=window.NBC_TEAMS; teamSync().then(()=>{ rebuildAll(); }); })); }
+  b.insertAdjacentHTML('beforeend',reloadBtnHtml()); wireReload(b);
 }
+function teamAtText(){ const a=(S.teamInfo&&S.teamInfo.at)||((window.NBC_TEAMS||{}).at)||''; if(!a) return ''; const d=new Date(a); if(isNaN(d)) return '';
+  const j=new Date(d.getTime()+9*3600e3); return (j.getUTCMonth()+1)+'/'+j.getUTCDate()+' '+String(j.getUTCHours()).padStart(2,'0')+':'+String(j.getUTCMinutes()).padStart(2,'0')+' 版'; }
+function reloadBtnHtml(){ const t=teamAtText(); return '<div class="see2" style="margin-top:6px">'+(t?'チームのデータ：'+t+'　':'')+'<button type="button" class="mini" data-reload>チームのデータを読み込み直す（講師がチームを変えたとき）</button></div>'; }
+function wireReload(b){ const x=b.querySelector('[data-reload]'); if(x) x.addEventListener('click',()=>reloadTeams(x)); }
+function reloadTeams(btn){ if(btn){ btn.disabled=true; btn.textContent='読み込んでいます…'; }
+  const sc=document.createElement('script'); sc.src='teams.js?t='+Date.now();
+  sc.onload=()=>{ teamSync().then(ch=>{ if(ch) rebuildAll(); else teamBanner(); }); };
+  sc.onerror=()=>{ if(btn){ btn.disabled=false; btn.textContent='読み込めませんでした。通信を確かめて、もう一度押してください'; } };
+  document.head.appendChild(sc); }
 const TEAMSEC=['v-judge','v-mix','v-pm','v-persona','v-vpc','v-idea','v-cust','v-vpc2','v-redo','v-bmc','v-viz','v-delta','v-show'];
 function roleNotes(){
   document.querySelectorAll('.rolenote').forEach(x=>x.remove());
@@ -3546,7 +3614,7 @@ function buildTeamSum(){
     '<p class="see2">メンバー：<b>'+mem.map(esc).join('、')+'</b>'+(T.rec?'　／　記録係：<b>'+esc(T.rec)+'</b>':'')+'</p>'+
     '<p class="see2"><b>全員一致の '+(ids.length-split.length-none.length)+' 問</b>は、判定を自動で入れました（直してかまいません）。<b>分かれた '+split.length+' 問</b>と<b>誰も判定していない（？） '+none.length+' 問</b>は判定が空です。根拠を声に出して、チームで決めてください。</p>'+
     (split.length?'<p class="see2">分かれた質問：'+split.map(id=>'<b>'+id+'</b> '+esc(ITEMS[id].see)).join('、')+'</p>':'')+
-    '<p class="see2"><b>チームの◎は3〜5個に絞ります。</b>◎を付けた人が多く、外の人が認めた根拠があるものから残してください。'+
+    '<p class="see2"><b>AIに渡す◎は3〜5個です（「つなぎ合わせる」のいちばん上で選びます）。</b>◎を付けた人が多いもの、外の人が認めた根拠があるものから選んでください。<b>判定を○や？に直す必要はありません。</b>'+
     (maru.length?'<br>◎を付けた人数：'+maru.map(x=>x.id+' '+esc(ITEMS[x.id].see)+' <b>'+x.n+'/'+mem.length+'</b>').join('、'):'')+'</p>'+
     '<p class="see2">いまのチームの◎：<b>'+counts().maru+'</b> 個</p>';
 }
