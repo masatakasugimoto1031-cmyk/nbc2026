@@ -109,6 +109,12 @@ input[type=text],input[type=password]{font:inherit;font-size:13px;padding:6px 9p
 .gate p{margin:0 0 16px;font-size:13px;color:var(--ink-2)}
 .gate .row{display:flex;gap:8px}
 .gate input{flex:1}
+.pbkey{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 6px}.pbkey input[type=password]{flex:1;min-width:220px;font:inherit;padding:6px 8px;border:1px solid var(--line-strong);border-radius:7px}
+.prbig{border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-align:center;background:var(--surface)}
+.prbig .tm{font-size:22px;font-weight:800}.prbig .ph{font-size:16px;margin-top:4px}.prbig .clk{font-size:72px;font-weight:900;font-variant-numeric:tabular-nums;line-height:1.1;margin-top:6px}
+.prbig.p1 .clk{color:#1f7a3a}.prbig.p1w .clk{color:#b26a00}.prbig.p2 .clk{color:#16406C}.prbig.p3 .clk{color:#666}.prbig.p4 .clk{color:#c00000}
+.prbig:fullscreen{display:flex;flex-direction:column;justify-content:center;background:#fff}.prbig:fullscreen .tm{font-size:6vh}.prbig:fullscreen .ph{font-size:5vh}.prbig:fullscreen .clk{font-size:30vh}
+table#t-pres tr.cur td{background:rgba(46,125,90,.12);font-weight:700} table#t-pres tr.done td{color:var(--ink-3)}
 body.ta .full-only{display:none!important}
 body:not(.ta) .ta-only{display:none!important}
 .tabox{border:1px solid var(--line);border-left:4px solid var(--moss);border-radius:8px;padding:10px 14px;background:var(--surface);font-size:13px}
@@ -135,7 +141,7 @@ table.tt tr.cur td{background:var(--hi-bg,rgba(46,125,90,.12));font-weight:700}.
 
 <div id="gate" class="gate">
   <h2>7つの力 集計ボード</h2>
-  <p>講師用です。合言葉を入れてください（TAの方は、TA用の合言葉で開くと、チーム編成と提出の状況だけが出ます）。<br>この画面には全チームの判定が出ます。受講生に見せると、判定の独立性が失われ、一致率が測れなくなります。</p>
+  <p>講師用です。合言葉を入れてください（TAの方は、TA用の合言葉で開くと、チーム編成・提出の状況・発表進行だけが出ます）。<br>この画面には全チームの判定が出ます。受講生に見せると、判定の独立性が失われ、一致率が測れなくなります。</p>
   <div class="row">
     <input type="password" id="pw" placeholder="合言葉" autocomplete="off">
     <button class="btn" id="go">開く</button>
@@ -160,6 +166,7 @@ table.tt tr.cur td{background:var(--hi-bg,rgba(46,125,90,.12));font-weight:700}.
       <button role="tab" aria-selected="true" data-v="in">受け取る</button>
       <button role="tab" aria-selected="false" data-v="team">チーム編成</button>
       <button role="tab" aria-selected="false" data-v="now">当日の進行</button>
+      <button role="tab" aria-selected="false" data-v="pres">発表進行</button>
       <button role="tab" aria-selected="false" class="full-only" data-v="prog">進捗</button>
       <button role="tab" aria-selected="false" class="full-only" data-v="agr">一致率</button>
       <button role="tab" aria-selected="false" class="full-only" data-v="mix">つなぎ合わせ</button>
@@ -186,6 +193,7 @@ table.tt tr.cur td{background:var(--hi-bg,rgba(46,125,90,.12));font-weight:700}.
         <li>当日の朝：「チーム編成」タブで<b>欠席</b>に印 → 記録係が欠席なら選び直す →「teams.js を作ってコピー」→ 講師に渡す（または GitHub の teams.js を置き換える）→ 学生に「<b>チームのデータを読み込み直す</b>」を押してもらいます。</li>
         <li>記録係の端末が使えないとき：「チーム編成」のチームの枠 →「<b>記録係の引き継ぎデータをコピー</b>」→ 新しい記録係の端末の「はじめに」いちばん下「予備：チームのデータを読み込む」に貼ります。</li>
         <li>学生が端末を替えたとき：下の「受け取ったもの」の「最新のデータをコピー」→ 新しい端末の同じ場所に貼ります。</li>
+        <li>DAY2：「発表進行」タブで、発表ファイルの受け取り・タイマー・<b>他チームへの返事（⑤b）の状況</b>を見ます。⑤bは、講師に合言葉を入れてもらうと「最新を読み込む」で確かめられます。「声をかける人をコピー」で、まだの人と空のチームが分かります。</li>
         <li>終わったら「チーム編成をファイルに保存」で講師に渡します。控えのファイルは講義の外に出さず、講義のあとで消してください。</li>
       </ol>
       <p class="status" style="margin:6px 0 0">TAの画面には、判定の中身・研究会レポート・盲検評定は出ません（判定の独立性を守るため）。</p>
@@ -241,6 +249,8 @@ table.tt tr.cur td{background:var(--hi-bg,rgba(46,125,90,.12));font-weight:700}.
     <div class="card"><h2>ワークベンチに載せる（teams.js）<span class="s">学生の操作なしで、チームのデータが入ります</span></h2><div class="body">
       <p style="margin:0 0 6px;font-size:13px">学生は、ワークベンチを開くだけです。<b>右上の名前（事前課題と同じ書き方）で自分のチームが自動で見つかり</b>、記録係の端末にはメンバー全員の事前課題が入ります。メンバーの端末には、チーム名・記録係・「記録係の画面で作業する」案内が出て、チームの提出ボタンは押せなくなります。</p>
       <p style="margin:0 0 6px;font-size:13px"><b>載せる時期は4回＋当日</b>：①10/24まで（チーム編成と事前課題）②10/25夜（記録係の提出② → メンバーの8日間の画面へ：調査設計・分担表・AIだけの案・チームの控え（DAY1））③11/2（メンバーの聞き取り④と前半の見直し → 記録係のDAY2の画面へ）④11/3夜（記録係の提出⑤ → メンバーの事後レポートへ：チームの控え（DAY2まで））。毎回、先に「スプレッドシートから読み込む」をしてから、ここで作り直して差し替えます。<b>DAY1・DAY2の朝</b>に欠席・記録係の変更があれば、もう一度作り直します。</p>
+      <div class="btns" style="align-items:center"><label style="font-size:13px">発表ファイルのCC（TAのアドレス）<input type="email" id="tm-cc" placeholder="例：ta@example.ac.jp" style="font:inherit;padding:5px 8px;border:1px solid var(--line-strong);border-radius:7px;min-width:18em;margin-left:6px"></label></div>
+      <p class="status" style="margin:2px 0 8px">ここに入れたアドレスは、teams.js の中で名前ごとに暗号化されて、チームの学生の「発表」タブのメールのCCにだけ入ります（公開ページには平文で載りません）。</p>
       <div class="btns"><button class="btn" id="tm-js">teams.js を作ってコピー</button></div>
       <p class="status" id="tm-js-st"></p>
       <textarea id="tm-js-out" readonly hidden style="min-height:80px"></textarea>
@@ -257,6 +267,30 @@ table.tt tr.cur td{background:var(--hi-bg,rgba(46,125,90,.12));font-weight:700}.
     <div class="card"><h2>人ごとの状況</h2><div class="scroll"><table id="t-now"></table></div></div>
   </section>
 
+  <section id="v-pres" hidden>
+    <p class="lede">DAY2の発表（<b>14:25〜16:15</b>）。<b>A→Kの順</b>に、講師のPCから投影します。各チームの記録係は<b>14:20まで</b>に、講師宛てのメール（CCでTAにも届く）で発表ファイルを送ります。届いたら「受け取った」を押してください。<b>14:20に届いていないチームは最後に回し、自分たちのPCで発表します。</b></p>
+    <div class="card"><h2>発表タイマー<span class="s" id="pr-sum"></span></h2><div class="body">
+      <div id="pr-big" class="prbig"></div>
+      <div class="btns"><button class="btn" id="pr-start">開始</button><button class="btn sec" id="pr-pause">一時停止</button><button class="btn sec" id="pr-next">次のチームへ</button><button class="btn sec" id="pr-reset">このチームをはじめから</button><button class="btn sec" id="pr-full">発表者に見せる（全画面）</button>
+        <label style="font-size:13px;align-self:center"><input type="checkbox" id="pr-sound" checked> 鈴を鳴らす</label></div>
+      <p class="status">4分で鈴1回、5分で発表終了（鈴2回）、8分で質疑終了（鈴3回）、続けて入れ替え1分。入れ替えが終わったら「次のチームへ」。全体の予定は 14:25〜16:15（11チーム×9分＝99分＋予備11分）。</p>
+    </div></div>
+    <div class="card"><h2>発表順と提出の管理<span class="s" id="pr-n"></span></h2><div class="scroll"><table id="t-pres"></table></div>
+      <div class="body"><div class="btns"><button class="btn sec" id="pr-abc">A→Kの順に戻す</button><button class="btn sec" id="pr-clear">提出の印と進み具合を消す</button></div><p class="status" id="pr-st"></p></div></div>
+    <div class="card" id="pb-card"><h2>他チームへの返事（⑤b）の状況<span class="s" id="pb-sum"></span></h2><div class="body">
+      <p class="see2" style="margin:0 0 8px">学生は、<b>各チームの質疑の3分のあいだに</b>そのチームへの返事を書き、<b>16:15〜16:25</b>に「提出⑤b」で送ります（途中で送ってもよく、送り直すと新しいほうが使われます）。ここには、<b>誰が・どのチームに書いたか（有無）だけ</b>が出ます。返事の中身（受け取りたいか・理由・点）は出ません。</p>
+      <div class="pbkey"><input type="password" id="pb-key" placeholder="読み込み用の合言葉（講師が入れます）" autocomplete="off">
+        <button class="btn" id="pb-load" type="button">最新を読み込む</button>
+        <label style="font-size:13px;align-self:center"><input type="checkbox" id="pb-auto"> 2分ごとに読み込む</label></div>
+      <p class="status" id="pb-st"></p>
+      <div class="btns"><button class="btn sec" id="pb-copy" type="button">声をかける人をコピー</button></div>
+    </div>
+      <div class="scroll"><table id="t-pb"></table></div>
+      <div class="body"><h3 class="sec" style="margin:4px 0">チームごとの、届いた返事の数</h3></div>
+      <div class="scroll"><table id="t-pbt"></table></div>
+    </div>
+  </section>
+
   <section id="v-prog" hidden>
     <div class="kpis card" id="kpi"></div>
     <div class="card"><h2>チーム別の状況</h2><div class="scroll"><table id="t-prog"></table></div></div>
@@ -267,7 +301,7 @@ table.tt tr.cur td{background:var(--hi-bg,rgba(46,125,90,.12));font-weight:700}.
     <div class="card"><h2>集計の条件<span class="s">使用順1本目のみ／全件、の切り替え</span></h2><div class="body" id="agr-opt"></div></div>
     <div class="kpis card" id="kagr"></div>
     <div class="card"><h2>項目ごとの一致率<span class="s">一致率60%未満は色を付けています</span></h2><div class="scroll"><table id="t-agr"></table></div></div>
-    <div class="card"><h2>宝の地図<span class="s">8チームの判定を並べます。平均しません。チームを順に並べません</span></h2>
+    <div class="card"><h2>宝の地図<span class="s">全チームの判定を並べます。平均しません。チームを順に並べません</span></h2>
       <div class="body"><p class="status">同じ九大を、チームごとにどう見たか。見え方の違いが、そのまま「質問や条件のどこが分かれやすいか」の材料になります。</p></div>
       <div class="scroll"><table id="t-map"></table></div></div>
   </section>
@@ -283,13 +317,13 @@ table.tt tr.cur td{background:var(--hi-bg,rgba(46,125,90,.12));font-weight:700}.
     <p class="lede">斬新さが実際に「作られる」のはここです。<b>◎（外に出せる強み）× 困りごと の総当たりで、候補を何通り作ったか</b>が上流の主指標になります。<br>候補生成数が1に近いチームは、最頻値をそのまま採ったのと同じです。</p>
     <div class="kpis card" id="kmix"></div>
     <div class="card"><h2>チームごとの候補生成<span class="s">ひと言にした宝の数／押したマス数／欲しがりそうな相手の数／解けないが大事なこと</span></h2><div class="scroll"><table id="t-mix"></table></div></div>
-    <div class="card"><h2>選んだ組み合わせ<span class="s">8チームが別々のマスを選んだか</span></h2><div class="body" id="mixpick"></div></div>
+    <div class="card"><h2>選んだ組み合わせ<span class="s">各チームが別々のマスを選んだか</span></h2><div class="body" id="mixpick"></div></div>
     <div class="card"><h2>社会の変化の選ばれ方<span class="s">第三の入口。どのカードを何チームが選んだか</span></h2><div class="body" id="mixchg"></div></div>
     <div class="card"><h2>九大だけでは届かないが大事な困りごと<span class="s">DAY2「誰と組むか」の入力になります</span></h2><div class="body" id="mixhard"></div></div>
   </section>
 
   <section id="v-work" hidden>
-    <p class="lede">8チームの成果物を、工程ごとに並べます。<b>PPTの提出はありません。</b>ここに出ているものが全部です。</p>
+    <p class="lede">全チームの成果物を、工程ごとに並べます。発表のファイル（PowerPoint）は、DAY2にメールで講師に届きます（受け取りは「発表進行」タブ）。<b>文章の中身は、ここに出ているものと同じです</b>（画像はファイルにだけ入ります）。</p>
     <div class="card"><h2>そろい具合<span class="s">工程ごとに、何チームが書けているか</span></h2><div class="scroll"><table id="t-fill"></table></div></div>
     <div class="card"><h2>ペルソナ</h2><div class="body" id="w-persona"></div></div>
     <div class="card"><h2>提供価値（VPC）<span class="s">左右の数が対応しているかを見ます</span></h2><div class="scroll"><table id="t-vpc"></table></div></div>
@@ -344,7 +378,7 @@ table.tt tr.cur td{background:var(--hi-bg,rgba(46,125,90,.12));font-weight:700}.
       <button class="btn sec" id="rp-blind">外部評定者用の盲検シートをコピー</button>
     </div>
     <p class="status noprint" id="rp-st"></p>
-    <div class="card noprint"><h2>盲検評定（Upliftの主指標）<span class="s">AIだけの案8本と最後の案8本を、ラベルを伏せて混ぜます。依頼書の6つ・特定度を付けます</span></h2><div class="body" id="rp-rate"></div></div>
+    <div class="card noprint"><h2>盲検評定（Upliftの主指標）<span class="s">AIだけの案と最後の案（各チーム1本ずつ）を、ラベルを伏せて混ぜます。依頼書の6つ・特定度を付けます</span></h2><div class="body" id="rp-rate"></div></div>
     <div class="card noprint"><h2>既存事例件数（第三者の検索・設計書 §1.3）<span class="s">チームごとに件数を入れます</span></h2><div class="body" id="rp-ex"></div></div>
     <div id="rep-body" class="rp"></div>
     <textarea id="rp-out" readonly hidden style="min-height:200px"></textarea>
@@ -819,7 +853,7 @@ async function teamsJs(){
   const all=TNAMES.filter(t=>memOf(t).length);
   for(const team of TNAMES){ const mem=memOf(team); if(!mem.length) continue; nTeam++;
     const t=teamObj(team);
-    const body={team,rec:TEAMS.rec[team]||'',members:mem.map(p=>p.nick),all,init:{i:t.i,p:t.o.p},tm:t.o.tm,idea:t.idea,ivm:t.ivm,aio:t.aio,rp:t.rp};
+    const body={team,rec:TEAMS.rec[team]||'',members:mem.map(p=>p.nick),all,cc:(TEAMS.cc||'').trim(),init:{i:t.i,p:t.o.p},tm:t.o.tm,idea:t.idea,ivm:t.ivm,aio:t.aio,rp:t.rp};
     for(const p of mem){ const n=normName(p.nick); m[await sha24(salt+'|'+n)]=await sealFor(salt,n,body); nMem++; } }
   return {text:'/* ニュービジネス・クリエーション 2026　チームのデータ（'+at+'）。名前ごとに暗号化 */\nwindow.NBC_TEAMS='+JSON.stringify({v:1,at,salt,m})+';\n',nMem,nTeam}; }
 function tmMail(team,t){ return '【NBC】チーム編成のお知らせ（'+team+'）\n\n'+team+'のメンバー：'+t.mem.map(p=>p.nick).join('、')+'\n記録係：'+(TEAMS.rec[team]||'当日、チームで決めてください')+
@@ -831,6 +865,7 @@ function persistTeams(){ fixTeams(); try{localStorage.setItem('nbc20-board-teams
 function renderTeam(){
   const T=document.getElementById('t-team'); if(!T) return;
   const ps=persons(); document.getElementById('tm-n').textContent=ps.length+' 人';
+  { const cc=document.getElementById('tm-cc'); if(cc&&document.activeElement!==cc) cc.value=TEAMS.cc||''; }
   const kIn=document.getElementById('tm-k'); if(kIn&&document.activeElement!==kIn) kIn.value=TEAMS.k||Math.max(1,Math.ceil(ps.length/4));
   const used=[...new Set(Object.values(TEAMS.assign).filter(Boolean))];
   const opts=cur=>'<option value="">未定</option>'+TNAMES.slice(0,Math.max(TEAMS.k||2,used.length)).map(t=>'<option'+(cur===t?' selected':'')+'>'+t+'</option>').join('');
@@ -878,6 +913,7 @@ document.getElementById('tm-auto').addEventListener('click',()=>{
 });
 document.getElementById('tm-k').addEventListener('change',e=>{ TEAMS.k=Math.max(1,Math.min(12,parseInt(e.target.value,10)||1)); persistTeams(); renderTeam(); });
 document.getElementById('tm-save').addEventListener('click',()=>{persistTeams(); document.getElementById('tm-st').textContent='保存しました。';});
+{ const cc=document.getElementById('tm-cc'); if(cc){ cc.value=TEAMS.cc||''; cc.addEventListener('change',()=>{ TEAMS.cc=cc.value.trim(); persistTeams(); tmChanged('発表ファイルのCCを変えました。'); }); } }
 function tmChanged(msg){ const e=document.getElementById('tm-st'); if(e) e.innerHTML=(msg?'<span class="warnc">'+esc(msg)+'</span><br>':'')+'チーム編成を変えました。<b>teams.js を作り直して差し替え</b>、学生に「チームのデータを読み込み直す」を押してもらってください。'; }
 document.getElementById('tm-xadd').addEventListener('click',()=>{ const i=document.getElementById('tm-xname'); const n=(i.value||'').trim(); if(!n) return; fixTeams();
   if(persons().some(p=>normName(p.nick)===normName(n))){ document.getElementById('tm-st').textContent=n+' さんは、すでに表にいます。'; return; }
@@ -1129,9 +1165,9 @@ const PH=[
  {k:'pre',n:'事前課題',d:'〜10/19 24:00',sub:'am',
   tt:[['10/13','教務から事前課題を配る（Moodle）'],['〜10/19','ひとりで目安60分（早い人は30分）：当たり前10分・21の質問30分・糸島の困りごと13分・1行の案2分・提出5分'],['10/19 24:00','提出①の締切（ひとり1件・名前だけ）'],['10/20 午前','講師：「提出の状況」で①がまだの人をコピー → 教務からリマインド'],['10/21 24:00','最終回収（これより後は「①締切後」の印）'],['10/22 午前','講師：◎が3つ未満の人・出所のない◎を確認 →「チーム編成」でチームと記録係を決め、教務へ（3人1チーム）'],['10/24','講師：teams.js を作って差し替え／TAに1時間のレクチャ（チーム編成・提出の状況・引き継ぎ）'],['10/25 朝','講師・TA：出欠を確かめ、欠席・記録係を直して teams.js を差し替え → 学生は「チームのデータを読み込み直す」']]},
  {k:'pm',n:'DAY1',d:'10/25',sub:'pm',
-  tt:[['9:30','講師・TA：出欠 → 欠席があれば「チーム編成」で直し、teams.js を差し替え（5分）'],['10:00','オリエンテーション（依頼書・全体の地図・AIの使い方）：チーム名と記録係が出ているか確認。出ていなければ「チームのデータを読み込み直す」（15分）'],['10:15','アイスブレイク（記録係の画面の周りに3人で座る・15分）'],['10:30','メガトレンド・生活者起点（35分）'],['11:05','あるものから始める（25分）'],['11:30','持ち寄り（記録係の画面）：分かれた問い／困りごとを3〜5件に（35分）。AIに渡す◎3〜5個は午後の「つなぎ合わせる」で選ぶ'],['12:05','昼食'],['12:55','宝のひと言＋欲しがりそうな相手（15分）'],['13:10','総当たり表（遠いマスを1つ）→変化カード→1つ選ぶ（25分）'],['13:35','重なりを見る（読み上げ・スクリーンに並べる）＋AIだけの案を記録（10分）'],['13:45','AIと8つの欄に（30分）：20分で「まとめて」→振り分け→10分で直す'],['14:15','休憩（10分）'],['14:25','ペルソナ（20分）'],['14:45','提供価値（25分）'],['15:10','アイデアシート・依頼書の6つ（15分）'],['15:25','AIのお客さん（20分）'],['15:45','休憩（10分）'],['15:55','8日間の進め方（10分）'],['16:05','調査設計（「聞きに行く」・25分）'],['16:30','提出②（チームで1件）・全体の地図（15分）']]},
+  tt:[["9:30", "講師・TA：出欠 → 欠席があれば「チーム編成」で直し、teams.js を差し替え（10:00までに）"], ["10:00", "１. オリエンテーション：依頼主の6つの条件／全体の地図／チームの確認（15分）"], ["10:15", "２. アイスブレイク：エレベーターピッチ（15分）"], ["10:30", "３. メガトレンドを知る：世界と日本の構造変化（20分）"], ["10:50", "４. 生活者起点で考える：価値軸の変化／世代による違い（15分）"], ["11:05", "５. 新規事業開発を学ぶ：新規事業開発に関する知識・フレームワーク（20分）"], ["11:25", "６. あるものから始める：事業機会の3つの円／今年の入口／主体（25分）"], ["11:50", "７. 九州大学の7つの力を見る：持ち寄り：分かれた問い／困りごとを3〜5件に（35分）"], ["12:25", "昼食（40分）"], ["13:05", "８. 機会を見つける：宝をひと言で→AIに渡す◎を選ぶ→欲しがる相手（20分）"], ["13:25", "総当たり表（遠いマス）→社会の変化→1つ選ぶ（25分）"], ["13:50", "重なりを見る／AIだけの案を記録する（10分）"], ["14:00", "AIと8つの欄に（20分で「まとめて」）（30分）"], ["14:30", "９. 誰の、どんな課題か：ペルソナ（使う人・決める人・払う人）（20分）"], ["14:50", "休憩（10分）"], ["15:00", "１０. 提供価値を考える：VPC①：相手の側（困りごと・望み）（25分）"], ["15:25", "アイデアシート（名称は仮／★／やめる条件）（15分）"], ["15:40", "１１. 確かめる：AIのお客さん→ピボット表（1回目）（20分）"], ["16:00", "8日間の進め方・反応の強さ・聞かないこと（20分）"], ["16:20", "調査設計：最初の相手・最初の質問・分担表（25分）"], ["16:45", "１２. ラップアップ：提出②（記録係）／11チームの案の地図（15分）"]]},
  {k:'gap',n:'8日間',d:'10/26〜11/2',sub:null,tt:[['10/25夜','講師：「チーム編成」で teams.js を作り直して差し替え（アイデアシート・調査設計・AIだけの案をメンバーの画面へ）'],['10/28ごろ','前半の見直し（任意・提出なし。書いた分は提出④と一緒に届く）'],['11/2 18:00','提出④（聞き取り結果・ひとりずつ）'],['11/2','講師：全部読む → teams.js を作り直して差し替え（メンバーの記録を記録係の画面へ）']]},
- {k:'d2',n:'DAY2',d:'11/3',sub:'d2',tt:[['9:30','講師・TA：出欠。記録係が休みなら「記録係の引き継ぎデータをコピー」→ 新しい記録係の端末に貼る／teams.js の記録係を直して差し替え'],['10:00','振り返り：8日間の記録を読む（20分）'],['10:20','聞いた結果の扱い方（20分）'],['10:40','VPC②：書き直し・渡すもの・適合表（30分）'],['11:10','作り直す：依頼主の6つの条件→続ける・直す・やめる→名称とコンセプト（40分）'],['12:00','誰と組むか／相手の利益（30分）'],['12:30','昼食'],['13:20','ビジネスモデルキャンバス（35分）'],['13:55','ビジネスモデル図解（25分）'],['14:20','九大に何が増えるか（15分）'],['14:35','発表の確認・PowerPointで保存（15分）'],['14:50','発表（8チーム×5分＋質疑3分）'],['16:05','提出⑤（記録係）・受け取りたいか→提出⑤b（15分）'],['16:20','講評（30分）'],['16:50','ラップアップ／事後レポート']]},
+ {k:'d2',n:'DAY2',d:'11/3',sub:'d2',tt:[["9:30", "講師・TA：出欠。記録係が休みなら「記録係の引き継ぎデータをコピー」→ 新しい記録係の端末に貼る／teams.js の記録係を直して差し替え"], ["10:00", "１. オリエンテーション：振り返り：8日間の記録を読む（20分）"], ["10:20", "２. 確かめた結果を読む：聞いた結果の扱い方（支持・反証・保留）（20分）"], ["10:40", "VPC②：書き直す・渡すもの・適合表（30分）"], ["11:10", "作り直す：6つの条件→判断→名称とコンセプト（40分）"], ["11:50", "誰と組むか／その相手にとっての利益（30分）"], ["12:20", "昼食（40分）"], ["13:00", "３. ビジネスモデルを考える：ビジネスモデルキャンバス（9マス）（35分）"], ["13:35", "ビジネスモデル図解（3×3・4ステップ）（25分）"], ["14:00", "実現したら九大のどの力が増えるか（15分）"], ["14:15", "４. ビジネスモデルを発表：発表の確認→講師にメールで送る（14:20まで）（10分）"], ["14:25", "発表：A→Kの順（5分＋質疑3分＋入替1分）（110分）"], ["16:15", "提出⑤（記録係）／提出⑤b（ひとり）（10分）"], ["16:25", "講評：11チームの案の地図／AIだけの案（25分）"], ["16:50", "５. ラップアップ：本日の学び／事後レポート（11/10まで）（10分）"]]},
  {k:'post',n:'事後',d:'〜11/10',sub:'post',tt:[['11/10','提出⑥（事後レポート）']]}];
 const RK=['opp','who','alt','val','partner','benefit','cond','stop'];
 const has=(s,k)=>(s.sc||[]).includes(k)||(s.sc||[]).includes('all');
@@ -1150,7 +1186,7 @@ const CHK={
   ['宝のひと言',nmN(mx)>=Math.min(x.maru,3)&&nmN(mx)>0,'◎を具体的なひと言にしてください'],
   ['押したマス3つ以上',onCells(mx).length>=3,'総当たり表で、成り立ちそうなマスを3つ以上'],
   ['組み合わせを1つ選んだ',!!mx.chosen,'総当たり表の下で1つ選んでください'],
-  ['AIだけの案',!!(((mx.aionly||{}).text||'').trim()),'13:35：決まった1文で聞き、直さずに記録'],
+  ['AIだけの案',!!(((mx.aionly||{}).text||'').trim()),'13:50：決まった1文で聞き、直さずに記録'],
   ['AIとの8欄',f8(rs[0])>=6,'20分たったら「まとめて」→貼り付けて振り分け（6欄以上）'],
   ['ペルソナの名前',!!((s.persona||{}).name||'').trim(),'「地域の人」ではなく、ひとりの人として'],
   ['★の条件',/★/.test(((s.idea||{}).cond||'')+((s.idea||{}).weak||'')),'いちばん確かでない条件に★を'],
@@ -1206,7 +1242,7 @@ function renderNow(){
   say.innerHTML=lines.length?lines.join(''):'<p class="lede" style="margin:0">声をかけるチームはありません。</p>';
   tbl(T,[['チーム'],[byTeam?'提出した人':'名前']].concat(labels.map(l=>[l])),res.map(r=>({c:[esc(r.s.team),esc(r.s.nick||'—')].concat(r.c.map(c=>c[1]?'<span class="hi">✓</span>':'<span class="warnc">×</span>'))})));
 }
-function renderAll(){resolveTeams();sortSub();renderTeam();renderNow();renderSubs();renderProg();renderAgr();renderMix();renderUp();renderWork();renderPeer();renderProb();renderPre();renderIv();renderPost();renderRep();}
+function renderAll(){resolveTeams();sortSub();renderTeam();renderPres();renderPb();renderNow();renderSubs();renderProg();renderAgr();renderMix();renderUp();renderWork();renderPeer();renderProb();renderPre();renderIv();renderPost();renderRep();}
 
 /* ================= v20：研究会レポート（設計書 v1.8・追補 v1.9 の事前登録の指標） ================= */
 const FITK=['pain','gain','emo','pay'];
@@ -1381,7 +1417,7 @@ function repModel(){
   const tDet=T.map(r=>[esc(r.t),r.row?'#'+r.row:'—',esc(r.changed||'—'),r.match==null?'—':(r.match?'一致':'不一致'),r.fitX.length?r.fitX.map(k=>FITL[k]).join('、'):'—',r.fitX.length?(r.fitHit?'×の行を直した':'×の行と別を変えた'):'—',esc(r.dec||'—')]);
   S.push({h:'5　ピボット（3回）',note:'1回目＝AIのお客さん（仮の印）、2回目＝10/28ごろ 前半の見直し（任意・実在の人。提出④の記入から数える）、3回目＝DAY2 作り直す（適合表）。',head:['チーム','判断表','DAY2で変えたもの','一致','適合表の×','×と直したもの','判断'],rows:tDet});
   const mv=T.filter(r=>r.fin);
-  S.push({h:'6　発散（追補 v1.9 §5）',note:'事前に置いた見込み：移動・交通の案は8チーム中2以下（下回らなくても工程の欠陥とは読まず、どの工夫が効かなかったかを記録する）。移動・交通は語で拾う候補（目で確定）。',
+  S.push({h:'6　発散（追補 v1.9 §5）',note:'事前に置いた見込み：移動・交通の案は全チームの25%以下（設計時は8チーム中2以下。11チームなら2以下。下回らなくても工程の欠陥とは読まず、どの工夫が効かなかったかを記録する）。移動・交通は語で拾う候補（目で確定）。',
     head:['指標','値'],rows:[
       ['移動・交通の案（最後の案）',mv.filter(r=>r.moveFin).length+' / '+mv.length],
       ['移動・交通の案（AIだけの案）',T.filter(r=>r.aio&&r.moveAI).length+' / '+T.filter(r=>r.aio).length],
@@ -1411,7 +1447,7 @@ function repModel(){
       ['特定度（評定者A）',spd('A','ai'),spd('A','fin'),'括り／立場／名前・場面'],
       ['確かめていない固有名（候補・1チーム平均）',f1(avg(T.filter(r=>r.aio).map(r=>r.orgAI))),f1(avg(T.filter(r=>r.fin).map(r=>r.orgFin))),'目で確定'],
       ['仮置きの数値（候補・1チーム平均）',f1(avg(T.filter(r=>r.aio).map(r=>r.numAI))),f1(avg(T.filter(r=>r.fin).map(r=>r.numFin))),'目で確定'],
-      ['8チームの似かより（bi-gram Jaccard）',pct(meanJac(T.map(r=>r.aio))),pct(meanJac(T.map(r=>r.fin))),'低いほど分かれている'],
+      ['チームどうしの似かより（bi-gram Jaccard）',pct(meanJac(T.map(r=>r.aio))),pct(meanJac(T.map(r=>r.fin))),'低いほど分かれている'],
       ['既存事例件数（平均）',f1(avg(exv('ai'))),f1(avg(exv('fin'))),'第三者の検索 '+exv('ai').length+'＋'+exv('fin').length+' 件']]});
   const aiK={}; T.filter(r=>r.aio).forEach(r=>{const k=(r.aiName||'未記入').trim()||'未記入'; aiK[k]=(aiK[k]||0)+1;});
   S.push({h:'7b　AIだけの案：使ったAI（層別）と記録の取り消し',note:'AIだけの案は、使ったAIで変わる。使ったAIで層別して並べる。',head:['使ったAI','チーム数'],rows:Object.entries(aiK).map(([k,v])=>[esc(k),v]).concat(T.some(r=>r.aioUndo)?[['記録を取り消したチーム',T.filter(r=>r.aioUndo).map(r=>esc(r.t)+'（'+r.aioUndo+'回）').join('、')]]:[])});
@@ -1431,8 +1467,8 @@ function repModel(){
   lim.push(['設計上の限界','条件4（発言より強い反応）は、聞き取りの前に作るAIだけの案では満たせない','5つ（条件4を除く）の充足数も報告する']);
   lim.push(['設計上の限界','全員に同じ根拠集15件を配っているため、Q2の一致は根拠集の共有で上振れしうる','根拠集の引用の有無で層別する（第1節）']);
   if(ag.n<8) lim.push(['N','事前課題の判定者が '+(ag.n||0)+' 人（Fleiss κ は人数が少ないと不安定）','人数を明記し、κは参考値とする']);
-  if(nT<8) lim.push(['N','チーム数が '+nT+'（設計は8チーム）','チーム単位の指標は向きだけを読む']);
-  if(both.length<8) lim.push(['評定','評定者AとBの両方が入力した本数が '+both.length+'（AIだけの案8本＋最後の案8本が設計）','評定者間の一致は参考値']);
+  if(nT<11) lim.push(['N','チーム数が '+nT+'（2026年度の設計は11チーム）','チーム単位の指標は向きだけを読む']);
+  if(both.length<22) lim.push(['評定','評定者AとBの両方が入力した本数が '+both.length+'（AIだけの案11本＋最後の案11本が設計）','評定者間の一致は参考値']);
   if(blindBroken) lim.push(['盲検','評定者が、どちらの案かを75%以上当てている','形式の違い（長さ・書きぶり）で見分けられている疑い。充足数の差は盲検の結果として扱わない']);
   if(lateAm.length) lim.push(['手続','事前課題の締切後に受け付けた提出が '+lateAm.length+' 人','催促後の提出は、独立性（他の人と相談していないか）を事後レポートで確かめる']);
   if(rsP.length) lim.push(['手続','端末で控えから復元した人が '+rsP.length+' 人（計 '+rsT+' 回）','復元で入力が巻き戻った可能性。該当者の提出は時刻と内容を目で確かめる']);
@@ -1585,6 +1621,116 @@ document.getElementById('x-md').addEventListener('click',()=>put(report(),'レ�
 document.getElementById('x-csv').addEventListener('click',()=>put(csv(),'CSVをコピーしました。'));
 document.getElementById('x-json').addEventListener('click',()=>put(JSON.stringify({subs:SUB,teams:TEAMS,rate:RATE},null,2),'JSONをコピーしました（提出・チーム編成・盲検評定）。'));
 
+
+/* ================= v25：発表進行（A→Kの順・提出の管理・タイマー） ================= */
+let PR={order:[],recv:{},cur:0,acc:0,t0:0,run:false,done:{},fired:{}};
+try{ const r=localStorage.getItem('nbc25-pres'); if(r) PR=Object.assign(PR,JSON.parse(r)); }catch(e){}
+function prSave(){ try{ localStorage.setItem('nbc25-pres',JSON.stringify(PR)); }catch(e){} }
+function prTeams(){ let ts=[]; try{ ts=TNAMES.filter(t=>memOf(t).length); }catch(e){} return ts.length?ts:TNAMES.slice(0,11); }
+function prOrder(){ const ts=prTeams(); PR.order=(PR.order||[]).filter(t=>ts.includes(t)); ts.forEach(t=>{ if(!PR.order.includes(t)) PR.order.push(t); }); if(PR.cur>=PR.order.length) PR.cur=Math.max(0,PR.order.length-1); return PR.order; }
+function jstNow(){ const d=new Date(Date.now()+9*3600e3); return {h:d.getUTCHours(),m:d.getUTCMinutes(),s:d.getUTCSeconds()}; }
+const pad2=n=>String(n).padStart(2,'0');
+function hhmm(ms){ const d=new Date(ms+9*3600e3); return pad2(d.getUTCHours())+':'+pad2(d.getUTCMinutes()); }
+function prElapsed(){ return (PR.acc||0)+(PR.run?Date.now()-PR.t0:0); }
+let AC=null;
+function bell(n){ if(!document.getElementById('pr-sound')||!document.getElementById('pr-sound').checked) return;
+  try{ AC=AC||new (window.AudioContext||window.webkitAudioContext)(); const t=AC.currentTime;
+    for(let i=0;i<n;i++){ const o=AC.createOscillator(), g=AC.createGain(); o.frequency.value=1046; o.type='sine';
+      g.gain.setValueAtTime(0.0001,t+i*0.45); g.gain.exponentialRampToValueAtTime(0.4,t+i*0.45+0.02); g.gain.exponentialRampToValueAtTime(0.0001,t+i*0.45+0.4);
+      o.connect(g); g.connect(AC.destination); o.start(t+i*0.45); o.stop(t+i*0.45+0.42); } }catch(e){} }
+const PRPH=[[240,1],[300,2],[480,3]];
+function prTick(){ const big=document.getElementById('pr-big'); if(!big) return; const ord=prOrder(); const team=ord[PR.cur]||'—';
+  const e=Math.floor(prElapsed()/1000); const key=team;
+  PR.fired=PR.fired||{}; const f=PR.fired[key]=PR.fired[key]||[];
+  if(PR.run) PRPH.forEach(([sec,n])=>{ if(e>=sec&&!f.includes(sec)){ f.push(sec); prSave(); bell(n); } });
+  let ph,rem,cls;
+  if(e<300){ ph='発表'; rem=300-e; cls=e>=240?'p1w':'p1'; }
+  else if(e<480){ ph='質疑'; rem=480-e; cls='p2'; }
+  else if(e<540){ ph='入れ替え'; rem=540-e; cls='p3'; }
+  else { ph='時間を過ぎています（次のチームへ）'; rem=e-540; cls='p4'; }
+  const left=ord.length-PR.cur; const endMs=Date.now()+Math.max(0,540-e)*1000+(left-1)*540*1000;
+  const late=hhmm(endMs)>'16:15';
+  big.className='prbig '+cls;
+  big.innerHTML='<div class="tm">'+esc(team)+'（'+(PR.cur+1)+' / '+ord.length+'）'+(PR.run?'':'　<span style="font-size:14px;color:var(--ink-3)">停止中</span>')+'</div><div class="ph">'+ph+'</div><div class="clk">'+(cls==='p4'?'+':'')+pad2(Math.floor(rem/60))+':'+pad2(rem%60)+'</div>';
+  const sm=document.getElementById('pr-sum'); if(sm) sm.innerHTML='残り '+left+' チーム　／　このままの終了見込み '+hhmm(endMs)+(late?'　<span class="warnc">16:15を過ぎます</span>':''); }
+function renderPres(){ const T=document.getElementById('t-pres'); if(!T) return; const ord=prOrder(); const now=jstNow(); const past=now.h*60+now.m>=14*60+20;
+  document.getElementById('pr-n').textContent='受け取った '+ord.filter(t=>(PR.recv[t]||{}).at).length+' / '+ord.length+' チーム';
+  tbl(T,[['順'],['チーム'],['発表ファイル'],['差し替え'],['メモ'],['発表'],['順番']],ord.map((t,i)=>{ const r=PR.recv[t]||{}; const st=PR.done[t]?'済':(i===PR.cur?'発表中':'待ち');
+    return {cls:PR.done[t]?'done':(i===PR.cur?'cur':''),c:[i+1,'<b>'+esc(t)+'</b>',
+      r.at?'<span class="hi">受け取った '+esc(r.at)+'</span> <button type="button" class="btn sec" style="padding:1px 6px;font-size:11px" data-un="'+esc(t)+'">取り消す</button>':(past?'<span class="warnc">未着</span> ':'')+'<button type="button" class="btn" style="padding:2px 8px;font-size:12px" data-rv="'+esc(t)+'">受け取った</button>',
+      (r.rep||0)+' <button type="button" class="btn sec" style="padding:1px 6px;font-size:11px" data-rp="'+esc(t)+'">＋1</button>',
+      '<input type="text" data-mm="'+esc(t)+'" value="'+esc(r.memo||'')+'" style="font:inherit;font-size:12px;padding:3px 6px;border:1px solid var(--line-strong);border-radius:6px;width:12em">',
+      st,'<button type="button" class="btn sec" style="padding:1px 6px;font-size:11px" data-up="'+i+'">↑</button> <button type="button" class="btn sec" style="padding:1px 6px;font-size:11px" data-dn="'+i+'">↓</button> <button type="button" class="btn sec" style="padding:1px 6px;font-size:11px" data-last="'+i+'">最後へ</button>']}; }));
+  const R=t=>PR.recv[t]=PR.recv[t]||{};
+  T.querySelectorAll('[data-rv]').forEach(b=>b.addEventListener('click',()=>{ const n=jstNow(); R(b.dataset.rv).at=pad2(n.h)+':'+pad2(n.m); prSave(); renderPres(); }));
+  T.querySelectorAll('[data-un]').forEach(b=>b.addEventListener('click',()=>{ R(b.dataset.un).at=''; prSave(); renderPres(); }));
+  T.querySelectorAll('[data-rp]').forEach(b=>b.addEventListener('click',()=>{ const r=R(b.dataset.rp); r.rep=(r.rep||0)+1; const n=jstNow(); r.at=pad2(n.h)+':'+pad2(n.m); prSave(); renderPres(); }));
+  T.querySelectorAll('[data-mm]').forEach(x=>x.addEventListener('change',()=>{ R(x.dataset.mm).memo=x.value; prSave(); }));
+  const mv=(i,j)=>{ if(j<0||j>=ord.length) return; const cur=ord[PR.cur]; const [x]=ord.splice(i,1); ord.splice(j,0,x); PR.order=ord; PR.cur=ord.indexOf(cur); prSave(); renderPres(); prTick(); };
+  T.querySelectorAll('[data-up]').forEach(b=>b.addEventListener('click',()=>mv(+b.dataset.up,+b.dataset.up-1)));
+  T.querySelectorAll('[data-dn]').forEach(b=>b.addEventListener('click',()=>mv(+b.dataset.dn,+b.dataset.dn+1)));
+  T.querySelectorAll('[data-last]').forEach(b=>b.addEventListener('click',()=>mv(+b.dataset.last,ord.length-1)));
+  prTick(); }
+document.getElementById('pr-start').addEventListener('click',()=>{ if(!PR.run){ PR.run=true; PR.t0=Date.now(); prSave(); } bell(0); prTick(); });
+document.getElementById('pr-pause').addEventListener('click',()=>{ if(PR.run){ PR.acc=prElapsed(); PR.run=false; prSave(); } prTick(); });
+document.getElementById('pr-reset').addEventListener('click',()=>{ const t=prOrder()[PR.cur]; PR.acc=0; PR.run=false; if(PR.fired) delete PR.fired[t]; prSave(); prTick(); });
+document.getElementById('pr-next').addEventListener('click',()=>{ const ord=prOrder(); const t=ord[PR.cur]; if(t) PR.done[t]=true; if(PR.cur<ord.length-1) PR.cur++; PR.acc=0; PR.run=false; prSave(); renderPres(); });
+document.getElementById('pr-full').addEventListener('click',()=>{ const b=document.getElementById('pr-big'); if(b.requestFullscreen) b.requestFullscreen().catch(()=>{}); });
+document.getElementById('pr-abc').addEventListener('click',()=>{ PR.order=prTeams().slice(); PR.cur=0; prSave(); renderPres(); document.getElementById('pr-st').textContent='A→Kの順に戻しました。'; });
+document.getElementById('pr-clear').addEventListener('click',e=>{ const b=e.currentTarget;
+  if(b.dataset.armed!=='1'){ b.dataset.armed='1'; b.textContent='もう一度押すと消します'; clearTimeout(b._t); b._t=setTimeout(()=>{b.dataset.armed=''; b.textContent='提出の印と進み具合を消す';},6000); return; }
+  clearTimeout(b._t); b.dataset.armed=''; b.textContent='提出の印と進み具合を消す';
+  PR={order:prTeams().slice(),recv:{},cur:0,acc:0,t0:0,run:false,done:{},fired:{}}; prSave(); renderPres(); document.getElementById('pr-st').textContent='消しました。'; });
+setInterval(()=>{ const v=document.getElementById('v-pres'); if(v&&!v.hidden) prTick(); },250);
+
+
+/* ================= v26：他チームへの返事（⑤b）の管理と催促（TAも使える。中身は出さない） ================= */
+let PB_KEY='';   /* 読み込み用の合言葉は、この画面を閉じるまでメモリにだけ置く（保存しない・表示しない） */
+let PB_ROWS=[];
+const pbHas=(s,k)=>(s.sc||[]).includes(k)||(s.sc||[]).includes('all');
+function pbState(rec,t){ const r=(rec&&rec.peer||[]).find(x=>(x.team||'').trim()===t); if(!r) return '';
+  const sc=r.s||[]; const full=!!r.want&&sc.length>=6&&sc.every(v=>v>0); const any=!!r.want||sc.some(v=>v>0)||!!(r.why||'').trim();
+  return full?'済':(any?'途中':''); }
+function pbRecOf(nick){ const k=pkey(nick); return SUB.find(x=>pkey(x.nick)===k)||null; }
+function renderPb(){ const T=document.getElementById('t-pb'); if(!T) return; const ord=prOrder();
+  const ppl=[]; ord.forEach(t=>memOf(t).forEach(p=>ppl.push({team:t,nick:p.nick})));
+  const rows=ppl.map(p=>{ const rec=pbRecOf(p.nick); const sent=!!(rec&&pbHas(rec,'pr')); const tg=ord.filter(t=>t!==p.team);
+    const st=tg.map(t=>[t,sent?pbState(rec,t):'']); const done=st.filter(x=>x[1]==='済').length;
+    const at=rec&&(rec.recv||{}).pr||'';
+    return {team:p.team,nick:p.nick,sent,at,n:tg.length,done,half:st.filter(x=>x[1]==='途中').map(x=>x[0]),miss:st.filter(x=>!x[1]).map(x=>x[0])}; });
+  PB_ROWS=rows;
+  const sh=t=>t.replace(/チーム$/,'');
+  const sent=rows.filter(r=>r.sent).length, full=rows.filter(r=>r.sent&&r.done===r.n).length;
+  document.getElementById('pb-sum').textContent=rows.length?('送った '+sent+' / '+rows.length+' 人　全チームそろった '+full+' 人'):'';
+  tbl(T,[['チーム'],['名前'],['⑤b'],['書いたチーム',1],['まだのチーム'],['途中のチーム']],rows.map(r=>({c:[esc(r.team),esc(r.nick),
+    r.sent?'<span class="hi">送った</span>'+(r.at?' <small>'+esc(String(r.at).slice(11,16)||r.at)+'</small>':''):'<span class="warnc">まだ</span>',
+    r.sent?(r.done+' / '+r.n):'—', r.sent?(r.miss.length?'<span class="warnc">'+esc(r.miss.map(sh).join('・'))+'</span>':'<span class="hi">なし</span>'):'—',
+    r.sent&&r.half.length?esc(r.half.map(sh).join('・')):'' ]})));
+  const TT=document.getElementById('t-pbt');
+  if(TT) tbl(TT,[['チーム'],['届いた返事（そろったもの）',1],['見込み',1]],ord.map(t=>{ const exp=rows.filter(r=>r.team!==t).length;
+    const got=rows.filter(r=>r.team!==t&&r.sent&&!r.miss.includes(t)&&!r.half.includes(t)).length;
+    return {c:[esc(t),got,exp]}; }));
+}
+function pbCopyText(){ const sh=t=>t.replace(/チーム$/,''); const L=[];
+  PB_ROWS.forEach(r=>{ if(!r.sent) L.push(r.team+'　'+r.nick+'：⑤bをまだ送っていません');
+    else if(r.miss.length||r.half.length) L.push(r.team+'　'+r.nick+'：'+(r.miss.length?sh(r.miss.join('・'))+' が空':'')+(r.miss.length&&r.half.length?'／':'')+(r.half.length?r.half.map(sh).join('・')+' が途中（受け取りたいか・6つの軸）':'')+'。書いたら送り直してください'); });
+  return L; }
+document.getElementById('pb-copy').addEventListener('click',async()=>{ const L=pbCopyText(); const st=document.getElementById('pb-st');
+  if(!L.length){ st.textContent=PB_ROWS.length?'声をかける人はいません。':'チーム編成がまだです。'; return; }
+  try{ await navigator.clipboard.writeText(L.join('\n')); st.textContent='声をかける人 '+L.length+' 人をコピーしました（名前と、空のチームだけ。返事の中身は入りません）。'; }catch(e){ st.textContent='コピーできませんでした。'; } });
+function pbLoad(){ const st=document.getElementById('pb-st'); const ki=document.getElementById('pb-key');
+  if(ki.value.trim()){ PB_KEY=ki.value.trim(); ki.value=''; ki.placeholder='合言葉は入っています（この画面を閉じると消えます）'; }
+  const sp=document.getElementById('sheetpw'); const key=PB_KEY||(ROLE==='full'&&sp?sp.value.trim():'');
+  if(!(CFG.submitUrl&&/^https:\/\//.test(CFG.submitUrl))){ st.textContent='この画面では、スプレッドシートから読み込めません（公開ページで開いてください）。控えのファイルを読み込んでも確かめられます。'; return; }
+  if(!key){ st.textContent='読み込み用の合言葉を、講師に入れてもらってください。'; return; }
+  const keep=sp.value; sp.value=key; document.getElementById('sheetload').click(); sp.value=(ROLE==='full')?keep:'';
+  const n=new Date(Date.now()+9*3600e3), hm=String(n.getUTCHours()).padStart(2,'0')+':'+String(n.getUTCMinutes()).padStart(2,'0');
+  st.textContent='読み込んでいます…（'+hm+'）';
+  setTimeout(()=>{ st.textContent='最新の読み込み（'+hm+'）：'+(document.getElementById('st').textContent||''); },5000); }
+document.getElementById('pb-load').addEventListener('click',pbLoad);
+document.getElementById('pb-key').addEventListener('keydown',e=>{ if(e.key==='Enter') pbLoad(); });
+setInterval(()=>{ const a=document.getElementById('pb-auto'), v=document.getElementById('v-pres'); if(a&&a.checked&&v&&!v.hidden&&(PB_KEY||ROLE==='full')) pbLoad(); },120000);
+
 /* ---- gate & tabs ---- */
 function open_(role){ ROLE=role==='ta'?'ta':'full'; document.body.classList.toggle('ta',ROLE==='ta'); document.getElementById('gate').hidden=true;document.getElementById('app').hidden=false;renderAll();}
 document.getElementById('go').addEventListener('click',async()=>{
@@ -1594,11 +1740,12 @@ document.getElementById('go').addEventListener('click',async()=>{
   else document.getElementById('gs').textContent='合言葉が違います。';
 });
 document.getElementById('pw').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('go').click();});
+document.getElementById('lock').addEventListener('click',()=>{ PB_KEY=''; });
 document.getElementById('lock').addEventListener('click',()=>{sessionStorage.removeItem('nbc-b');location.reload();});
 { const ss=sessionStorage.getItem('nbc-b'); if(ss==='1')open_('full'); else if(ss==='ta')open_('ta'); }
 document.querySelectorAll('nav.tabs button').forEach(b=>b.addEventListener('click',()=>{
   document.querySelectorAll('nav.tabs button').forEach(x=>x.setAttribute('aria-selected',String(x===b)));
-  ['in','team','now','prog','agr','mix','up','work','peer','prob','pre','iv','post','rep','exp'].forEach(v=>{
+  ['in','team','now','pres','prog','agr','mix','up','work','peer','prob','pre','iv','post','rep','exp'].forEach(v=>{
     const e=document.getElementById('v-'+v); if(e)e.hidden=(v!==b.dataset.v);});
   window.scrollTo({top:0,behavior:'instant'});
 }));
