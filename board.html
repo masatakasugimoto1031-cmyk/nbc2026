@@ -250,7 +250,7 @@ table.tt tr.cur td{background:var(--hi-bg,rgba(46,125,90,.12));font-weight:700}.
   </section>
 
   <section id="v-team" hidden>
-    <p class="lede"><b>10月22日（最終回収の翌日）</b>に、提出①を出した人をチームに分けます（3人1チーム。同じ日に教務へ）。DAY1の前日までに teams.js を差し替えると、記録係の画面は、<b>21の質問にメンバー全員の判定と根拠が並び、全員一致の問いには判定が入った状態</b>から始まります。分かれた問いと、困りごとの絞り込み（3〜5件）が、当日の持ち寄りの作業です（AIに渡す◎3〜5個は「つなぎ合わせる」で選ぶ。判定は変えない）。<br><b>当日の朝の変更</b>：欠席に印を付け（記録係が欠席なら選び直す）、teams.js を作り直して差し替え、学生に「チームのデータを読み込み直す」を押してもらいます。TAもこの操作ができます。<br><b>ひとりずつの判定（一致率の主分析）は、ここでは変わりません。</b></p>
+    <p class="lede"><b>10月22日（最終回収の翌日）</b>に、提出①を出した人をチームに分けます（4人1チーム。41名なら4人×9＋5人×1＝10チーム。同じ日に教務へ）。DAY1の前日までに teams.js を差し替えると、記録係の画面は、<b>21の質問にメンバー全員の判定と根拠が並び、全員一致の問いには判定が入った状態</b>から始まります。分かれた問いと、困りごとの絞り込み（3〜5件）が、当日の持ち寄りの作業です（AIに渡す◎3〜5個は「つなぎ合わせる」で選ぶ。判定は変えない）。<br><b>当日の朝の変更</b>：欠席に印を付け（記録係が欠席なら選び直す）、teams.js を作り直して差し替え、学生に「チームのデータを読み込み直す」を押してもらいます。TAもこの操作ができます。<br><b>ひとりずつの判定（一致率の主分析）は、ここでは変わりません。</b></p>
     <div class="card"><div class="body">
       <label style="font-size:13px">チームの数 <input type="number" id="tm-k" min="1" max="12" value="2" style="width:5em;font:inherit;padding:4px 6px;border:1px solid var(--line-strong);border-radius:7px"></label>
       <div class="btns"><button class="btn full-only" id="tm-auto">◎の数が偏らないように自動で振り分ける</button><button class="btn sec" id="tm-save">保存する</button></div>
@@ -281,15 +281,15 @@ table.tt tr.cur td{background:var(--hi-bg,rgba(46,125,90,.12));font-weight:700}.
   </section>
 
   <section id="v-pres" hidden>
-    <p class="lede">DAY2の発表（<b>14:25〜16:15</b>）。<b>A→Kの順</b>に、講師のPCから投影します。各チームの記録係は<b>14:20まで</b>に、講師宛てのメール（CCでTAにも届く）で発表ファイルを送ります。届いたら「受け取った」を押してください。<b>14:20に届いていないチームは最後に回し、自分たちのPCで発表します。</b></p>
+    <p class="lede">DAY2の発表（<b>14:25〜16:15</b>）。<b>A→Jの順</b>に、講師のPCから投影します。各チームの記録係は<b>14:20まで</b>に、講師宛てのメール（CCでTAにも届く）で発表ファイルを送ります。届いたら「受け取った」を押してください。<b>14:20に届いていないチームは最後に回し、自分たちのPCで発表します。</b></p>
     <div class="card"><h2>発表タイマー<span class="s" id="pr-sum"></span></h2><div class="body">
       <div id="pr-big" class="prbig"></div>
       <div class="btns"><button class="btn" id="pr-start">開始</button><button class="btn sec" id="pr-pause">一時停止</button><button class="btn sec" id="pr-next">次のチームへ</button><button class="btn sec" id="pr-reset">このチームをはじめから</button><button class="btn sec" id="pr-full">発表者に見せる（全画面）</button>
         <label style="font-size:13px;align-self:center"><input type="checkbox" id="pr-sound" checked> 鈴を鳴らす</label></div>
-      <p class="status">4分で鈴1回、5分で発表終了（鈴2回）、8分で質疑終了（鈴3回）、続けて入れ替え1分。入れ替えが終わったら「次のチームへ」。全体の予定は 14:25〜16:15（11チーム×9分＝99分＋予備11分）。</p>
+      <p class="status">4分で鈴1回、5分で発表終了（鈴2回）、8分で質疑終了（鈴3回）、続けて入れ替え1分。入れ替えが終わったら「次のチームへ」。全体の予定は 14:25〜16:15（10チーム×9分＝90分＋予備20分）。</p>
     </div></div>
     <div class="card"><h2>発表順と提出の管理<span class="s" id="pr-n"></span></h2><div class="scroll"><table id="t-pres"></table></div>
-      <div class="body"><div class="btns"><button class="btn sec" id="pr-abc">A→Kの順に戻す</button><button class="btn sec" id="pr-clear">提出の印と進み具合を消す</button></div><p class="status" id="pr-st"></p></div></div>
+      <div class="body"><div class="btns"><button class="btn sec" id="pr-abc">A→Jの順に戻す</button><button class="btn sec" id="pr-clear">提出の印と進み具合を消す</button></div><p class="status" id="pr-st"></p></div></div>
     <div class="card" id="pb-card"><h2>他チームへの返事（⑤b）の状況<span class="s" id="pb-sum"></span></h2><div class="body">
       <p class="see2" style="margin:0 0 8px">学生は、<b>各チームの質疑の3分のあいだに</b>そのチームへの返事を書き、<b>16:15〜16:25</b>に「提出⑤b」で送ります（途中で送ってもよく、送り直すと新しいほうが使われます）。ここには、<b>誰が・どのチームに書いたか（有無）だけ</b>が出ます。返事の中身（受け取りたいか・理由・点）は出ません。</p>
       <div class="pbkey"><input type="password" id="pb-key" placeholder="読み込み用の合言葉（講師が入れます）" autocomplete="off">
@@ -1184,11 +1184,11 @@ function renderPost(){
 /* ---- 当日の進行 ---- */
 const PH=[
  {k:'pre',n:'事前課題',d:'〜10/19 24:00',sub:'am',
-  tt:[['10/13','教務から事前課題を配る（Moodle）'],['〜10/19','ひとりで目安60分（早い人は30分）：当たり前10分・21の質問30分・糸島の困りごと13分・1行の案2分・提出5分'],['10/19 24:00','提出①の締切（ひとり1件・名前だけ）'],['10/20 午前','講師：「提出の状況」で①がまだの人をコピー → 教務からリマインド'],['10/21 24:00','最終回収（これより後は「①締切後」の印）'],['10/22 午前','講師：◎が3つ未満の人・出所のない◎を確認 →「チーム編成」でチームと記録係を決め、教務へ（3人1チーム）'],['10/24','講師：teams.js を作って差し替え／TAに1時間のレクチャ（チーム編成・提出の状況・引き継ぎ）'],['10/25 朝','講師・TA：出欠を確かめ、欠席・記録係を直して teams.js を差し替え → 学生は「チームのデータを読み込み直す」']]},
+  tt:[['10/13','教務から事前課題を配る（Moodle）'],['〜10/19','ひとりで目安60分（早い人は30分）：当たり前10分・21の質問30分・糸島の困りごと13分・1行の案2分・提出5分'],['10/19 24:00','提出①の締切（ひとり1件・名前だけ）'],['10/20 午前','講師：「提出の状況」で①がまだの人をコピー → 教務からリマインド'],['10/21 24:00','最終回収（これより後は「①締切後」の印）'],['10/22 午前','講師：◎が3つ未満の人・出所のない◎を確認 →「チーム編成」でチームと記録係を決め、教務へ（4人1チーム・10チーム）'],['10/24','講師：teams.js を作って差し替え／TAに1時間のレクチャ（チーム編成・提出の状況・引き継ぎ）'],['10/25 朝','講師・TA：出欠を確かめ、欠席・記録係を直して teams.js を差し替え → 学生は「チームのデータを読み込み直す」']]},
  {k:'pm',n:'DAY1',d:'10/25',sub:'pm',
-  tt:[["9:30", "講師・TA：出欠 → 欠席があれば「チーム編成」で直し、teams.js を差し替え（10:00までに）"], ["10:00", "１. オリエンテーション：依頼主の6つの条件／全体の地図／チームの確認（15分）"], ["10:15", "２. アイスブレイク：エレベーターピッチ（15分）"], ["10:30", "３. メガトレンドを知る：世界と日本の構造変化（20分）"], ["10:50", "４. 生活者起点で考える：価値軸の変化／世代による違い（15分）"], ["11:05", "５. 新規事業開発を学ぶ：新規事業開発に関する知識・フレームワーク（20分）"], ["11:25", "６. あるものから始める：事業機会の3つの円／今年の入口／主体（25分）"], ["11:50", "７. 九州大学の7つの力を見る：持ち寄り：分かれた問い／困りごとを3〜5件に（35分）"], ["12:25", "昼食（40分）"], ["13:05", "８. 機会を見つける：宝をひと言で→AIに渡す◎を選ぶ→欲しがる相手（20分）"], ["13:25", "総当たり表（遠いマス）→社会の変化→1つ選ぶ（25分）"], ["13:50", "重なりを見る／AIだけの案を記録する（10分）"], ["14:00", "AIと8つの欄に（20分で「まとめて」）（30分）"], ["14:30", "９. 誰の、どんな課題か：ペルソナ（使う人・決める人・払う人）（20分）"], ["14:50", "休憩（10分）"], ["15:00", "１０. 提供価値を考える：VPC①：相手の側（困りごと・望み）（25分）"], ["15:25", "アイデアシート（名称は仮／★／やめる条件）（15分）"], ["15:40", "１１. 確かめる：AIのお客さん→ピボット表（1回目）（20分）"], ["16:00", "8日間の進め方・反応の強さ・聞かないこと（20分）"], ["16:20", "調査設計：最初の相手・最初の質問・分担表（25分）"], ["16:45", "１２. ラップアップ：提出②（記録係）／11チームの案の地図（15分）"]]},
+  tt:[["9:30", "講師・TA：出欠 → 欠席があれば「チーム編成」で直し、teams.js を差し替え（10:00までに）"], ["10:00", "１. オリエンテーション：依頼主の6つの条件／全体の地図／チームの確認（15分）"], ["10:15", "２. アイスブレイク：エレベーターピッチ（15分）"], ["10:30", "３. メガトレンドを知る：世界と日本の構造変化（20分）"], ["10:50", "４. 生活者起点で考える：価値軸の変化／世代による違い（15分）"], ["11:05", "５. 新規事業開発を学ぶ：新規事業開発に関する知識・フレームワーク（20分）"], ["11:25", "６. あるものから始める：事業機会の3つの円／今年の入口／主体（25分）"], ["11:50", "７. 九州大学の7つの力を見る：持ち寄り：分かれた問い／困りごとを3〜5件に（35分）"], ["12:25", "昼食（40分）"], ["13:05", "８. 機会を見つける：宝をひと言で→AIに渡す◎を選ぶ→欲しがる相手（20分）"], ["13:25", "総当たり表（遠いマス）→社会の変化→1つ選ぶ（25分）"], ["13:50", "重なりを見る／AIだけの案を記録する（10分）"], ["14:00", "AIと8つの欄に（20分で「まとめて」）（30分）"], ["14:30", "９. 誰の、どんな課題か：ペルソナ（使う人・決める人・払う人）（20分）"], ["14:50", "休憩（10分）"], ["15:00", "１０. 提供価値を考える：VPC①：相手の側（困りごと・望み）（25分）"], ["15:25", "アイデアシート（名称は仮／★／やめる条件）（15分）"], ["15:40", "１１. 確かめる：AIのお客さん→ピボット表（1回目）（20分）"], ["16:00", "8日間の進め方・反応の強さ・聞かないこと（20分）"], ["16:20", "調査設計：最初の相手・最初の質問・分担表（25分）"], ["16:45", "１２. ラップアップ：提出②（記録係）／10チームの案の地図（15分）"]]},
  {k:'gap',n:'8日間',d:'10/26〜11/2',sub:null,tt:[['10/25夜','講師：「チーム編成」で teams.js を作り直して差し替え（アイデアシート・調査設計・AIだけの案をメンバーの画面へ）'],['10/28ごろ','前半の見直し（任意・提出なし。書いた分は提出④と一緒に届く）'],['11/2 18:00','提出④（聞き取り結果・ひとりずつ）'],['11/2','講師：全部読む → teams.js を作り直して差し替え（メンバーの記録を記録係の画面へ）']]},
- {k:'d2',n:'DAY2',d:'11/3',sub:'d2',tt:[["9:30", "講師・TA：出欠。記録係が休みなら「記録係の引き継ぎデータをコピー」→ 新しい記録係の端末に貼る／teams.js の記録係を直して差し替え"], ["10:00", "１. オリエンテーション：振り返り：8日間の記録を読む（20分）"], ["10:20", "２. 確かめた結果を読む：聞いた結果の扱い方（支持・反証・保留）（20分）"], ["10:40", "VPC②：書き直す・渡すもの・適合表（30分）"], ["11:10", "作り直す：6つの条件→判断→名称とコンセプト（40分）"], ["11:50", "誰と組むか／その相手にとっての利益（30分）"], ["12:20", "昼食（40分）"], ["13:00", "３. ビジネスモデルを考える：ビジネスモデルキャンバス（9マス）（35分）"], ["13:35", "ビジネスモデル図解（3×3・4ステップ）（25分）"], ["14:00", "実現したら九大のどの力が増えるか（15分）"], ["14:15", "４. ビジネスモデルを発表：発表の確認→講師にメールで送る（14:20まで）（10分）"], ["14:25", "発表：A→Kの順（5分＋質疑3分＋入替1分）（110分）"], ["16:15", "提出⑤（記録係）／提出⑤b（ひとり）（10分）"], ["16:25", "講評：11チームの案の地図／AIだけの案（25分）"], ["16:50", "５. ラップアップ：本日の学び／事後レポート（11/10まで）（10分）"]]},
+ {k:'d2',n:'DAY2',d:'11/3',sub:'d2',tt:[["9:30", "講師・TA：出欠。記録係が休みなら「記録係の引き継ぎデータをコピー」→ 新しい記録係の端末に貼る／teams.js の記録係を直して差し替え"], ["10:00", "１. オリエンテーション：振り返り：8日間の記録を読む（20分）"], ["10:20", "２. 確かめた結果を読む：聞いた結果の扱い方（支持・反証・保留）（20分）"], ["10:40", "VPC②：書き直す・渡すもの・適合表（30分）"], ["11:10", "作り直す：6つの条件→判断→名称とコンセプト（40分）"], ["11:50", "誰と組むか／その相手にとっての利益（30分）"], ["12:20", "昼食（40分）"], ["13:00", "３. ビジネスモデルを考える：ビジネスモデルキャンバス（9マス）（35分）"], ["13:35", "ビジネスモデル図解（3×3・4ステップ）（25分）"], ["14:00", "実現したら九大のどの力が増えるか（15分）"], ["14:15", "４. ビジネスモデルを発表：発表の確認→講師にメールで送る（14:20まで）（10分）"], ["14:25", "発表：A→Jの順（5分＋質疑3分＋入替1分）（110分）"], ["16:15", "提出⑤（記録係）／提出⑤b（ひとり）（10分）"], ["16:25", "講評：10チームの案の地図／AIだけの案（25分）"], ["16:50", "５. ラップアップ：本日の学び／事後レポート（11/10まで）（10分）"]]},
  {k:'post',n:'事後',d:'〜11/10',sub:'post',tt:[['11/10','提出⑥（事後レポート）']]}];
 const RK=['opp','who','alt','val','partner','benefit','cond','stop'];
 const has=(s,k)=>(s.sc||[]).includes(k)||(s.sc||[]).includes('all');
@@ -1438,7 +1438,7 @@ function repModel(){
   const tDet=T.map(r=>[esc(r.t),r.row?'#'+r.row:'—',esc(r.changed||'—'),r.match==null?'—':(r.match?'一致':'不一致'),r.fitX.length?r.fitX.map(k=>FITL[k]).join('、'):'—',r.fitX.length?(r.fitHit?'×の行を直した':'×の行と別を変えた'):'—',esc(r.dec||'—')]);
   S.push({h:'5　ピボット（3回）',note:'1回目＝AIのお客さん（仮の印）、2回目＝10/28ごろ 前半の見直し（任意・実在の人。提出④の記入から数える）、3回目＝DAY2 作り直す（適合表）。',head:['チーム','判断表','DAY2で変えたもの','一致','適合表の×','×と直したもの','判断'],rows:tDet});
   const mv=T.filter(r=>r.fin);
-  S.push({h:'6　発散（追補 v1.9 §5）',note:'事前に置いた見込み：移動・交通の案は全チームの25%以下（設計時は8チーム中2以下。11チームなら2以下。下回らなくても工程の欠陥とは読まず、どの工夫が効かなかったかを記録する）。移動・交通は語で拾う候補（目で確定）。',
+  S.push({h:'6　発散（追補 v1.9 §5）',note:'事前に置いた見込み：移動・交通の案は全チームの25%以下（設計時は8チーム中2以下。10チームなら2以下。下回らなくても工程の欠陥とは読まず、どの工夫が効かなかったかを記録する）。移動・交通は語で拾う候補（目で確定）。',
     head:['指標','値'],rows:[
       ['移動・交通の案（最後の案）',mv.filter(r=>r.moveFin).length+' / '+mv.length],
       ['移動・交通の案（AIだけの案）',T.filter(r=>r.aio&&r.moveAI).length+' / '+T.filter(r=>r.aio).length],
@@ -1488,7 +1488,7 @@ function repModel(){
   lim.push(['設計上の限界','条件4（発言より強い反応）は、聞き取りの前に作るAIだけの案では満たせない','5つ（条件4を除く）の充足数も報告する']);
   lim.push(['設計上の限界','全員に同じ根拠集15件を配っているため、Q2の一致は根拠集の共有で上振れしうる','根拠集の引用の有無で層別する（第1節）']);
   if(ag.n<8) lim.push(['N','事前課題の判定者が '+(ag.n||0)+' 人（Fleiss κ は人数が少ないと不安定）','人数を明記し、κは参考値とする']);
-  if(nT<11) lim.push(['N','チーム数が '+nT+'（2026年度の設計は11チーム）','チーム単位の指標は向きだけを読む']);
+  if(nT<10) lim.push(['N','チーム数が '+nT+'（2026年度の設計は10チーム・4人1チーム）','チーム単位の指標は向きだけを読む']);
   if(both.length<22) lim.push(['評定','評定者AとBの両方が入力した本数が '+both.length+'（AIだけの案11本＋最後の案11本が設計）','評定者間の一致は参考値']);
   if(blindBroken) lim.push(['盲検','評定者が、どちらの案かを75%以上当てている','形式の違い（長さ・書きぶり）で見分けられている疑い。充足数の差は盲検の結果として扱わない']);
   if(lateAm.length) lim.push(['手続','事前課題の締切後に受け付けた提出が '+lateAm.length+' 人','催促後の提出は、独立性（他の人と相談していないか）を事後レポートで確かめる']);
@@ -1643,11 +1643,11 @@ document.getElementById('x-csv').addEventListener('click',()=>put(csv(),'CSVを�
 document.getElementById('x-json').addEventListener('click',()=>put(JSON.stringify({subs:SUB,teams:TEAMS,rate:RATE},null,2),'JSONをコピーしました（提出・チーム編成・盲検評定）。'));
 
 
-/* ================= v25：発表進行（A→Kの順・提出の管理・タイマー） ================= */
+/* ================= v25：発表進行（A→Jの順・提出の管理・タイマー） ================= */
 let PR={order:[],recv:{},cur:0,acc:0,t0:0,run:false,done:{},fired:{}};
 try{ const r=localStorage.getItem('nbc25-pres'); if(r) PR=Object.assign(PR,JSON.parse(r)); }catch(e){}
 function prSave(){ try{ localStorage.setItem('nbc25-pres',JSON.stringify(PR)); }catch(e){} }
-function prTeams(){ let ts=[]; try{ ts=TNAMES.filter(t=>memOf(t).length); }catch(e){} return ts.length?ts:TNAMES.slice(0,11); }
+function prTeams(){ let ts=[]; try{ ts=TNAMES.filter(t=>memOf(t).length); }catch(e){} return ts.length?ts:TNAMES.slice(0,10); }
 function prOrder(){ const ts=prTeams(); PR.order=(PR.order||[]).filter(t=>ts.includes(t)); ts.forEach(t=>{ if(!PR.order.includes(t)) PR.order.push(t); }); if(PR.cur>=PR.order.length) PR.cur=Math.max(0,PR.order.length-1); return PR.order; }
 function jstNow(){ const d=new Date(Date.now()+9*3600e3); return {h:d.getUTCHours(),m:d.getUTCMinutes(),s:d.getUTCSeconds()}; }
 const pad2=n=>String(n).padStart(2,'0');
@@ -1697,7 +1697,7 @@ document.getElementById('pr-pause').addEventListener('click',()=>{ if(PR.run){ P
 document.getElementById('pr-reset').addEventListener('click',()=>{ const t=prOrder()[PR.cur]; PR.acc=0; PR.run=false; if(PR.fired) delete PR.fired[t]; prSave(); prTick(); });
 document.getElementById('pr-next').addEventListener('click',()=>{ const ord=prOrder(); const t=ord[PR.cur]; if(t) PR.done[t]=true; if(PR.cur<ord.length-1) PR.cur++; PR.acc=0; PR.run=false; prSave(); renderPres(); });
 document.getElementById('pr-full').addEventListener('click',()=>{ const b=document.getElementById('pr-big'); if(b.requestFullscreen) b.requestFullscreen().catch(()=>{}); });
-document.getElementById('pr-abc').addEventListener('click',()=>{ PR.order=prTeams().slice(); PR.cur=0; prSave(); renderPres(); document.getElementById('pr-st').textContent='A→Kの順に戻しました。'; });
+document.getElementById('pr-abc').addEventListener('click',()=>{ PR.order=prTeams().slice(); PR.cur=0; prSave(); renderPres(); document.getElementById('pr-st').textContent='A→Jの順に戻しました。'; });
 document.getElementById('pr-clear').addEventListener('click',e=>{ const b=e.currentTarget;
   if(b.dataset.armed!=='1'){ b.dataset.armed='1'; b.textContent='もう一度押すと消します'; clearTimeout(b._t); b._t=setTimeout(()=>{b.dataset.armed=''; b.textContent='提出の印と進み具合を消す';},6000); return; }
   clearTimeout(b._t); b.dataset.armed=''; b.textContent='提出の印と進み具合を消す';
