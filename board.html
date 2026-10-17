@@ -127,6 +127,13 @@ input[type=text],input[type=password]{font:inherit;font-size:13px;padding:6px 9p
 #scr .rc .ms{margin-top:8px;font-size:.85em;color:var(--ink-2);border-top:1px dashed var(--line);padding-top:6px}
 #scr .sum{margin:14px 0 0;font-size:calc(18px*var(--fs));font-weight:700}
 @media (max-width:640px){#scr .sr{grid-template-columns:1fr}#scr .sr .x{display:none}#scr .rc .two{grid-template-columns:1fr}}
+.tak{display:grid;grid-template-columns:5.2em 1fr auto;gap:4px 10px;align-items:start;padding:7px 4px;border-top:1px solid var(--line);font-size:13.5px;line-height:1.6}
+.tak:first-child{border-top:0}.tak.cur{background:var(--indigo-soft);border-radius:6px}.tak.done{color:var(--ink-3)}.tak.done .tx{text-decoration:line-through}
+.tak .tm{font-weight:800;font-variant-numeric:tabular-nums}.tak input{width:20px;height:20px}
+.att{display:inline-flex;gap:4px}.att button{border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:7px;padding:5px 9px;font-size:13px;min-width:3.4em}
+.att button.on.a1{background:var(--moss);border-color:var(--moss);color:#fff}.att button.on.a2{background:var(--ochre);border-color:var(--ochre);color:#fff}.att button.on.a3{background:var(--clay);border-color:var(--clay);color:#fff}
+.cnt{display:inline-flex;align-items:center;gap:4px}.cnt button{border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:7px;width:2.2em;height:2em;font-size:15px;font-weight:700}
+.cnt b{min-width:1.6em;text-align:center;font-variant-numeric:tabular-nums;font-size:16px}
 .prbig:fullscreen{display:flex;flex-direction:column;justify-content:center;background:#fff}.prbig:fullscreen .tm{font-size:6vh}.prbig:fullscreen .ph{font-size:5vh}.prbig:fullscreen .clk{font-size:30vh}
 table#t-pres tr.cur td{background:rgba(46,125,90,.12);font-weight:700} table#t-pres tr.done td{color:var(--ink-3)}
 body.ta .full-only{display:none!important}
@@ -181,6 +188,7 @@ table.tt tr.cur td{background:var(--hi-bg,rgba(46,125,90,.12));font-weight:700}.
       <button role="tab" aria-selected="false" data-v="team">チーム編成</button>
       <button role="tab" aria-selected="false" data-v="now">当日の進行</button>
       <button role="tab" aria-selected="false" data-v="pres">発表進行</button>
+      <button role="tab" aria-selected="false" data-v="tarec">TAの記録</button>
       <button role="tab" aria-selected="false" class="full-only" data-v="prog">進捗</button>
       <button role="tab" aria-selected="false" class="full-only" data-v="agr">一致率</button>
       <button role="tab" aria-selected="false" class="full-only" data-v="mix">つなぎ合わせ</button>
@@ -208,6 +216,7 @@ table.tt tr.cur td{background:var(--hi-bg,rgba(46,125,90,.12));font-weight:700}.
         <li>当日の朝：「チーム編成」タブで<b>欠席</b>に印 → 記録係が欠席なら選び直す →「teams.js を作ってコピー」→ 講師に渡す（または GitHub の teams.js を置き換える）→ 学生に「<b>チームのデータを読み込み直す</b>」を押してもらいます。</li>
         <li>記録係の端末が使えないとき：「チーム編成」のチームの枠 →「<b>記録係の引き継ぎデータをコピー</b>」→ 新しい記録係の端末の「はじめに」いちばん下「予備：チームのデータを読み込む」に貼ります。</li>
         <li>学生が端末を替えたとき：下の「受け取ったもの」の「最新のデータをコピー」→ 新しい端末の同じ場所に貼ります。</li>
+        <li><b>当日の出欠・発言の数・その日のタスク</b>は「TAの記録」タブで行います（9:30の出欠、講義中の発言、17:00にファイルで講師へ）。</li>
         <li>DAY2：「発表進行」タブで、発表ファイルの受け取り・タイマー・<b>他チームへの返事（⑤b）の状況</b>を見ます。⑤bは、講師に合言葉を入れてもらうと「最新を読み込む」で確かめられます。「声をかける人をコピー」で、まだの人と空のチームが分かります。</li>
         <li>終わったら「チーム編成をファイルに保存」で講師に渡します。控えのファイルは講義の外に出さず、講義のあとで消してください。</li>
       </ol>
@@ -318,6 +327,23 @@ table.tt tr.cur td{background:var(--hi-bg,rgba(46,125,90,.12));font-weight:700}.
     </div>
   </section>
 
+  <section id="v-tarec" hidden>
+    <p class="lede"><b>当日の単純作業（出欠・発言の数・提出の確認）をここでまとめて行います。</b>押した内容はこの端末に保存され、「チーム編成をファイルに保存（講師に渡す）」で講師に渡ります。発言の数は、講師が「講義への貢献」を見るときの参考です（チームの中の話し合いは数えません）。</p>
+    <div class="card"><div class="body"><div class="phases" id="ta-day"></div><p class="status" id="ta-st" style="margin:0"></p></div></div>
+    <div class="card"><h2>この日のTAのタスク<span class="s" id="ta-tsum"></span></h2><div class="body" id="ta-tasks"></div></div>
+    <div class="kpis card" id="ta-kpi"></div>
+    <div class="card"><h2>出欠と発言の数<span class="s">出欠は、欠席にするとチーム編成の「欠席」にも付きます。記録係が欠席なら講師に伝えます</span></h2>
+      <div class="body"><div class="btns" style="margin:0 0 8px"><input type="search" id="ta-q" placeholder="名前で探す" style="font:inherit;padding:6px 8px;border:1px solid var(--line-strong);border-radius:7px;width:min(220px,100%)">
+        <button class="btn sec" type="button" id="ta-allin">未確認の人をまとめて「出席」</button>
+        <button class="btn sec" type="button" id="ta-clear-ab">前の日の欠席の印を外す</button>
+        <button class="btn sec full-only" type="button" id="ta-csv">出欠と発言の控えをコピー（表計算に貼る）</button></div>
+      <p class="status" style="margin:0">発言＝講師の問いに答えた・全体に意見を言った（1回1つ）。質問＝DAY2の発表の質疑で質問した。迷ったら数えない。</p></div>
+      <div class="scroll"><table id="t-ta"></table></div></div>
+    <div class="card"><h2>提出の確認と声かけ</h2><div class="body">
+      <p class="see2" style="margin:0 0 6px">講義中の提出（②⑤⑤b）がまだの人は、「受け取る」の「未提出の一覧と催促」に出ます。講師に合言葉を入れてもらい「提出の状況を読み込む」で最新にします。⑤bの空のチームは「発表進行」の下に出ます。</p>
+      <div class="btns"><button class="btn sec" type="button" data-go="in">未提出の一覧を開く</button><button class="btn sec" type="button" data-go="pres">発表進行を開く</button><button class="btn sec" type="button" data-go="team">チーム編成を開く</button></div></div></div>
+  </section>
+
   <section id="v-prog" hidden>
     <div class="kpis card" id="kpi"></div>
     <div class="card"><h2>チーム別の状況</h2><div class="scroll"><table id="t-prog"></table></div></div>
@@ -426,7 +452,7 @@ table.tt tr.cur td{background:var(--hi-bg,rgba(46,125,90,.12));font-weight:700}.
 <div id="scr" hidden style="--fs:1"><div class="scr-bar"><b id="scr-t"></b><span class="scr-at" id="scr-at"></span><span class="sp"></span><button class="btn sec" id="scr-load" type="button">最新を読み込む</button><button class="btn sec" id="scr-minus" type="button">文字−</button><button class="btn sec" id="scr-plus" type="button">文字＋</button><button class="btn sec" id="scr-full" type="button">全画面</button><button class="btn" id="scr-x" type="button">閉じる</button></div><div id="scr-body"></div></div>
 <footer class="wrap">
   受け取ったデータは、この端末とあなたのアカウントにだけ保存されます。／ FVCP／7資本モデル v1.16 を参照（演習の判定は、実在の九州大学の判定として扱わず、九大と外部の連携に用いない）
-　ボードの版：v31（2026年10月17日）
+　ボードの版：v32（2026年10月17日）
 </footer>
 </div>
 
@@ -1281,7 +1307,81 @@ function renderNow(){
   say.innerHTML=lines.length?lines.join(''):'<p class="lede" style="margin:0">声をかけるチームはありません。</p>';
   tbl(T,[['チーム'],[byTeam?'提出した人':'名前']].concat(labels.map(l=>[l])),res.map(r=>({c:[esc(r.s.team),esc(r.s.nick||'—')].concat(r.c.map(c=>c[1]?'<span class="hi">✓</span>':'<span class="warnc">×</span>'))})));
 }
-function renderAll(){resolveTeams();sortSub();renderTeam();renderPres();renderPb();renderNow();renderSubs();renderProg();renderAgr();renderMix();renderUp();renderWork();renderPeer();renderProb();renderPre();renderIv();renderPost();renderRep();if(SCR.mode)renderScr();}
+function renderAll(){resolveTeams();sortSub();renderTeam();renderPres();renderPb();renderNow();renderSubs();renderProg();renderAgr();renderMix();renderUp();renderWork();renderPeer();renderProb();renderPre();renderIv();renderPost();renderRep();renderTaRec();if(SCR.mode)renderScr();}
+
+/* ================= v32：TAの記録（出欠・発言の数・その日のタスク） ================= */
+const TA_TASKS={d1:[
+ ['前日','ボード（TA）を開き、講師から受け取った「TAに渡すファイル」を「控えのファイルを読み込む」で入れる。チーム編成と名簿が出ることを確かめる'],
+ ['9:15','会場：机8台＋島2つにチーム札（A〜J）。講師PCとプロジェクタ・音（鈴）を確かめる'],
+ ['9:30','出欠を取る（このタブ）。来た人を「出席」。記録係が欠席なら、すぐ講師に伝える'],
+ ['9:45','欠席・名前のない人があれば「チーム編成」で直し、「teams.js を作ってコピー」→ 講師へ（講師がGitHubを差し替える）'],
+ ['10:00','学生に「チームのデータを読み込み直す」を押してもらい、全員にチーム名と記録係が出たかを回って確かめる。10:00以降に来た人は「遅刻」'],
+ ['10:15','アイスブレイク（エレベーターピッチ）：1人30秒の時間を計る'],
+ ['10:30','講義（〜11:50）：講師の問いに答えた人を「発言」で数える'],
+ ['11:50','持ち寄り：記録係の画面に全員の事前課題が入っているかを回って確かめる（入っていなければ「読み込み直す」）'],
+ ['12:25','昼食：午前の出欠を確定（遅刻の時刻）。午後から来る人を講師に伝える'],
+ ['13:50','記録係に「組み合わせを講師に送る」を押してもらう。押し方が分からない記録係を手伝う'],
+ ['14:20','「AIと8つの欄に」：20分たったら「まとめて」を送るよう全体に声をかける'],
+ ['15:55','AIのお客さん：「まとめ」まで進んでいないチームに声をかける'],
+ ['16:50','講師に合言葉を入れてもらい「提出の状況を読み込む」→ ②が「まだ」「途中」のチームの記録係に声をかける（17:00まで）'],
+ ['17:00','「チーム編成をファイルに保存（講師に渡す）」→ 講師へ（出欠と発言の数も入ります）']],
+ d2:[
+ ['前日','講師から受け取った最新の「TAに渡すファイル」を読み込む（11/2夜）'],
+ ['9:30','出欠を取る（このタブ）。はじめに「前の日の欠席の印を外す」。記録係が欠席なら「チーム編成」の「記録係の引き継ぎデータをコピー」で引き継ぐ'],
+ ['10:00','全チームの記録係の画面に、8日間の記録（聞いた人数・反応の強さ）が出ているかを回って確かめる'],
+ ['10:40','ワーク（〜12:20）：机を回り、手が止まっているチームを講師に伝える。全体での発言を数える'],
+ ['13:00','ワーク（〜14:15）：同上'],
+ ['14:10','講師に「発表進行」の⑤bの欄へ合言葉を入れてもらう'],
+ ['14:15','発表ファイルのメール（CC）が届いたら「発表進行」で「受け取った」。14:20に届いていないチームに声をかけ、届かなければ「最後へ」'],
+ ['14:25','発表（〜16:15）：タイマー（4分・5分・8分の鈴、入れ替え1分）。質疑で質問した人を「質問」で数える'],
+ ['15:20','（任意）⑤bを一度送るよう案内 →「最新を読み込む」→ 空のチームが多い人に一言'],
+ ['16:15','⑤・⑤bの声かけ（16:25まで）：「2分ごとに読み込む」に印 →「声をかける人をコピー」'],
+ ['16:25','まだの人・チームの名前を講師に渡す'],
+ ['17:00','「チーム編成をファイルに保存（講師に渡す）」→ 講師へ。発表ファイルのメールと控えのファイルを消す']]};
+let TADAY=null;
+function taDayAuto(){ const d=new Date(Date.now()+9*3600e3), md=(d.getUTCMonth()+1)*100+d.getUTCDate(); return md>=1026?'d2':'d1'; }
+function taFix(){ fixTeams(); ['att','talk','tachk'].forEach(k=>{ if(!TEAMS[k]||typeof TEAMS[k]!=='object') TEAMS[k]={}; ['d1','d2'].forEach(d=>{ if(!TEAMS[k][d]||typeof TEAMS[k][d]!=='object') TEAMS[k][d]={}; }); }); }
+function taNow(){ const d=new Date(Date.now()+9*3600e3); return String(d.getUTCHours()).padStart(2,'0')+':'+String(d.getUTCMinutes()).padStart(2,'0'); }
+function taToday(day){ const d=new Date(Date.now()+9*3600e3), md=(d.getUTCMonth()+1)*100+d.getUTCDate(); return (day==='d1'&&md===1025)||(day==='d2'&&md===1103); }
+function taPeople(){ taFix(); const m={}; Object.keys(TEAMS.assign||{}).forEach(n=>{ if(n&&!isTest(n)&&!EXN[pkey(n)]) m[n]=TEAMS.assign[n]||''; }); (TEAMS.extra||[]).forEach(n=>{ n=String(n||'').trim(); if(n&&!(n in m)) m[n]=TEAMS.assign[n]||''; });
+  return Object.keys(m).map(n=>({n,t:m[n]||'—'})).sort((a,b)=>a.t.localeCompare(b.t)||a.n.localeCompare(b.n,'ja')); }
+function taSave(msg){ persistTeams(); if(msg) document.getElementById('ta-st').textContent=msg; }
+function renderTaRec(){ const host=document.getElementById('ta-tasks'); if(!host) return; taFix(); const day=TADAY||taDayAuto();
+  const dd=document.getElementById('ta-day'); dd.innerHTML=[['d1','DAY1','10/25（日）'],['d2','DAY2','11/3（火・祝）']].map(([k,n,d])=>'<button type="button" class="btn '+(k===day?'':'sec')+'" data-tad="'+k+'">'+n+'<br><small>'+d+'</small></button>').join('');
+  dd.querySelectorAll('[data-tad]').forEach(b=>b.addEventListener('click',()=>{ TADAY=b.dataset.tad; renderTaRec(); }));
+  const L=TA_TASKS[day], ck=TEAMS.tachk[day], now=taNow(); let cur=-1; if(taToday(day)) L.forEach((r,i)=>{ if(/^\d{1,2}:\d{2}$/.test(r[0])&&r[0].padStart(5,'0')<=now) cur=i; });
+  host.innerHTML=L.map((r,i)=>'<label class="tak'+(ck[i]?' done':'')+(i===cur?' cur':'')+'"><span class="tm">'+(i===cur?'▶ ':'')+esc(r[0])+'</span><span class="tx">'+esc(r[1])+'</span><input type="checkbox" data-tak="'+i+'"'+(ck[i]?' checked':'')+'></label>').join('');
+  host.querySelectorAll('[data-tak]').forEach(c=>c.addEventListener('change',()=>{ TEAMS.tachk[day][c.dataset.tak]=c.checked; if(!c.checked) delete TEAMS.tachk[day][c.dataset.tak]; taSave(); renderTaRec(); }));
+  document.getElementById('ta-tsum').textContent=Object.keys(ck).length+' / '+L.length+' 済み';
+  const P=taPeople(), A=TEAMS.att[day], K=TEAMS.talk[day], q=(document.getElementById('ta-q').value||'').trim();
+  const c={出席:0,遅刻:0,欠席:0}; P.forEach(p=>{ const st=(A[p.n]||{}).st; if(st) c[st]++; });
+  const recAb=P.filter(p=>(A[p.n]||{}).st==='欠席'&&TEAMS.rec[p.t]===p.n);
+  const sumS=P.reduce((a,p)=>a+((K[p.n]||{}).s||0),0), sumQ=P.reduce((a,p)=>a+((K[p.n]||{}).q||0),0);
+  document.getElementById('ta-kpi').innerHTML=[['出席',c.出席+' 人',''],['遅刻',c.遅刻+' 人',''],['欠席',c.欠席+' 人',recAb.length?'記録係の欠席 '+recAb.map(p=>p.t).join('・'):'',recAb.length?'ng':''],['未確認',(P.length-c.出席-c.遅刻-c.欠席)+' 人','名簿 '+P.length+' 人'],['発言／質問',sumS+' ／ '+sumQ,'この日の合計']]
+    .map(([l,v,n,cl])=>'<div class="kpi '+(cl||'')+'"><div class="l">'+l+'</div><div class="v">'+v+'</div><div class="n">'+esc(n||'')+'</div></div>').join('');
+  const T=document.getElementById('t-ta'); const qq=x=>esc(x).replace(/"/g,'&quot;');
+  if(!P.length){ T.innerHTML='<tbody><tr><td>チーム編成がまだありません（10/22に講師が作り、「TAに渡すファイル」で届きます）。</td></tr></tbody>'; return; }
+  const rows=P.filter(p=>!q||normName(p.n).includes(normName(q))||p.t.includes(q));
+  tbl(T,[['チーム'],['名前'],['出欠'],['時刻'],['発言'],['質問']],rows.map(p=>{ const a=A[p.n]||{}, k=K[p.n]||{}; const rec=TEAMS.rec[p.t]===p.n;
+    return {cls:a.st==='欠席'?'lo':'',c:[esc(p.t),esc(p.n)+(rec?' <small class="hi">記録係</small>':''),
+      '<span class="att">'+[['出席','a1'],['遅刻','a2'],['欠席','a3']].map(([s2,cl])=>'<button type="button" class="'+cl+(a.st===s2?' on':'')+'" data-att="'+qq(p.n)+'" data-s="'+s2+'">'+s2+'</button>').join('')+'</span>',
+      esc(a.at||''),
+      '<span class="cnt"><button type="button" data-k="'+qq(p.n)+'" data-f="s" data-d="-1" aria-label="発言を1つ減らす">−</button><b>'+(k.s||0)+'</b><button type="button" data-k="'+qq(p.n)+'" data-f="s" data-d="1" aria-label="発言を1つ増やす">＋</button></span>',
+      '<span class="cnt"><button type="button" data-k="'+qq(p.n)+'" data-f="q" data-d="-1" aria-label="質問を1つ減らす">−</button><b>'+(k.q||0)+'</b><button type="button" data-k="'+qq(p.n)+'" data-f="q" data-d="1" aria-label="質問を1つ増やす">＋</button></span>']}; }));
+  T.querySelectorAll('[data-att]').forEach(b=>b.addEventListener('click',()=>{ const n=b.dataset.att, st=b.dataset.s, cur2=(A[n]||{}).st;
+    if(cur2===st){ delete A[n]; delete TEAMS.absent[n]; } else { A[n]={st,at:taNow()}; if(st==='欠席') TEAMS.absent[n]=true; else delete TEAMS.absent[n]; }
+    const tm=TEAMS.assign[n]; taSave(st==='欠席'&&tm&&TEAMS.rec[tm]===n&&cur2!==st?'記録係（'+n+'・'+tm+'）が欠席です。講師に伝え、「チーム編成」で記録係を選び直してください（DAY2は「記録係の引き継ぎデータをコピー」）。':n+'：'+((A[n]||{}).st||'未確認')+'にしました。'); renderAll(); }));
+  T.querySelectorAll('[data-k]').forEach(b=>b.addEventListener('click',()=>{ const n=b.dataset.k, f=b.dataset.f; const k=K[n]=K[n]||{s:0,q:0}; k[f]=Math.max(0,(k[f]||0)+Number(b.dataset.d)); taSave(); renderTaRec(); }));
+}
+document.getElementById('ta-q').addEventListener('input',()=>renderTaRec());
+document.getElementById('ta-allin').addEventListener('click',()=>{ const day=TADAY||taDayAuto(); taFix(); const A=TEAMS.att[day]; let n=0; const t=taNow();
+  taPeople().forEach(p=>{ if(!A[p.n]){ A[p.n]={st:'出席',at:t}; delete TEAMS.absent[p.n]; n++; } }); taSave('未確認だった '+n+' 人を「出席」にしました。来ていない人は「欠席」に直してください。'); renderAll(); });
+document.getElementById('ta-clear-ab').addEventListener('click',()=>{ const n=Object.keys(TEAMS.absent||{}).length; TEAMS.absent={}; taSave('欠席の印を '+n+' 人分外しました（前の日の出欠の記録は残っています）。'); renderAll(); });
+document.getElementById('ta-csv').addEventListener('click',async()=>{ taFix(); const P=taPeople(); const g=(d,n)=>((TEAMS.att[d]||{})[n]||{}); const k=(d,n)=>((TEAMS.talk[d]||{})[n]||{});
+  const t=[['チーム','名前','DAY1 出欠','DAY1 時刻','DAY2 出欠','DAY2 時刻','DAY1 発言','DAY2 発言','DAY2 質問','発言・質問 合計']].concat(P.map(p=>[p.t,p.n,g('d1',p.n).st||'',g('d1',p.n).at||'',g('d2',p.n).st||'',g('d2',p.n).at||'',k('d1',p.n).s||0,k('d2',p.n).s||0,k('d2',p.n).q||0,(k('d1',p.n).s||0)+(k('d2',p.n).s||0)+(k('d1',p.n).q||0)+(k('d2',p.n).q||0)])).map(r=>r.join('\t')).join('\n');
+  try{ await navigator.clipboard.writeText(t); document.getElementById('ta-st').textContent='出欠と発言の控えをコピーしました（'+P.length+'人）。成績の参考にする場合も、講義の外に出さないでください。'; }catch(e){ document.getElementById('ta-st').textContent='コピーできませんでした。'; } });
+document.querySelectorAll('#v-tarec [data-go]').forEach(b=>b.addEventListener('click',()=>{ const t=document.querySelector('nav.tabs button[data-v="'+b.dataset.go+'"]'); if(t) t.click(); }));
+setInterval(()=>{ const v=document.getElementById('v-tarec'); if(v&&!v.hidden) renderTaRec(); },60000);
 
 /* ================= v31：スクリーン表示（13:50・16:45 組み合わせ／DAY2 16:25 講評） ================= */
 let SCR={mode:'',fs:1};
@@ -1899,7 +1999,7 @@ document.getElementById('lock').addEventListener('click',()=>{sessionStorage.rem
 { const ss=sessionStorage.getItem('nbc-b'); if(ss==='1')open_('full'); else if(ss==='ta')open_('ta'); }
 document.querySelectorAll('nav.tabs button').forEach(b=>b.addEventListener('click',()=>{
   document.querySelectorAll('nav.tabs button').forEach(x=>x.setAttribute('aria-selected',String(x===b)));
-  ['in','team','now','pres','prog','agr','mix','up','work','peer','prob','pre','iv','post','rep','exp'].forEach(v=>{
+  ['in','team','now','pres','tarec','prog','agr','mix','up','work','peer','prob','pre','iv','post','rep','exp'].forEach(v=>{
     const e=document.getElementById('v-'+v); if(e)e.hidden=(v!==b.dataset.v);});
   window.scrollTo({top:0,behavior:'instant'});
 }));
