@@ -113,6 +113,20 @@ input[type=text],input[type=password]{font:inherit;font-size:13px;padding:6px 9p
 .prbig{border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-align:center;background:var(--surface)}
 .prbig .tm{font-size:22px;font-weight:800}.prbig .ph{font-size:16px;margin-top:4px}.prbig .clk{font-size:72px;font-weight:900;font-variant-numeric:tabular-nums;line-height:1.1;margin-top:6px}
 .prbig.p1 .clk{color:#1f7a3a}.prbig.p1w .clk{color:#b26a00}.prbig.p2 .clk{color:#16406C}.prbig.p3 .clk{color:#666}.prbig.p4 .clk{color:#c00000}
+#scr{position:fixed;inset:0;z-index:60;background:var(--surface);color:var(--ink);overflow:auto;padding:14px clamp(16px,3vw,40px) 40px}
+#scr .scr-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;position:sticky;top:-14px;background:var(--surface);padding:8px 0 10px;border-bottom:1px solid var(--line);margin-bottom:14px;z-index:2}
+#scr .scr-bar b{font-size:20px}#scr .scr-at{font-size:13px;color:var(--ink-3)}#scr .sp{flex:1}
+#scr .sr{display:grid;grid-template-columns:7.5em 1fr 1.6em 1fr;gap:6px 14px;align-items:baseline;padding:calc(10px*var(--fs)) 4px;border-bottom:1px solid var(--line);font-size:calc(22px*var(--fs));line-height:1.45}
+#scr .sr .tm{font-weight:800}#scr .sr .x{text-align:center;color:var(--ink-3)}#scr .sr .sub{font-size:.62em;color:var(--ink-3)}
+#scr .sr.none{color:var(--ink-3)}
+#scr .ov{display:inline-block;font-size:.6em;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--clay-soft);color:var(--clay);margin-left:6px;vertical-align:middle}
+#scr .rg{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr));gap:14px}
+#scr .rc{border:1px solid var(--line-strong);border-radius:10px;padding:12px 14px;font-size:calc(16px*var(--fs));line-height:1.5}
+#scr .rc h3{margin:0 0 8px;font-size:1.25em}#scr .rc .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+#scr .rc .lb{font-size:.78em;font-weight:700;color:var(--ink-3);margin-bottom:2px}#scr .rc .ai{color:var(--ink-2);white-space:pre-wrap}
+#scr .rc .ms{margin-top:8px;font-size:.85em;color:var(--ink-2);border-top:1px dashed var(--line);padding-top:6px}
+#scr .sum{margin:14px 0 0;font-size:calc(18px*var(--fs));font-weight:700}
+@media (max-width:640px){#scr .sr{grid-template-columns:1fr}#scr .sr .x{display:none}#scr .rc .two{grid-template-columns:1fr}}
 .prbig:fullscreen{display:flex;flex-direction:column;justify-content:center;background:#fff}.prbig:fullscreen .tm{font-size:6vh}.prbig:fullscreen .ph{font-size:5vh}.prbig:fullscreen .clk{font-size:30vh}
 table#t-pres tr.cur td{background:rgba(46,125,90,.12);font-weight:700} table#t-pres tr.done td{color:var(--ink-3)}
 body.ta .full-only{display:none!important}
@@ -284,7 +298,7 @@ table.tt tr.cur td{background:var(--hi-bg,rgba(46,125,90,.12));font-weight:700}.
     <p class="lede">DAY2の発表（<b>14:25〜16:15</b>）。<b>A→Jの順</b>に、講師のPCから投影します。各チームの記録係は<b>14:20まで</b>に、講師宛てのメール（CCでTAにも届く）で発表ファイルを送ります。届いたら「受け取った」を押してください。<b>14:20に届いていないチームは最後に回し、自分たちのPCで発表します。</b></p>
     <div class="card"><h2>発表タイマー<span class="s" id="pr-sum"></span></h2><div class="body">
       <div id="pr-big" class="prbig"></div>
-      <div class="btns"><button class="btn" id="pr-start">開始</button><button class="btn sec" id="pr-pause">一時停止</button><button class="btn sec" id="pr-next">次のチームへ</button><button class="btn sec" id="pr-reset">このチームをはじめから</button><button class="btn sec" id="pr-full">発表者に見せる（全画面）</button>
+      <div class="btns"><button class="btn" id="pr-start">開始</button><button class="btn sec" id="pr-pause">一時停止</button><button class="btn sec" id="pr-next">次のチームへ</button><button class="btn sec" id="pr-reset">このチームをはじめから</button><button class="btn sec" id="pr-full">発表者に見せる（全画面）</button><button class="btn sec full-only" type="button" data-scr="rev">講評を映す（16:25）</button>
         <label style="font-size:13px;align-self:center"><input type="checkbox" id="pr-sound" checked> 鈴を鳴らす</label></div>
       <p class="status">4分で鈴1回、5分で発表終了（鈴2回）、8分で質疑終了（鈴3回）、続けて入れ替え1分。入れ替えが終わったら「次のチームへ」。全体の予定は 14:25〜16:15（10チーム×9分＝90分＋予備20分）。</p>
     </div></div>
@@ -330,7 +344,7 @@ table.tt tr.cur td{background:var(--hi-bg,rgba(46,125,90,.12));font-weight:700}.
     <p class="lede">斬新さが実際に「作られる」のはここです。<b>◎（外に出せる強み）× 困りごと の総当たりで、候補を何通り作ったか</b>が上流の主指標になります。<br>候補生成数が1に近いチームは、最頻値をそのまま採ったのと同じです。</p>
     <div class="kpis card" id="kmix"></div>
     <div class="card"><h2>チームごとの候補生成<span class="s">ひと言にした宝の数／押したマス数／欲しがりそうな相手の数／解けないが大事なこと</span></h2><div class="scroll"><table id="t-mix"></table></div></div>
-    <div class="card"><h2>選んだ組み合わせ<span class="s">各チームが別々のマスを選んだか</span></h2><div class="body" id="mixpick"></div></div>
+    <div class="card"><h2>選んだ組み合わせ<span class="s">各チームが別々のマスを選んだか</span></h2><div class="body"><div class="btns" style="margin:0 0 8px"><button class="btn" type="button" data-scr="mix">スクリーンに映す（全チームの組み合わせ）</button><button class="btn sec" type="button" data-scr="rev">講評を映す（AIだけの案と最後の案）</button></div><p class="status" style="margin:0 0 8px">13:50と16:45：先に「受け取る」でスプレッドシートから読み込んでから押します。映した画面の「最新を読み込む」でも読み込めます。</p><div id="mixpick"></div></div></div>
     <div class="card"><h2>社会の変化の選ばれ方<span class="s">第三の入口。どのカードを何チームが選んだか</span></h2><div class="body" id="mixchg"></div></div>
     <div class="card"><h2>九大だけでは届かないが大事な困りごと<span class="s">DAY2「誰と組むか」の入力になります</span></h2><div class="body" id="mixhard"></div></div>
   </section>
@@ -409,8 +423,10 @@ table.tt tr.cur td{background:var(--hi-bg,rgba(46,125,90,.12));font-weight:700}.
   </section>
 </main>
 
+<div id="scr" hidden style="--fs:1"><div class="scr-bar"><b id="scr-t"></b><span class="scr-at" id="scr-at"></span><span class="sp"></span><button class="btn sec" id="scr-load" type="button">最新を読み込む</button><button class="btn sec" id="scr-minus" type="button">文字−</button><button class="btn sec" id="scr-plus" type="button">文字＋</button><button class="btn sec" id="scr-full" type="button">全画面</button><button class="btn" id="scr-x" type="button">閉じる</button></div><div id="scr-body"></div></div>
 <footer class="wrap">
   受け取ったデータは、この端末とあなたのアカウントにだけ保存されます。／ FVCP／7資本モデル v1.16 を参照（演習の判定は、実在の九州大学の判定として扱わず、九大と外部の連携に用いない）
+　ボードの版：v31（2026年10月17日）
 </footer>
 </div>
 
@@ -617,11 +633,13 @@ function renderSubm(){ const T=document.getElementById('t-subm'); if(!T) return;
   const rows=SUB.map(s=>({n:s.nick||'—',s})); const seen=new Set(SUB.map(s=>pkey(s.nick)).concat(SUBT.map(s=>pkey(s.nick))));
   String(ROSTER||'').split(/\n/).map(x=>x.trim()).filter(Boolean).concat(TEAMS.extra||[]).concat(Object.keys(TEAMS.assign||{})).concat(statNicks()).forEach(n=>{ const k=pkey(n); if(!seen.has(k)){ seen.add(k); rows.push({n:canon(n),s:null}); } });
   const tOf=r=>(r.s&&REALT(r.s.team))?r.s.team:(TEAMS.assign[r.n]||statTeam(r.n)||'—');
-  const teamHas=(t,k)=>t!=='—'&&(SUB.some(x=>x.team===t&&has(x,k))||statTeamHas(t,k));
+  const teamHas=(t,k)=>t!=='—'&&(SUB.some(x=>x.team===t&&has(x,k)&&(k!=='pm'||pmFinal((x.recv||{}).pm)))||statTeamHas(t,k));
   const COLSALL=[['am','①'],['pm','②'],['iv','④'],['d2','⑤'],['pr','⑤b'],['post','⑥']], COLS=COLSALL.filter(c=>ROLE!=='ta'||['pm','d2','pr'].includes(c[0]));
   rows.sort((a,b)=>tOf(a).localeCompare(tOf(b))||a.n.localeCompare(b.n,'ja'));
-  const got=(r,k)=>{ const s=r.s; if(s&&has(s,k)) return (s.recv||{})[k]||'済'; return statAt(r.n,k); };
+  const got0=(r,k)=>{ const s=r.s; if(s&&has(s,k)) return (s.recv||{})[k]||'済'; return statAt(r.n,k); };
+  const got=(r,k)=>{ const at=got0(r,k); return (k==='pm'&&at&&!pmFinal(at))?'':at; };
   const cell=(r,k)=>{ const at=got(r,k); if(at) return '<span class="hi">✓</span>'+(at!=='済'?' <small>'+esc(String(at).slice(5,10))+'</small>':'');
+    if(k==='pm'&&got0(r,k)&&!teamHas(tOf(r),k)) return '<span class="warnc">途中</span> <small>'+esc(scrHm(got0(r,k)))+'</small>';
     if((k==='pm'||k==='d2')&&teamHas(tOf(r),k)) return '<span class="hi">チーム✓</span>'; return '<span class="warnc">—</span>'; };
   const any=r=>COLS.some(c=>got(r,c[0]));
   tbl(T,[['チーム'],['名前']].concat(COLS.map(c=>[c[1]])),rows.map(r=>({c:[esc(tOf(r)),esc(r.n)+(any(r)?'':' <small class="warnc">未提出</small>')+((TEAMS.absent||{})[r.n]?' <small>欠席</small>':'')].concat(COLS.map(c=>cell(r,c[0])))})));
@@ -1263,7 +1281,57 @@ function renderNow(){
   say.innerHTML=lines.length?lines.join(''):'<p class="lede" style="margin:0">声をかけるチームはありません。</p>';
   tbl(T,[['チーム'],[byTeam?'提出した人':'名前']].concat(labels.map(l=>[l])),res.map(r=>({c:[esc(r.s.team),esc(r.s.nick||'—')].concat(r.c.map(c=>c[1]?'<span class="hi">✓</span>':'<span class="warnc">×</span>'))})));
 }
-function renderAll(){resolveTeams();sortSub();renderTeam();renderPres();renderPb();renderNow();renderSubs();renderProg();renderAgr();renderMix();renderUp();renderWork();renderPeer();renderProb();renderPre();renderIv();renderPost();renderRep();}
+function renderAll(){resolveTeams();sortSub();renderTeam();renderPres();renderPb();renderNow();renderSubs();renderProg();renderAgr();renderMix();renderUp();renderWork();renderPeer();renderProb();renderPre();renderIv();renderPost();renderRep();if(SCR.mode)renderScr();}
+
+/* ================= v31：スクリーン表示（13:50・16:45 組み合わせ／DAY2 16:25 講評） ================= */
+let SCR={mode:'',fs:1};
+function pmFinal(at){ const m=String(at||'').match(/(\d{4})\D(\d{1,2})\D(\d{1,2})\D+(\d{1,2}):(\d{2})/); if(!m) return true;
+  const md=(+m[2])*100+(+m[3]), mm=(+m[4])*60+(+m[5]); return !(+m[1]===2026&&md===1025&&mm<990); }
+function scrTeams(){ const real=TNAMES.filter(t=>memOf(t).length); const got=teams().filter(t=>REALT(t)&&!real.includes(t)); return real.concat(got); }
+function scrHm(at){ const m=String(at||'').match(/(\d{1,2}):(\d{2})/); return m?(m[1].padStart(2,'0')+':'+m[2]):''; }
+function scrMix(){
+  const rows=scrTeams().map(t=>{ const s=SUB.find(x=>x.team===t&&x.mix&&x.mix.chosen)||SUB.find(x=>x.team===t&&x.mix);
+    const mx=s&&s.mix||{}; if(!mx.chosen) return {t,none:true};
+    const [oid,pi]=mx.chosen.split('|'); const nm=((mx.name||{})[oid]||'').trim(); const see=NAME[oid]?NAME[oid].see:oid;
+    return {t,oid,nm,see,pt:((s.probs||[])[Number(pi)]||'').trim(),at:scrHm((s.recv||{}).pm)}; });
+  const got=rows.filter(r=>!r.none);
+  got.forEach(r=>{ r.ov=[]; got.forEach(q=>{ if(q===r) return;
+    if(q.oid===r.oid) r.ov.push(q.t.replace('チーム','')+'：同じ宝');
+    else{ const j=(r.pt&&q.pt)?jac(bigrams(r.pt),bigrams(q.pt)):null; if(j!=null&&j>=0.35) r.ov.push(q.t.replace('チーム','')+'：困りごとが近い'); } }); });
+  document.getElementById('scr-t').textContent='全チームの組み合わせ（宝のひと言 × 困りごと）';
+  document.getElementById('scr-at').textContent='届いた '+got.length+' / '+rows.length+' チーム'+(STAT.at?'':'');
+  document.getElementById('scr-body').innerHTML=rows.length?rows.map(r=>r.none?
+    '<div class="sr none"><div class="tm">'+esc(r.t)+'</div><div>まだ届いていません（記録係が口頭で1行）</div><div></div><div></div></div>':
+    '<div class="sr"><div class="tm">'+esc(r.t)+(r.at?'<div class="sub">'+esc(r.at)+'</div>':'')+'</div><div><b>'+esc(r.nm||'（ひと言なし）')+'</b><div class="sub">'+esc(r.oid+' '+r.see)+'</div></div><div class="x">×</div>'+
+    '<div>'+esc(r.pt||'（困りごとなし）')+(r.ov.length?'<div>'+r.ov.map(x=>'<span class="ov">重なり '+esc(x)+'</span>').join('')+'</div>':'')+'</div></div>').join('')+
+    '<p class="sum">重なりの印は機械の目安です。変えるかどうかは、チームが決めます（続けるなら「なぜ自分たちならできるか」を1行）。</p>'
+    :'<p class="sum">チーム編成も提出もまだありません。</p>';
+}
+function scrRev(){
+  const ts=scrTeams(); const R=ts.map(t=>{ const r=teamRow(t); const I=pick(t,'idea')||{}, D=pick(t,'redo')||{};
+    return {t,r,name:(D.name||I.title||'').trim(),concept:(D.concept||I.concept||'').trim(),dec:D.dec||'',d2:SUB.some(x=>x.team===t&&has(x,'d2'))}; });
+  const jA=meanJac(R.map(x=>x.r.aio)), jF=meanJac(R.map(x=>x.r.fin));
+  document.getElementById('scr-t').textContent='講評：AIだけの案と、最後の案';
+  document.getElementById('scr-at').textContent='提出⑤ '+R.filter(x=>x.d2).length+' / '+R.length+' チーム';
+  document.getElementById('scr-body').innerHTML=(R.length?'<div class="rg">'+R.map(x=>'<div class="rc"><h3>'+esc(x.t)+(x.d2?'':' <span class="ov">⑤まだ</span>')+'</h3><div class="two">'+
+    '<div><div class="lb">AIだけの案（DAY1 13:50）</div><div class="ai">'+esc((x.r.aio||'（記録なし）').slice(0,160))+((x.r.aio||'').length>160?'…':'')+'</div></div>'+
+    '<div><div class="lb">最後の案（DAY2）</div><div><b>'+esc(x.name||'（名称なし）')+'</b></div><div>'+esc(x.concept||'')+'</div>'+(x.dec?'<div class="lb" style="margin-top:4px">判断：'+esc(x.dec)+'</div>':'')+'</div></div>'+
+    '<div class="ms">依頼主の6つの条件　そろった '+x.r.irai+' / 6　｜　会社名・数字（機械で数えた目安）　AIだけ '+(x.r.orgAI+x.r.numAI)+' → 最後 '+(x.r.orgFin+x.r.numFin)+'</div></div>').join('')+'</div>':'<p class="sum">まだありません。</p>')+
+    '<p class="sum">10チームの似ている度合い（平均）：AIだけの案 '+pct(jA)+' → 最後の案 '+pct(jF)+'　（低いほど、チームごとに分かれている）</p>'+
+    '<p class="status">受け取りたいか（⑤b）の中身と点数は、ここには出しません。この比較は研究のための測定で、成績には関係しません。</p>';
+}
+function renderScr(){ const el=document.getElementById('scr'); if(!SCR.mode){ el.hidden=true; return; } el.hidden=false; el.style.setProperty('--fs',SCR.fs);
+  try{ if(SCR.mode==='mix') scrMix(); else scrRev(); }catch(e){ document.getElementById('scr-body').innerHTML='<p class="sum">表示できませんでした（'+esc(e.message||e)+'）。</p>'; } }
+document.querySelectorAll('[data-scr]').forEach(b=>b.addEventListener('click',()=>{ SCR.mode=b.dataset.scr; renderScr(); }));
+document.getElementById('scr-x').addEventListener('click',()=>{ SCR.mode=''; if(document.fullscreenElement) document.exitFullscreen().catch(()=>{}); renderScr(); });
+document.getElementById('scr-plus').addEventListener('click',()=>{ SCR.fs=Math.min(2,+(SCR.fs+0.15).toFixed(2)); renderScr(); });
+document.getElementById('scr-minus').addEventListener('click',()=>{ SCR.fs=Math.max(0.7,+(SCR.fs-0.15).toFixed(2)); renderScr(); });
+document.getElementById('scr-full').addEventListener('click',()=>{ const el=document.getElementById('scr'); if(el.requestFullscreen) el.requestFullscreen().catch(()=>{}); });
+document.getElementById('scr-load').addEventListener('click',()=>{ const bx=document.getElementById('sheetbox');
+  if(!bx||bx.hidden){ document.getElementById('scr-at').textContent='この画面では読み込めません（公開ページで開いてください）。'; return; }
+  if(!document.getElementById('sheetpw').value.trim()){ document.getElementById('scr-at').textContent='「受け取る」タブで、読み込み用の合言葉を先に入れてください。'; return; }
+  document.getElementById('scr-at').textContent='読み込んでいます…'; document.getElementById('sheetload').click(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&SCR.mode&&!document.fullscreenElement){ SCR.mode=''; renderScr(); } });
 
 /* ================= v20：研究会レポート（設計書 v1.8・追補 v1.9 の事前登録の指標） ================= */
 const FITK=['pain','gain','emo','pay'];
@@ -1761,12 +1829,12 @@ function statOk(x){ return x&&x.nick&&!isTest(x.nick)&&!EXN[pkey(x.nick)]; }
 function statNicks(){ return (STAT.rows||[]).filter(statOk).map(x=>x.nick); }
 function statAt(nick,k){ const p=pkey(nick); const L=(STAT.rows||[]).filter(x=>statOk(x)&&x.scope===k&&pkey(x.nick)===p).map(x=>x.at).sort(); return L.length?L[L.length-1]:''; }
 function statTeam(nick){ const p=pkey(nick); const L=(STAT.rows||[]).filter(x=>statOk(x)&&pkey(x.nick)===p&&REALT(x.team)); return L.length?L[L.length-1].team:''; }
-function statTeamHas(t,k){ return (STAT.rows||[]).some(x=>statOk(x)&&x.scope===k&&x.team===t); }
+function statTeamHas(t,k){ return (STAT.rows||[]).some(x=>statOk(x)&&x.scope===k&&x.team===t&&(k!=='pm'||pmFinal(x.at))); }
 const RM=[
  {k:'am',l:'①',name:'提出① 事前課題',who:'ひとり',dl:'10月19日（月）24時（最終の回収は10月21日（水）24時）',
   msg:'【NBC2026】事前課題（提出①）がまだの人へ。ワークベンチの「提出① 事前課題」タブで「提出する」を押してください（「受け付けました」と出れば完了です）。締切は10月19日（月）24時、最終の回収は10月21日（水）24時です。'},
  {k:'pm',l:'②',name:'提出② DAY1（記録係）',who:'チーム',dl:'DAY1（10月25日）17:00まで',
-  msg:'記録係の人へ：「提出② DAY1（記録係）」タブで「提出する」を押してください。送ると、夜のうちにメンバーの画面へ調査設計と分担表が届きます。'},
+  msg:'記録係の人へ：「提出② DAY1（記録係）」タブで「提出する」を押してください（13:50に途中で送ったチームも、もう一度）。送ると、夜のうちにメンバーの画面へ調査設計と分担表が届きます。'},
  {k:'iv',l:'④',name:'提出④ 8日間（ひとり）',who:'ひとり',dl:'11月2日（月）18時',
   msg:'【NBC2026】聞いた記録（提出④）がまだの人へ。ワークベンチの「提出④ 8日間（ひとり）」タブで「提出する」を押してください。締切は11月2日（月）18時です。聞けた人数が少なくても、聞けたところまでで送ってください。'},
  {k:'d2',l:'⑤',name:'提出⑤ チーム（記録係）',who:'チーム',dl:'DAY2（11月3日）16:25まで',
