@@ -655,7 +655,7 @@ nav.tabs button.subtab::before{content:"✉ ";opacity:.8}
         <tr><td>当日、チームや記録係が変わった</td><td>講師・TAがチームのデータを差し替えます。画面上の「<b>チームのデータを読み込み直す</b>」を押すか、ページを読み込み直してください。あなたの入力は消えません</td></tr>
         <tr><td>「提出する」が送れない</td><td>通信を確かめてもう一度。続けて失敗するときは「データだけコピー」を押し、講師に送ってください（講師が集計ボードに貼ります）</td></tr>
       </tbody></table></div>
-      <p class="see2" style="margin-top:6px">この画面の版：v42（2026年10月17日）</p>
+      <p class="see2" style="margin-top:6px">この画面の版：v43（2026年10月25日）</p>
       <h3 class="sec" style="margin-top:12px">控えから復元</h3>
       <p class="see2">自動の控え（この端末の中）の一覧です。復元すると、いまの入力はその時点の内容に置きかわります（置きかわる前の内容も、控えとして残します）。</p>
       <div id="bk-list"></div>
@@ -1007,7 +1007,7 @@ nav.tabs button.subtab::before{content:"✉ ";opacity:.8}
 <footer class="wrap">
   九州大学 ロバート・ファン／アントレプレナーシップ・センター　ニュービジネス・クリエーション　2026年度　／　FVCP／7資本モデル v1.16 を参照<br>
   この授業の判定は演習です。実在の九州大学の判定として扱わず、九大と外部の連携には用いません。<br>
-  入力内容はこの端末の中にだけ自動保存されます。サーバーには何も送られません。共有・提出は、あなたがデータを渡したときにだけ行われます。<br>画面の版：v42（2026年10月17日）
+  入力内容はこの端末の中にだけ自動保存されます。サーバーには何も送られません。共有・提出は、あなたがデータを渡したときにだけ行われます。<br>画面の版：v43（2026年10月25日）
 </footer>
 
 <dialog id="picker">
@@ -3359,7 +3359,7 @@ async function unpack(code){
 }
 function applyPacked(d){
   if(d.t&&d.t!=='事前') S.team=d.t; S.nick=d.n||S.nick; S.tool=d.l||''; S.ord=d.o||''; S.started=d.s||S.started;
-  if(d.hand){ S.role='rec'; S.teamInit=d.t||S.teamInit; }
+  if(d.hand){ S.role='rec'; S.roleAt=((window.NBC_TEAMS||{}).at)||''; S.teamInit=d.t||S.teamInit; }
   (d.i||[]).forEach(([id,mark,cond,reason,src])=>{ if(!S.items[id])return;
     S.items[id]={mark:mark||'',reason:reason||'',src:src||'',cond:(cond||'000').split('').map(c=>c==='1')}; });
   if(Array.isArray(d.p)) S.probs=d.p.slice();
@@ -3573,7 +3573,7 @@ async function teamSync(){
   if(!d){ TEAMSTATE='notfound'; return false; }
   const n=normName(S.nick), moved=!S.teamInfo||S.teamInfo.team!==d.team, recChg=!!S.teamInfo&&normName(S.teamInfo.rec||'')!==normName(d.rec||'');
   S.team=d.team; S.teamInfo={team:d.team,rec:d.rec||'',members:d.members||[],at:T.at||'',all:Array.isArray(d.all)?d.all:[],cc:d.cc||''};
-  if(moved||recChg||!S.role) S.role=(normName(d.rec)===n)?'rec':'mem';
+  /* v43：記録係かメンバーかは teams.js の記録係を正とする。「この端末を記録係にする」と引き継ぎは、次に講師が teams.js を上げるまでの一時的な代役 */ const manualRec=S.role==='rec'&&!!S.roleAt&&S.roleAt===(T.at||''); if(!manualRec) S.role=(normName(d.rec)===n)?'rec':'mem'; if(normName(d.rec)===n||S.role!=='rec') S.roleAt='';
   S.teamPre=d.tm||null; S.teamIdea=d.idea||null; S.teamIv=(d.ivm||[]).filter(m=>normName(m.nick)!==n); S.teamAio=d.aio||''; S.teamRec=d.rp||null;
   if(S.role==='rec'&&d.init&&(S.teamInit!==d.team)&&!hasTeamWork()) applyInit(d);
   ensure32(); TEAMSTATE='ok'; save(); return true; }
@@ -3588,7 +3588,7 @@ function teamBanner(){
   if(S.role==='rec') b.innerHTML='<b>'+esc(I.team)+'（'+mem+'）。あなたは記録係です。</b>DAY1・DAY2のチームの作業は、<b>この画面をチーム全員で見て</b>進めます。チームの提出（②⑤）もこの画面から送ります。'+(S.teamPre?'21の質問に、メンバー全員の事前課題が集まっています。':'')+((S.teamIv||[]).length?'　ほかのメンバーの聞き取りの記録も入っています（「聞きに行く」）。':'');
   else{ b.innerHTML='<b>'+esc(I.team)+'（'+mem+'）。記録係は '+esc(I.rec||'—')+' さんです。</b>DAY1・DAY2のチームの作業は、<b>記録係の画面をチーム全員で見て</b>進めます。この画面に書くのは、<b>自分が聞いた8日間の記録（④）、受け取りたいか（⑤b）、事後レポート（⑥）</b>だけです。チームで決めたことは、記録係の提出のあと「チームの控え」として「聞きに行く」「事後レポート」に出ます。'+
     '<div class="btns" style="margin:8px 0 0"><button type="button" class="mini" id="be-rec">記録係が休みのとき：この端末を記録係にする</button></div>';
-    const br=document.getElementById('be-rec'); br.addEventListener('click',e=>twoStep(e.currentTarget,'もう一度押すと、この端末が記録係になります',()=>{ S.role='rec'; const T=window.NBC_TEAMS; teamSync().then(()=>{ rebuildAll(); }); })); }
+    const br=document.getElementById('be-rec'); br.addEventListener('click',e=>twoStep(e.currentTarget,'もう一度押すと、この端末が記録係になります',()=>{ S.role='rec'; S.roleAt=((window.NBC_TEAMS||{}).at)||''; const T=window.NBC_TEAMS; teamSync().then(()=>{ rebuildAll(); }); })); }
   b.insertAdjacentHTML('beforeend',reloadBtnHtml()); wireReload(b);
 }
 function teamAtText(){ const a=(S.teamInfo&&S.teamInfo.at)||((window.NBC_TEAMS||{}).at)||''; if(!a) return ''; const d=new Date(a); if(isNaN(d)) return '';
